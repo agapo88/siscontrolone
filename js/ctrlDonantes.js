@@ -1,10 +1,9 @@
-var miApp = angular.module('proyecto', ['ngRoute']);
-
-miApp.controller('home', function($scope, $http){
+miApp.controller('ctrlDonantes', function($scope, $http){
 	
-	$scope.lstDatos = [];
+	$scope.lstDonantes = [];
+
 	($scope.fnCargar = function(){
-		$http.post('consultas.php', {accion: 'inicio'})
+		$http.post('consultas.php', {accion: 'cargarDonantes'})
 		.success(function( data ){
 			console.log( data );
 			$scope.lstDatos = data;

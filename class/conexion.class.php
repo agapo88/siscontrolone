@@ -9,7 +9,7 @@ class Conexion extends mysqli
 	private $server = 'localhost';
 	private $user   = 'root';
 	private $pass   = '';
-	private $db     = 'privado_db';
+	private $db     = 'db_siscontrolone';
 	protected $con  = false;
 	
 	// INICIALIZAR EL CONSTRUCTOR CON DATOS DE LA BD

@@ -18,6 +18,10 @@ switch ( $data->accion ) {
 
 		break;
 
+	case 'cargarDonantes':		// CONSULTAR LISTA DE DONANTES
+		$donate = new Donante();
+		break;
+
 }
 
 $conexion->close();

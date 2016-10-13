@@ -9,7 +9,6 @@
 <?php 
 	include 'include/menu.php';
 ?>
-
 	<!-- VISTA -->
 	<div ng-view></div>
 

@@ -16,7 +16,7 @@
          <ul class="nav navbar-nav">
             <li class="active"><a href="#">Inicio <span class="sr-only">(current)</span></a></li>
             <li><a href="#">Reportes</a></li>
-            <li><a href="#">Donantes</a></li>
+            <li><a href="#/donantes">Donantes</a></li>
             <li><a href="#">Reportes</a></li>
             
             <li class="dropdown">

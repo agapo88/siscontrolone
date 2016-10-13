@@ -17,11 +17,13 @@ class Donante
 	function consultarDonantes(){
 
 		$lstDonadores = array();
-		$sql = "SELECT idDonador, nombre, telefono, email, fechaIngreso, tipoEntidad FROM vstConsultaDonantes;";
+		$sql = "SELECT idDonador, nombre, telefono, email, fechaIngreso, tipoEntidad FROM vstConsultarDonantes;";
 
-		if( $result = $this->con->query($sql) ){
-			while( $row = $result->fetch_object() )
+		//echo $sql;
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
 				$lstDonadores[] = $row;
+			}
 		}
 
 		return $lstDonadores;

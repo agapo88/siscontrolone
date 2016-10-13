@@ -4,6 +4,7 @@
 	<title>Proyecto</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body ng-controller="home">
 <?php 
@@ -20,6 +21,9 @@
 
 	<!-- CONTROLADORES -->
 	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/route.js"></script>
+	<script type="text/javascript" src="js/ctrlDonantes.js"></script>
+
 
 </body>
 </html>

@@ -1,0 +1,30 @@
+.title-section{
+	padding: 10px 0;
+	width: 200px;
+	margin-top: -20px;
+	background: #163848;
+	border-radius: 0 0 2.5em 0;
+	position: relative;
+	box-shadow: 1px 2px 1px #888;
+	text-align: center;
+}
+
+.title-section > .titulo {
+	color: #fff;
+	text-shadow: 2px 1px 1px #07314c;
+	font-size: 18px;
+}
+
+#tb-title{
+	background: #0c3c6b;
+    color: #fff;
+}
+
+.noBorder{
+	border-radius: 0;
+}
+
+.title-info{
+	color: #fff;
+	background-color: #00BCD4;
+}

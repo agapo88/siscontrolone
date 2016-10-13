@@ -6,7 +6,9 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 </head>
 <body ng-controller="home">
-
+<?php 
+	include 'include/menu.php';
+?>
 
 	<!-- VISTA -->
 	<div ng-view></div>

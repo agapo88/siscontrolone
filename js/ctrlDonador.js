@@ -1,5 +1,7 @@
 miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 	
+	$scope.$parent.menu = 'donantes';
+
 	$scope.lstDonantes = [];
 	$scope.lstTipoEntidad = [];
 	

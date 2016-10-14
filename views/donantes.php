@@ -9,7 +9,7 @@
       </button>
    </div>
    <div class="col-sm-12">
-      <form class="navbar-form navbar-right" role="search">
+      <form class="navbar-right" role="search">
          <div class="form-group">
             <label class="control-label col-sm-4">Buscar Donador:</label>
             <div class="col-sm-8">
@@ -37,10 +37,10 @@
                <td class="text-center"> {{ donante.tipoEntidad }} </td>
                <td class="text-center"> {{ donante.telefono }} </td>
                <td class="text-center"> {{ donante.email }} </td>
-               donante.idDonador
             </tr>
          </tbody>
       </table>
+               donante.idDonador
    </div>
 </div>
 

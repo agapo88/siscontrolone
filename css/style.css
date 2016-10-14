@@ -1,8 +1,13 @@
-.title-section{
-	padding: 10px 0;
-	width: 200px;
-	margin-top: -20px;
+.principal{
+	margin: 0 15px;
+}
+
+.title-section {
+	padding: 7px 0;
+	width: 225px;
+	left: 0;
 	background: #163848;
+	background: rgba(5,50,75,0.90);
 	border-radius: 0 0 2.5em 0;
 	position: relative;
 	box-shadow: 1px 2px 1px #888;
@@ -27,4 +32,11 @@
 .title-info{
 	color: #fff;
 	background-color: #00BCD4;
+}
+
+.alerta{
+	position: fixed;
+	z-index: 2000;
+	right: 0;
+	margin: 15px;
 }

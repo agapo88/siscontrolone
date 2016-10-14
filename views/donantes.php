@@ -1,12 +1,9 @@
-
-<div class="title-section">
-   <span class="titulo">DONANTES</span>
-</div>
-
 <div class="row">
-
+   <div class="title-section">
+      <span class="titulo">DONANTES</span>
+   </div>
    <div class="col-sm-12 text-right">
-      <button type="button" class="btn btn-primary btn-sm noBorder" ng-mouseleave="hoveri=false" ng-mouseenter="hoveri=true" data-toggle="modal" data-target="#myModal">
+      <button type="button" class="btn btn-primary btn-sm noBorder" ng-mouseleave="hoveri=false" ng-mouseenter="hoveri=true" data-toggle="modal" data-target="#modalAgregar">
          <span class="glyphicon" ng-class="{'glyphicon-plus-sign': hoveri, 'glyphicon-plus':!hoveri}"></span>
          Agregar Donador
       </button>
@@ -31,7 +28,6 @@
                <th class="text-center">Telefono</th>
                <th class="text-center">Correo</th>
                <th class="text-center">Editar</th>
-               <th class="text-center">Eliminar</th>
             </tr>
          </thead>
          <tbody>
@@ -67,29 +63,45 @@
                      <input type="text" ng-model="donador.nombre" class="form-control">
                   </div>
                </div>
-               <div class="form-group">
+               <div class="form-group"  ng-class="{'has-error': formAgregar.telefono.$invalid}">
                   <label class="control-label col-sm-3">Telefono:</label>
                   <div class="col-sm-8">
-                     <input type="text" ng-model="donador.telefono" class="form-control">
+                     <input type="text" name="telefono" minlength="8" maxlength="15" ng-model="donador.telefono" class="form-control">
                   </div>
                </div>
-               <div class="form-group">
+               <div class="form-group" ng-class="{'has-error': formAgregar.email.$invalid}">
                   <label class="control-label col-sm-3">Email:</label>
                   <div class="col-sm-8">
-                     <input type="text" ng-model="donador.email" class="form-control">
+                     <input type="email" name="email" ng-model="donador.email" class="form-control">
                   </div>
                </div>
                <div class="form-group">
+                  <label class="control-label col-sm-3">Tipo Donante:</label>
+                  <div class="col-sm-6">
+                     <select class="form-control" ng-model="donador.idTipoEntidad">
+                        <option value="{{tipoEntidad.idTipoEntidad}}" ng-repeat="tipoEntidad in lstTipoEntidad">
+                           {{tipoEntidad.tipoEntidad}}
+                        </option>
+                     </select>
+                  </div>
+               </div>
+               
+               <div class="form-group" ng-class="{'has-error': formAgregar.fechaIngreso.$invalid}">
                   <label class="control-label col-sm-3">Fecha Ingreso:</label>
-                  <div class="col-sm-8">
-                     <input type="text" ng-model="donador.fechaIngreso" class="form-control">
+                  <div class="col-sm-6">
+                     <div class="input-group">
+                        <span class="input-group-addon">
+                           <i class="glyphicon glyphicon-calendar"></i>
+                        </span>
+                        <input type="text" name="fechaIngreso" class="form-control" ng-model="donador.fechaIngreso" data-date-format="dd/MM/yyyy" data-date-type="number"  data-max-date="today" data-autoclose="1"  bs-datepicker>
+                     </div>
                   </div>
                </div>
             </form>
          </div>
          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Guardar Donador</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()"><i class="glyphicon glyphicon-log-out"></i> Cerrar</button>
+            <button type="button" class="btn btn-primary" ng-click="guardarDonador()"><i class="glyphicon glyphicon-saved"></i> Guardar Donador</button>
          </div>
       </div>
    </div>

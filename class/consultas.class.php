@@ -12,18 +12,20 @@ class Consultas
 		$this->con = $conexion;
 	}
 
-	function consultarTipo()
+	// CONSULTAR TIPOS DONANTE
+	function consultarTipoEntidad()
 	{
-		$sql = "SELECT idArea, area FROM area";
-		//$tipos = array();
+		$lstTipoEntidad = array();
+
+		$sql = "SELECT idTipoEntidad, tipoEntidad FROM tipoEntidad;";
 		
 		if( $rs = $this->con->query( $sql ) ){
 			while( $row = $rs->fetch_object() ){
-				$tipos[] = $row;
+				$lstTipoEntidad[] = $row;
 			}
 		}
 
-		return $tipos;
+		return $lstTipoEntidad;
 	}
 
 }

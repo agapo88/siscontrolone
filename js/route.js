@@ -5,7 +5,7 @@ miApp.config(function($routeProvider) {
 	})
 	.when('/donantes',{
 		templateUrl : 'views/donantes.php',
-		controller : 'ctrlDonantes'
+		controller : 'ctrlDonador'
 	})
 	.when('/tema/:idTema', {
 		templateUrl : 'tema.view.php',

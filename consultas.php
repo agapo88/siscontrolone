@@ -16,12 +16,26 @@ $conexion = new Conexion();
 switch ( $data->accion ) {
 
 	case 'inicio':
-		$consulta = new Consultas( $conexion);
+		$consulta = new Consultas( $conexion );
 
 		//$datos = $consulta->consultarTipo();
 		echo json_encode( $datos );
 
 		break;
+
+	/***** DONANTES *****/
+	case 'cargaDataFamilia':
+		$consulta = new Consultas( $conexion );
+
+		$datos['lstAreas']      = $consulta->consultarAreas();
+		$datos['lstParentesco'] = $consulta->consultarParentescos();
+		$datos['lstGeneros'] = $consulta->consultarGeneros();
+		
+
+		echo json_encode( $datos );
+		break;
+
+	/***** DONANTES *****/
 
 	case 'cargarCatDonantes':
 		$consulta = new Consultas( $conexion );

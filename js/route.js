@@ -7,13 +7,13 @@ miApp.config(function($routeProvider) {
 		templateUrl : 'views/donantes.php',
 		controller : 'ctrlDonador'
 	})
+	.when('/familias', {
+		templateUrl : 'views/form.familias.php',
+		controller  : 'ctrlFamilias'
+	})
 	.when('/tema/:idTema', {
 		templateUrl : 'tema.view.php',
 		controller  : 'ctrlTema'
-	})
-	.when('/tag/:tag', {
-		templateUrl : 'temas.php',
-		controller  : 'ctrlTemas'
 	})
 	.otherwise({
 		redirectTo: '/'

@@ -28,6 +28,55 @@ class Consultas
 		return $lstTipoEntidad;
 	}
 
+
+	// CONSULTAR AREAS
+	function consultarAreas(){
+		$lstAreas = array();
+
+		$sql = "SELECT idArea, area FROM area;";
+		
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+				$lstAreas[] = $row;
+			}
+		}
+
+		return $lstAreas;
+	}
+
+	// CONSULTAR PARENTESCOS
+	function consultarParentescos(){
+		$lstParentesco = array();
+
+		$sql = "SELECT idParentesco, parentesco FROM parentesco;";
+		
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+				$lstParentesco[] = $row;
+			}
+		}
+
+		return $lstParentesco;
+	}
+
+
+	// CONSULTAR PARENTESCOS
+	function consultarGeneros(){
+		$lstGeneros = array();
+
+		$sql = "SELECT idGenero, genero FROM genero;";
+		
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+				$lstGeneros[] = $row;
+			}
+		}
+
+		return $lstGeneros;
+	}
+
+	
+
 }
 /*
 djsmurf10@gmail.com

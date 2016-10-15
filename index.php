@@ -28,6 +28,8 @@
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/route.js"></script>
 	<script type="text/javascript" src="js/ctrlDonador.js"></script>
+	<script type="text/javascript" src="js/ctrlFamilias.js"></script>
+	
 
 
 </body>

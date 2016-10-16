@@ -11,6 +11,8 @@ require_once 'class/consultas.class.php';
 require_once 'class/donante.class.php';
 require_once 'class/producto.class.php';
 require_once 'class/proveedor.class.php';
+require_once 'class/areas.bodega.class.php';
+
 
 $datos    = array();
 $conexion = new Conexion();
@@ -24,16 +26,34 @@ switch ( $data->accion ) {
 		
 		break;
 
-	case 'infoProducto':
-		// 5840  1430
+	/*** AREAS DE BODEGA ***/
+	case 'cargarSeccionBodega':
+		$area = new Area( $conexion );
+		$datos['lstSeccionBodega'] = $area->consultarSeccionB();
+		echo json_encode( $datos );
 		break;
 
+
 	/*** PRODUCTOS ****/
-	case 'cargarProductos':
+	case 'categoriaProductos':
 		$producto = new Producto( $conexion );
 		$datos['catProductos'] = $producto->catalogoProductos();
 		echo json_encode( $datos );
 		break;
+
+	case 'cargarTiposProducto':
+		$producto = new Producto( $conexion );
+		$datos['lstTiposProducto'] = $producto->consultarTipoProducto();
+		echo json_encode( $datos );
+		break;
+
+	case 'guardarProducto':
+		$prod = $data->datos;
+		$producto = new Producto( $conexion );
+		$datos = $producto->guardarProducto( $prod->producto, $prod->perecedero, $prod->idTipoProducto, $prod->idSeccionBodega, $prod->observacion );
+		echo json_encode( $datos );
+		break;
+		
 
 	case 'consultarProductos':
 		$producto = new Producto( $conexion );

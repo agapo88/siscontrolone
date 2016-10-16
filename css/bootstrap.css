@@ -5705,13 +5705,22 @@ button.list-group-item-danger.active:focus {
   border-bottom-color: #ddd;
 }
 .panel-primary {
-  border-color: #337ab7;
+  border-color: #d6d6d6;
 }
 .panel-primary > .panel-heading {
   color: #fff;
-  background-color: #337ab7;
-  border-color: #337ab7;
+  background-color: #0d48a0;
+  border-color: #0055d0;
 }
+
+/*** AGREGADO ***/
+.panel-primary > .panel-heading > a {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
 .panel-primary > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #337ab7;
 }

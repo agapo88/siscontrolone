@@ -2,7 +2,7 @@
 /**
 * PRODUCTO
 */
-class Producto
+class Producto extends Session
 {
 	
 	private $con;
@@ -90,7 +90,7 @@ class Producto
 						'idSeccionBodega' => (int) $row->idSeccionBodega,
 						'seccionBodega'   => $row->seccionBodega,
 						'esPerecedero'    => (int) $row->esPerecedero,
-						'perecedero'      => $row->perecedero,
+						'perecedero'      => strtoupper( $row->perecedero ),
 						'lstProductos'    => array(),
 						'totalProductos'  => 0
 					);
@@ -155,7 +155,50 @@ class Producto
 
 		return $catProductos;
 	}
-	*/
+
+	function consultarTipoProducto(){
+		$lsTiposProducto = array();
+		$sql = "SELECT 
+					    idTipoProducto, tipoProducto
+					FROM
+					    tipoproducto;";
+		
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+				$lsTiposProducto[] = $row;
+			}
+		}
+
+		return $lsTiposProducto;
+	}
+
+	function guardarProducto($producto, $perecedero, $idTipoProducto, $idSeccionBodega, $observacion){
+
+		$_producto        = $this->con->real_escape_string( $producto );
+		$_perecedero      = (int) $perecedero ;
+		$_idTipoProducto  = (int) $idTipoProducto ;
+		$_idSeccionBodega = (int) $idSeccionBodega ;
+		$_observacion     = $this->con->real_escape_string( $observacion );
+		$_idUsuario       = (int) $this->getIdUser();
+
+		$sql = "CALL registrarProducto( '{$producto}', {$_perecedero}, {$_idTipoProducto}, {$_idSeccionBodega}, '{$observacion}', {$_idUsuario});";
+
+		if( $rs = $this->con->query( $sql ) ){
+			// LIBERAR SIGUIENTE RESULTADO
+			$this->con->next_result();
+			$row = $rs->fetch_object();
+			$this->mensaje   = $row->mensaje;
+			$this->respuesta = (int) $row->respuesta;
+
+		}else{
+			$this->mensaje   = "No se pudo ejecutar el procedimiento.";
+			$this->respuesta = 0;
+		}
+
+		$respuesta = array( 'respuesta' => $this->respuesta, 'mensaje' => $this->mensaje );
+
+		return $respuesta;
+	}
 
 }
 ?>

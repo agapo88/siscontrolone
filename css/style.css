@@ -45,6 +45,11 @@
 	background-color: #259a8f;
 }
 
+.title-primary{
+	color: #fff;
+	background-color: #337ab7;
+}
+
 .alerta{
 	position: fixed;
 	z-index: 2000;

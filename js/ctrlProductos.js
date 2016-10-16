@@ -1,31 +1,33 @@
 miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $timeout){
 	
 	$scope.$parent.menu  = 'productos';
-
-	$scope.lstFamilias   = [];
-	$scope.lstGeneros    = [];
 	$scope.lstAreas      = [];
-	$scope.lstParentesco = [];
 
-	$scope.filtro = "tipoProducto"
-
-	$scope.producto = {};
-	$scope.itemProducto = {};
-
-	$scope.lstProductos = [];
-	$scope.lstProveedores = [];
-
-	$scope.tab = 1;
-
+	$scope.filtro           = "tipoProducto"
+	$scope.producto         = {};
+	$scope.itemProducto     = {};
+	$scope.lstProductos     = [];
+	$scope.lstProveedores   = [];
+	$scope.lstSeccionBodega = [];
+	$scope.tab              = 1;
 
 	$scope.$watch( 'filtro', function( _new, _old){
-		console.log( _new, _old );
-		if( _new != _old )
+		if( _new != _old ){
 			$scope.consultarProductos();
+		}
 	});
 
+	$scope.producto = {
+		producto        : '',
+		idSeccionBodega : null,
+		idTipoProducto  : null,
+		perecedero      : false,
+		observacion     : ''
+	};
+
+
 	// CARGAR LISTA DE PRODUCTOS
-	$scope.consultarProductos = function(){
+	($scope.consultarProductos = function(){
 		$http.post('consultas.php',{accion: 'consultarProductos', filtro: $scope.filtro})
 		.success(function(data){
 			console.log(data);
@@ -33,48 +35,52 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $time
 		}).error(function(data){
 			console.log(data);
 		});
-	}
-
-
-	$scope.miembro = {
-		nombres         : '',
-		apellidos       : '',
-		cui             : '',
-		fechaNacimiento : '',
-		idGenero        : null,
-		parentesco      : '',
-		idParentesco    : null,
-	};
-
-	($scope.cargarInicio = function(){
-		$http.post('consultas.php', {accion: 'infoProducto'})
-		.success(function( data ){
-			$scope.consultarProductos();
-		}).error(function(data){
-			console.log(data);
-		});
 	})();
+
 
 	// CARGAR LISTA DE PROVEEDORES
 	$scope.cargarLstProveedores = function(){
-		$http.post('consultas.php', {accion: 'cargarProveedores'}).success(function(data){
+		$http.post('consultas.php', {accion: 'cargarProveedores'})
+		.success(function(data){
 			console.log(data);
 			$scope.lstProveedores = data.lstProveedores;
 			
 		}).error(function(data){
 			console.log(data);
 		});
-	}
+	};
 
-	// CARGAR LISTA DE PRODUCTOS
-	$scope.cargarLstProductos = function(){
-		$http.post('consultas.php', {accion: 'cargarProductos'}).success(function(data){
+	($scope.cargarAreasBodega = function(){
+		$http.post('consultas.php', {accion: 'cargarSeccionBodega'})
+		.success(function(data){
 			console.log(data);
-			$scope.lstProductos = data.lstProductos;
+			$scope.lstSeccionBodega = data.lstSeccionBodega;
 		}).error(function(data){
 			console.log(data);
 		});
-	}
+	})();
+
+	($scope.cargarTiposProducto = function(){
+		$http.post('consultas.php', {accion: 'cargarTiposProducto'})
+		.success(function(data){
+			console.log(data);
+			$scope.lstTiposProducto = data.lstTiposProducto;
+		}).error(function(data){
+			console.log(data);
+		});
+	})();
+
+	$scope.catProductos = [];
+	// CARGAR CATEGORÍA DE PRODUCTOS
+	($scope.cargarCatProductos = function(){
+		$http.post('consultas.php', {accion: 'categoriaProductos'})
+		.success(function(data){
+			console.log(data);
+			$scope.catProductos = data.catProductos;
+		}).error(function(data){
+			console.log(data);
+		});
+	})();
 
 
 	// RESETEAR OBJETO
@@ -158,15 +164,14 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $time
 
 	// RESETEAR VALORES
 	$scope.reset = function(){
-		$scope.donador = {
-				nombre        : '',
-				telefono      : '',
-				email         : '',
-				idTipoEntidad : null,
-				fechaIngreso  : null
-			};
-	}
-
+		$scope.producto = {
+			producto        : '',
+			idSeccionBodega : null,
+			idTipoProducto  : null,
+			perecedero      : false,
+			observacion     : ''
+		};
+	};
 
 	var indice = null;
 	$scope.openModalOficios = function( index ){
@@ -189,7 +194,6 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $time
 	}
 
 
-
 	// CONSULTAR LISTA DONANTES
 	$scope.consultarDonadores = function(){
 		$http.post('consultas.php', {accion: 'cargarDonantes'})
@@ -201,44 +205,35 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $time
 		});
 	}
 
-	// GUARDAR DONADOR
-	$scope.guardarFamilia = function(){
 
-		var familia = $scope.familia;
+	// GUARDAR DONADOR
+	$scope.guardarProducto = function(){
+
+		var producto = $scope.producto;
 		var error = false;
 
-		if( !($scope.donador.nombre.length > 5)  ){
+		if( !(producto.idSeccionBodega) ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'Nombre del donador muy corto, debe tener minimo 5 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'No ha seleccionado el Area de bodega.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.donador.telefono.length > 3) ){
+		else if( !(producto.idTipoProducto) ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'No de telefono corto, debe tener minimo 8 digitos.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de producto.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.donador.email.length > 3) ){
+		else if( !(producto.producto.length > 3)  ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'Correo electronico Invalido, verifique.', placement: 'top', type: 'warning', show: true, duration: 4});
-		}
-		else if( !($scope.donador.idTipoEntidad) ){
-			error = true;
-			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
-		}
-		else if( !($scope.donador.fechaIngreso) ){
-
-			error = true;
-			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'Nombre del producto muy corto, debe tener minimo 4 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
 
 		// SI NO EXISTE ERROR
 		if( !error ){
-			var fechaIngreso = $filter('date')($scope.donador.fechaIngreso, "yyyy-MM-dd");
-			$http.post('consultas.php', {accion: 'guardarDonador', datos: $scope.donador, fechaIngreso: fechaIngreso})
+			$http.post('consultas.php', {accion: 'guardarProducto', datos: $scope.producto})
 			.success(function(data){
 				console.log(data);
 				if( data.respuesta ){
 					$scope.$parent.hideModalAgregar();
 					$scope.reset();
-					$scope.consultarDonadores();
+					$scope.consultarProductos();
 					$alert({title: 'Mensaje: ', content: data.mensaje, placement: 'top', type: 'success', show: true, duration: 4});
 				}else{
 					$alert({title: 'Error: ', content: data.mensaje, placement: 'top', type: 'danger', show: true, duration: 4});

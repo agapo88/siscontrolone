@@ -12,13 +12,13 @@
       <b>AGRUPAR POR:</b>
       <div class="btn-group" role="group">
          <button type="button" class="btn btn-default" ng-click="filtro='tipoProducto'">
-            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='tipoProducto', 'glyphicon-unchecked': filtro!='tipoProducto'}"></span> Tipos
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='tipoProducto', 'glyphicon-unchecked': filtro!='tipoProducto'}"></span> Tipos Producto
          </button>
-         <button type="button" class="btn btn-default" ng-click="filtro='anio'">
-            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='anio', 'glyphicon-unchecked': filtro!='anio'}"></span> Fecha Vencimiento
+         <button type="button" class="btn btn-default" ng-click="filtro='seccionBodega'">
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='seccionBodega', 'glyphicon-unchecked': filtro!='seccionBodega'}"></span> Área Bodega
          </button>
-         <button type="button" class="btn btn-default" ng-click="filtro='estado'">
-            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='estado', 'glyphicon-unchecked': filtro!='estado'}"></span> Cantidad
+         <button type="button" class="btn btn-default" ng-click="filtro='clasificacion'">
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='clasificacion', 'glyphicon-unchecked': filtro!='clasificacion'}"></span> Clasificacion
          </button>
       </div>
    </div>
@@ -42,13 +42,16 @@
                <strong ng-show="filtro=='tipoProducto'">
                   {{ producto.tipoProducto }}
                </strong>
-               <strong ng-show="filtro=='estado'">
-                  {{ producto.estadoDonador }}
+               <strong ng-show="filtro=='seccionBodega'">
+                  {{ producto.seccionBodega }}
+               </strong>
+               <strong ng-show="filtro=='clasificacion'">
+                  {{ producto.perecedero }}
                </strong>
             </a>
             <div class="pull-right">
                <label class="label label-primary">
-                  <strong>TOTAL: <span class="badge">{{producto.totalProducto}}</span></strong>
+                  <strong>TOTAL: <span class="badge">{{producto.totalProductos}}</span></strong>
                </label>
             </div>
          </div>
@@ -57,7 +60,7 @@
                <thead>
                   <tr>
                      <th class="text-center">No.</th>
-                     <th class="text-center">Producto</th>
+                     <th class="text-center col-sm-4">Producto</th>
                      <th class="text-center">Tipo Producto</th>
                      <th class="text-center">Perecedero</th>
                      <th class="text-center">Disponible</th>
@@ -70,8 +73,19 @@
                      <td class="text-center">
                         {{ producto.idProducto }}
                      </td>
-                     <td> {{ producto.producto }} </td>
-                     <td class="text-center"> {{ producto.tipoProducto }} </td>
+                     <td>
+                        <button type="button" class="btn btn-xs btn-default" ng-click="producto.showOb=!producto.showOb" ng-show="producto.observacion.length > 0">
+                           <span class="glyphicon" ng-class="{'glyphicon-eye-open': !producto.showOb, 'glyphicon-eye-close': producto.showOb}"></span>
+                        </button>
+                        {{ producto.producto }}
+                        <br>
+                        <div ng-show="producto.showOb">
+                           {{ producto.observacion }}
+                        </div>
+                      </td>
+                     <td class="text-center">
+                        {{ producto.tipoProducto }}
+                     </td>
                      <td class="text-center"> {{ producto.perecedero }} </td>
                      <td class="text-center"> {{ producto.totalProducto }}  </td>
                      <td class="text-center"> {{ producto.ubicacionBodega }} </td>

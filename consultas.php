@@ -31,7 +31,7 @@ switch ( $data->accion ) {
 	/*** PRODUCTOS ****/
 	case 'cargarProductos':
 		$producto = new Producto( $conexion );
-		$datos['lstProductos'] = $producto->consultarProductos();
+		$datos['catProductos'] = $producto->catalogoProductos();
 		echo json_encode( $datos );
 		break;
 
@@ -46,6 +46,7 @@ switch ( $data->accion ) {
 		$datos['lstProveedores'] = $proveedor->consultarProveedores();
 		echo json_encode( $datos );	
 		break;
+
 
 	/***** DONANTES *****/
 	case 'cargaDataFamilia':

@@ -16,7 +16,7 @@ class Donante extends Session
 
 
 	// FUNCION PARA CONSULTAR DONANTES EN LA BD
-	function consultarDonantes(  $groupBy = 'anio'){
+	function consultarDonantes(  $groupBy = 'tipoEntidad'){
 
 		// FILTRAR POR ESTADO
 		if( $groupBy == 'estado' )
@@ -24,7 +24,6 @@ class Donante extends Session
 		else
 			$filtroEstado = " WHERE idEstadoDonador = 1 ";
 
-		$firstDate    = true;
 		$lstDonadores = array();
 
 		$sql = "SELECT 

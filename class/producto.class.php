@@ -15,21 +15,14 @@ class Producto
 	}	
 
 
-		// FUNCION PARA CONSULTAR DONANTES EN LA BD
-	function consultarProductos(  $groupBy = 'anio'){
-
-		// FILTRAR POR ESTADO
-		if( $groupBy == 'estado' )
-			$filtroEstado = "";
-		else
-			$filtroEstado = " WHERE idEstadoDonador = 1 ";
-
-		$firstDate    = true;
-		$lstDonadores = array();
+	// FUNCION PARA CONSULTAR PRODUCTOS
+	function consultarProductos(  $groupBy = 'tipoProducto'){
+		$lstProductos = array();
 
 		$sql = "SELECT 
 					    idProducto,
 					    producto,
+					    observacion,
 					    esPerecedero,
 					    if(esPerecedero = 1, 'Si', 'No') AS perecedero,
 					    idSeccionBodega,
@@ -45,110 +38,110 @@ class Producto
 		if( $rs = $this->con->query( $sql ) ){
 			while( $row = $rs->fetch_object() ){
 				
-				$iTipoProducto = -1;
-				$iUbicacion        = -1;
-				$iEstado      = -1;
-				$iDonador     = -1;
+				$iTipoProducto  = -1;
+				$iSeccionBodega = -1;
+				$iPerecedero    = -1;
+				$iProducto      = -1;
 
 				// VER TIPO DE AGRUPACIÓN
-				if( $groupBy == 'tipoProducto' ): 		//tipoProducto
-					// VER SI EXISTE ENTIDAD
-					foreach ($lstDonadores AS $ixtipoProducto => $tipoProducto) {
+				if( $groupBy == 'tipoProducto' ): 		// TIPOPRODUCTO
+					foreach ($lstProductos AS $ixtipoProducto => $tipoProducto) {
 						if( $tipoProducto['idTipoProducto'] == $row->idTipoProducto ){
 							$iTipoProducto = $ixtipoProducto;
 							break;
 						}
 					}
 
-				elseif( $groupBy == 'ubicacion' ):			// AÑO
-					// VER SI EXISTE ENTIDAD
-					foreach ($lstDonadores AS $ixUbicacion => $anio) {
-						if( $anio['anio'] == $row->anio ){
-							$iUbicacion = $ixUbicacion;
+				elseif( $groupBy == 'seccionBodega' ):			// SECCION BODEGA
+					foreach ($lstProductos AS $ixSeccionBodega => $seccionBodega) {
+						if( $seccionBodega['idSeccionBodega'] == $row->idSeccionBodega ){
+							$iSeccionBodega = $ixSeccionBodega;
 							break;
 						}
 					}
 
-				elseif( $groupBy == 'estado' ):			// AÑO
-					// VER SI EXISTE ENTIDAD
-					foreach ($lstDonadores AS $ixEstado => $estado) {
-						if( $estado['idEstadoDonador'] == $row->idEstadoDonador ){
-							$iEstado = $ixEstado;
+				elseif( $groupBy == 'clasificacion' ):			// CLASIFICACION
+					foreach ($lstProductos AS $ixPerecedero => $perecedero) {
+						if( $perecedero['esPerecedero'] == $row->esPerecedero ){
+							$iPerecedero = $ixPerecedero;
 							break;
 						}
 					}
 
 				endif;
 
-				// SI NO EXISTE TIPO DE ENTIDAD Y/O AÑO
-				if( $iTipoProducto == -1 AND $iUbicacion == -1 AND $iEstado == -1 ){
+				// SI NO EXISTE EL TIPO LO AGREGA
+				if( $iTipoProducto == -1 AND $iSeccionBodega == -1 AND $iPerecedero == -1 ){
 
-					if( $groupBy == 'tipoProducto' ):				// tipoProducto
-						$iTipoProducto = count( $lstDonadores );
+					if( $groupBy == 'tipoProducto' ):				// TIPOPRODUCTO
+						$iTipoProducto = count( $lstProductos );
 
-					elseif( $groupBy == 'anio' ):					// AÑO
-						$iUbicacion = count( $lstDonadores );
+					elseif( $groupBy == 'seccionBodega' ):			// BODEGA
+						$iSeccionBodega = count( $lstProductos );
 
-					elseif( $groupBy == 'estado' ):					// AÑO
-						$iEstado = count( $lstDonadores );
+					elseif( $groupBy == 'clasificacion' ):			// CLASIFICACION
+						$iPerecedero = count( $lstProductos );
 
 					endif;
 
-					$lstDonadores[] = array(
-						'idTipoProducto' => (int) $row->idTipoProducto,
-						'tipoProducto'   => $row->tipoProducto,
-						'lstProductos'   => array(),
-						'totalProductos' => 0
+					$lstProductos[] = array(
+						'idTipoProducto'  => (int) $row->idTipoProducto,
+						'tipoProducto'    => $row->tipoProducto,
+						'idSeccionBodega' => (int) $row->idSeccionBodega,
+						'seccionBodega'   => $row->seccionBodega,
+						'esPerecedero'    => (int) $row->esPerecedero,
+						'perecedero'      => $row->perecedero,
+						'lstProductos'    => array(),
+						'totalProductos'  => 0
 					);
 				}
 
-				// VERIFICAR QUE VENGAN LOS DONANTES
-				foreach ($lstDonadores AS $ixtipoProducto => $tipoProducto) {
-					foreach ($tipoProducto['lstProductos'] AS $ixDonante => $donante) {
-						if( $donante['idProducto'] == $row->idProducto )		{
-							$iDonador = $ixDonante;
+				// VERIFICAR QUE VENGAN LOS LOS PRODUCTOS
+				foreach ($lstProductos AS $ixTipoProducto => $tipoProducto) {
+					foreach ($tipoProducto['lstProductos'] AS $ixProducto => $producto) {
+						if( $producto['idProducto'] == $row->idProducto ){
+							$iProducto = $ixProducto;
 							break;
 						}
 					}
 				}
 
 				// SI NO EXISTE EL DONANTE
-				if( $iDonador == -1 ){
-					if( $groupBy == 'tipoProducto' ):		// tipoProducto
+				if( $iProducto == -1 ){
+					if( $groupBy == 'tipoProducto' ):			// TIPO PRODUCTO
 						$ixSolicitud = $iTipoProducto;
-					elseif( $groupBy == 'anio' ):			// AÑO
-						$ixSolicitud = $iUbicacion;
-					elseif( $groupBy == 'estado' ):			// ESTADO
-						$ixSolicitud = $iEstado;
+					elseif( $groupBy == 'seccionBodega' ):		// SECCION BODEGA
+						$ixSolicitud = $iSeccionBodega;
+					elseif( $groupBy == 'clasificacion' ):		// CLASIFICACION
+						$ixSolicitud = $iPerecedero;
 					endif;
 
-					$lstDonadores[ $ixSolicitud ][ 'lstProductos' ][] = array(
+					$lstProductos[ $ixSolicitud ][ 'lstProductos' ][] = array(
 						'idProducto'      => $row->idProducto,
 						'producto'        => $row->producto,
+						'observacion'     => $row->observacion,
 						'esPerecedero'    => $row->esPerecedero,
 						'perecedero'      => $row->perecedero,
+						'idSeccionBodega' => $row->idSeccionBodega,
 						'ubicacionBodega' => $row->seccionBodega,
 						'idTipoProducto'  => $row->idTipoProducto,
 						'tipoProducto'    => $row->tipoProducto,
 						'totalProducto'   => $row->totalProducto ? $row->totalProducto : 0,
 						
 					);
-					$lstDonadores[ $ixSolicitud ]['totalProductos'] ++;
+					$lstProductos[ $ixSolicitud ]['totalProductos'] ++;
 				}
 
-
 			}
-
 		}
 
-		return $lstDonadores;
+		return $lstProductos;
 	}
 
-	/*
 	// CONSULTAR LISTA DE PRODUCTOS BD
-	function consultarProductos()
+	function catalogoProductos()
 	{
-		$lstProductos = array();
+		$catProductos = array();
 		$sql = "SELECT 
 					    idProducto, producto, esPerecedero
 					FROM
@@ -156,11 +149,11 @@ class Producto
 		
 		if( $rs = $this->con->query( $sql ) ){
 			while( $row = $rs->fetch_object() ){
-				$lstProductos[] = $row;
+				$catProductos[] = $row;
 			}
 		}
 
-		return $lstProductos;
+		return $catProductos;
 	}
 	*/
 

@@ -41,6 +41,7 @@ miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 				idTipoEntidad : null,
 				fechaIngreso  : null
 			};
+		$scope.itemDonador = {};
 	}
 
 	// CONSULTAR LISTA DONANTES
@@ -56,7 +57,6 @@ miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 
 	$scope.editarDonador = function( donador ){
 		$scope.itemDonador = angular.copy( donador );
-		$scope.itemDonador.fechaIngreso;
 		$('#modalEditar').modal('show');
 	}
 
@@ -64,15 +64,15 @@ miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 	$scope.actualizarDonador = function(){
 		var error = false;
 
-		if( !($scope.itemDonador.nombre.length > 5)  ){
+		if( !($scope.itemDonador.nombre && $scope.itemDonador.nombre.length > 5)  ){
 			error = true;
 			$alert({title: 'Alerta: ', content: 'Nombre del donador muy corto, debe tener minimo 5 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.itemDonador.telefono.length > 3) ){
+		else if( !($scope.itemDonador.telefono && $scope.itemDonador.telefono.length > 3) ){
 			error = true;
 			$alert({title: 'Alerta: ', content: 'No de telefono corto, debe tener minimo 8 digitos.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.itemDonador.email.length > 3) ){
+		else if( !($scope.itemDonador.email && $scope.itemDonador.email.length > 3) ){
 			error = true;
 			$alert({title: 'Alerta: ', content: 'Correo electronico Invalido, verifique.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
@@ -81,7 +81,6 @@ miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
 		else if( !($scope.itemDonador.fechaIngreso) ){
-
 			error = true;
 			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
@@ -111,15 +110,15 @@ miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 	$scope.guardarDonador = function(){
 		var error = false;
 
-		if( !($scope.donador.nombre.length > 5)  ){
+		if( !($scope.donador.nombre && $scope.donador.nombre.length > 5)  ){
 			error = true;
 			$alert({title: 'Alerta: ', content: 'Nombre del donador muy corto, debe tener minimo 5 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.donador.telefono.length > 3) ){
+		else if( !($scope.donador.telefono && $scope.donador.telefono.length > 3) ){
 			error = true;
 			$alert({title: 'Alerta: ', content: 'No de telefono corto, debe tener minimo 8 digitos.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.donador.email.length > 3) ){
+		else if( !($scope.donador.email && $scope.donador.email.length > 3) ){
 			error = true;
 			$alert({title: 'Alerta: ', content: 'Correo electronico Invalido, verifique.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
@@ -128,7 +127,6 @@ miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
 		else if( !($scope.donador.fechaIngreso) ){
-
 			error = true;
 			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}

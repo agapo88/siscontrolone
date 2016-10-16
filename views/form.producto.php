@@ -1,24 +1,24 @@
 <div class="row">
    <div class="title-section">
-      <span class="titulo">DONANTES</span>
+      <span class="titulo">DONACIONES</span>
    </div>
    <div class="col-sm-12 text-right">
       <button type="button" class="btn btn-success btn-sm noBorder" ng-mouseleave="hoveri=false" ng-mouseenter="hoveri=true" data-toggle="modal" data-target="#modalAgregar">
          <span class="glyphicon" ng-class="{'glyphicon-plus-sign': hoveri, 'glyphicon-plus':!hoveri}"></span>
-         Agregar Donador
+         Agregar Donación
       </button>
    </div>
    <div class="col-sm-12">
       <b>AGRUPAR POR:</b>
       <div class="btn-group" role="group">
-         <button type="button" class="btn btn-default" ng-click="filtro='tipoEntidad'">
-            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='tipoEntidad', 'glyphicon-unchecked': filtro!='tipoEntidad'}"></span> Tipo Entidad
+         <button type="button" class="btn btn-default" ng-click="filtro='tipoProducto'">
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='tipoProducto', 'glyphicon-unchecked': filtro!='tipoProducto'}"></span> Tipos
          </button>
          <button type="button" class="btn btn-default" ng-click="filtro='anio'">
-            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='anio', 'glyphicon-unchecked': filtro!='anio'}"></span> Año Ingreso
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='anio', 'glyphicon-unchecked': filtro!='anio'}"></span> Fecha Vencimiento
          </button>
          <button type="button" class="btn btn-default" ng-click="filtro='estado'">
-            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='estado', 'glyphicon-unchecked': filtro!='estado'}"></span> Estado
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='estado', 'glyphicon-unchecked': filtro!='estado'}"></span> Cantidad
          </button>
       </div>
    </div>
@@ -35,48 +35,46 @@
       </div>
    </div>
    <div class="col-sm-12">
-      <div class="panel panel-info" ng-repeat="(ixEntidad, entidad) in lstEntidades ">
+      <div class="panel panel-info" ng-repeat="(ixProducto, producto) in lstProductos">
          <div class="panel-heading">
-            <a ng-click="entidad.mostrar=!entidad.mostrar">
-               <span class="glyphicon" ng-class="{'glyphicon-chevron-right': entidad.mostrar, 'glyphicon-chevron-down': !entidad.mostrar}"></span>
-               <strong ng-show="filtro=='tipoEntidad'">
-                  {{ entidad.tipoEntidad }}
-               </strong>
-               <strong ng-show="filtro=='anio'">
-                  {{ entidad.anio }}
+            <a ng-click="producto.mostrar=!producto.mostrar">
+               <span class="glyphicon" ng-class="{'glyphicon-chevron-right': producto.mostrar, 'glyphicon-chevron-down': !producto.mostrar}"></span>
+               <strong ng-show="filtro=='tipoProducto'">
+                  {{ producto.tipoProducto }}
                </strong>
                <strong ng-show="filtro=='estado'">
-                  {{ entidad.estadoDonador }}
+                  {{ producto.estadoDonador }}
                </strong>
             </a>
             <div class="pull-right">
                <label class="label label-primary">
-                  <strong>TOTAL: <span class="badge">{{entidad.totalDonantes}}</span></strong>
+                  <strong>TOTAL: <span class="badge">{{producto.totalProducto}}</span></strong>
                </label>
             </div>
          </div>
-         <div class="panel-body" ng-hide="entidad.mostrar">
+         <div class="panel-body" ng-hide="producto.mostrar">
             <table class="table table-striped table-hover">
                <thead>
                   <tr>
                      <th class="text-center">No.</th>
-                     <th class="text-center">Donador</th>
-                     <th class="text-center" ng-if="filtro!='tipoEntidad'">Tipo Donador</th>
-                     <th class="text-center">Telefono</th>
-                     <th class="text-center">Fecha Ingreso</th>
-                     <th class="text-center">Correo</th>
+                     <th class="text-center">Producto</th>
+                     <th class="text-center">Tipo Producto</th>
+                     <th class="text-center">Perecedero</th>
+                     <th class="text-center">Disponible</th>
+                     <th class="text-center">Ubicación</th>
                      <th class="text-center">Editar</th>
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="(ixDonante, donador) in entidad.lstDonantes | filter:searchDonador || searchDonante" ng-init="$idIndex = $index">
+                  <tr ng-repeat="(ixProducto, producto) in producto.lstProductos | filter:searchproducto || searchDonante" ng-init="$idIndex = $index">
                      <td class="text-center">
-                      {{ $idIndex + 1 }} </td>
-                     <td> {{ donador.nombre }} </td>
-                     <td class="text-center" ng-if="filtro!='tipoEntidad'"> {{ donador.tipoEntidad }} </td>
-                     <td class="text-center"> {{ donador.telefono }} </td>
-                     <td class="text-center"> {{ donador.fechaFormato }}  </td>
-                     <td class="text-center"> {{ donador.email }} </td>
+                        {{ producto.idProducto }}
+                     </td>
+                     <td> {{ producto.producto }} </td>
+                     <td class="text-center"> {{ producto.tipoProducto }} </td>
+                     <td class="text-center"> {{ producto.perecedero }} </td>
+                     <td class="text-center"> {{ producto.totalProducto }}  </td>
+                     <td class="text-center"> {{ producto.ubicacionBodega }} </td>
                      <td>
                         <!-- OPCIONES -->
                         <div class="menu-opciones">
@@ -86,11 +84,9 @@
                            <button class="btn btn-xs btn-opcion" ng-click="editarDonador( donador )">
                               <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
                            </button>
-                           <!--
                            <button type="button" class="btn btn-sm btn-opcion" data-toggle="modal" data-target="#myModal" ng-click="openModalOficios( ixMiembro )">
-                              <span class="glyphicon glyphicon-plus"></span> Oficio
+                              <span class="glyphicon glyphicon-folder-open"></span>
                            </button>
-                           -->
                         </div>
                      </td>
                   </tr>
@@ -103,8 +99,8 @@
 
 
 <!-- VENTANA MODAL AGREGAR -->
-<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-   <div class="modal-dialog" role="document">
+<div class="modal" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
          <div class="modal-header title-info">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -113,6 +109,59 @@
             </h4>
          </div>
          <div class="modal-body">
+            <div>
+
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+
+                <li role="presentation" ng-class="{'active': tab==1}" ng-click="tab=1"><a role="tab">Home</a></li>
+                <li role="presentation" ng-class="{'active': tab==2}" ng-click="tab=2"><a role="tab">Profile</a></li>
+                <li role="presentation" ng-class="{'active': tab==3}" ng-click="tab=3"><a role="tab">Messages</a></li>
+                <li role="presentation" ng-class="{'active': tab==4}" ng-click="tab=4"><a role="tab">Settings</a></li>
+              </ul>
+              <!-- Tab panes -->
+              <div class="tab-content">
+                  <div role="tabpanel" ng-class="{'active': tab==1}" class="tab-pane active" ng-show="tab==1">
+                     <h3>
+                        Bienvenido(a)
+                     </h3>
+                     Por favor ingrese el tipo de Donación
+
+                     <form class="form-horizontal" novalidate autocomplete="off">
+                        <div class="form-group">
+                           <label class="control-label col-sm-3">
+                              SELECCIONE PRODUCTO
+                           </label>
+                           <div class="col-sm-7">
+                              <select class="form-control" ng-model="producto.idProducto">
+                                 <option value="{{  }}"></option>
+                              </select>
+                              <input type="number" class="form-control" ng-model="producto.cantidad">
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <label class="control-label col-sm-3">
+                              Cantidad
+                           </label>
+                           <div class="col-sm-7">
+                              <input type="number" class="form-control" ng-model="producto.cantidad">
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <label for="">Lista de Productos</label>
+                        </div>
+                     </form>
+                  </div>
+                  <div role="tabpanel" ng-class="{'active': tab==2}" class="tab-pane" ng-show="tab==2">
+                  </div>
+                  <div role="tabpanel" ng-class="{'active': tab==3}" class="tab-pane" ng-show="tab==3">
+                     pruebas...
+                  </div>
+                  <div role="tabpanel" ng-class="{'active': tab==4}" class="tab-pane" ng-show="tab==4">
+                     pruebas...
+                  </div>
+              </div>
+            </div>
             <form class="form-horizontal" name="formAgregar">
                <div class="form-group">
                   <label class="control-label col-sm-3">Nombre:</label>
@@ -168,8 +217,8 @@
 
 <!-- VENTANA MODAL EDITAR -->
 <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-   <div class="modal-dialog" role="document">
-      <div class="modal-content">
+   <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content ">
          <div class="modal-header title-editar">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">

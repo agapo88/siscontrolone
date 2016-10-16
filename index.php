@@ -30,6 +30,8 @@
 	<script type="text/javascript" src="js/ctrlDonador.js"></script>
 	<script type="text/javascript" src="js/ctrlFamilias.js"></script>
 	<script type="text/javascript" src="js/ctrlDonaciones.js"></script>
+	<script type="text/javascript" src="js/ctrlProductos.js"></script>
+	
 
 
 </body>

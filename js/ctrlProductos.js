@@ -1,11 +1,13 @@
-miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $timeout){
+miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $timeout){
 	
-	$scope.$parent.menu  = 'donaciones';
+	$scope.$parent.menu  = 'productos';
 
 	$scope.lstFamilias   = [];
 	$scope.lstGeneros    = [];
 	$scope.lstAreas      = [];
 	$scope.lstParentesco = [];
+
+	$scope.filtro = "tipoProducto"
 
 	$scope.producto = {};
 	$scope.itemProducto = {};
@@ -15,40 +17,24 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 
 	$scope.tab = 1;
 
-	$scope.$watch('agregarMiembros', function(){
-		console.log( $scope.agregarMiembros );
-		if( $scope.agregarMiembros == true ){
-			$timeout(function(){
-				$('#miembroCui').focus();
-			}, 100);
-		}
+
+	$scope.$watch( 'filtro', function( _new, _old){
+		console.log( _new, _old );
+		if( _new != _old )
+			$scope.consultarProductos();
 	});
-	
-	$scope.familia = {
-		nombre       : '',
-		fechaIngreso : '',
-		idArea       : '',
-		lstMiembros  : [
-			{
-				nombres         : 'Jose Antonio',
-				apellidos       : 'Perez García',
-				cui             : '0031231231231',
-				fechaNacimiento : '04/10/1999',
-				idGenero        : '1',
-				parentesco      : '',
-				idParentesco    : '3',
-			},
-			{
-				nombres         : 'Maria',
-				apellidos       : 'Perez García',
-				cui             : '0031231231231',
-				fechaNacimiento : '04/10/1999',
-				idGenero        : '2',
-				parentesco      : '',
-				idParentesco    : '3',
-			},
-		]
-	};
+
+	// CARGAR LISTA DE PRODUCTOS
+	$scope.consultarProductos = function(){
+		$http.post('consultas.php',{accion: 'consultarProductos', filtro: $scope.filtro})
+		.success(function(data){
+			console.log(data);
+			$scope.lstProductos = data.lstProductos;
+		}).error(function(data){
+			console.log(data);
+		});
+	}
+
 
 	$scope.miembro = {
 		nombres         : '',
@@ -63,8 +49,7 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 	($scope.cargarInicio = function(){
 		$http.post('consultas.php', {accion: 'infoProducto'})
 		.success(function( data ){
-			$scope.cargarLstProveedores();
-			$scope.cargarLstProductos();
+			$scope.consultarProductos();
 		}).error(function(data){
 			console.log(data);
 		});

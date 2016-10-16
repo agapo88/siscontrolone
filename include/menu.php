@@ -10,20 +10,34 @@
          </button>
          <a class="navbar-brand" href="#">Bienvenido</a>
       </div>
-
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
          <ul class="nav navbar-nav">
             <li ng-class="{'active':menu=='inicio'}"><a href="#">Inicio <span class="sr-only">(current)</span></a></li>
+
+            <li class="dropdown" ng-class="{'active':menu=='donaciones'}">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Donaciones <span class="caret"></span></a>
+               <ul class="dropdown-menu">
+                  <li><a href="#/donaciones">Donaciones</a></li>
+                  <li><a href="#/donaciones/fondoComun">Fondo Común</a></li>
+                  <li><a href="#">Beneficiarios</a></li>
+                  <li><a href="#">Suministros</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">Desastres</a></li>
+               </ul>
+            </li>
+
             <li ng-class="{'active':menu=='reporte'}"><a href="#">Reportes</a></li>
             <li ng-class="{'active':menu=='donantes'}"><a href="#/donantes">Donantes</a></li>
             <li ng-class="{'active':menu=='familias'}"><a href="#/familias">familias</a></li>
+            <li ng-class="{'active':menu=='productos'}"><a href="#/productos">Productos</a></li>
             
+         
             <li class="dropdown">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
+               <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
                <ul class="dropdown-menu">
                   <li><a href="#">Donantes</a></li>
-                  <li><a href="#">Donaciones</a></li>
+                  <li><a href="#">Donadores</a></li>
                   <li><a href="#">Beneficiarios</a></li>
                   <li><a href="#">Suministros</a></li>
                   <li role="separator" class="divider"></li>

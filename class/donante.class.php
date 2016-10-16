@@ -161,8 +161,7 @@ class Donante extends Session
 		$_idTipoEntidad = (int) $idTipoEntidad;
 		$_idUsuario     = (int) $this->getIdUser();
 
-		$sql = "CALL actualizarDonador($_idDonador,'{$_nombre}', '{$_telefono}', '{$_email}', {$_idTipoEntidad}, '2014-05-01', {$_idUsuario});";
-
+		$sql = "CALL actualizarDonador($_idDonador,'{$_nombre}', '{$_telefono}', '{$_email}', {$_idTipoEntidad}, '{$fechaIngreso}', {$_idUsuario});";
 		//echo $sql;
 
 		if( $rs = $this->con->query( $sql ) ){

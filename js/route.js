@@ -15,6 +15,15 @@ miApp.config(function($routeProvider) {
 		templateUrl : 'views/form.donaciones.php',
 		controller  : 'ctrlDonaciones'
 	})
+	.when('/donaciones/fondoComun', {
+		templateUrl : 'views/form.fondo.comun.php',
+		controller  : 'ctrlDonaciones'
+	})
+	.when('/productos', {
+		templateUrl : 'views/form.producto.php',
+		controller  : 'ctrlProductos'
+	})
+	
 	.when('/tema/:idTema', {
 		templateUrl : 'tema.view.php',
 		controller  : 'ctrlTema'

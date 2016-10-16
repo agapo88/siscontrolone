@@ -26,6 +26,7 @@ class Donante extends Session
 					    nombre,
 					    telefono,
 					    email,
+					    DATE_FORMAT(fechaIngreso, '%/%m/%y') AS fechaIngreso,
 					    DATE_FORMAT(fechaIngreso, '%d/%m/%y') AS fechaIngreso,
 					    DATE_FORMAT(fechaIngreso, '%Y') AS anio,
     					DATE_FORMAT(fechaIngreso, '%m') AS mes,
@@ -59,7 +60,7 @@ class Donante extends Session
 						'idTipoEntidad' => (int) $row->idTipoEntidad,
 						'tipoEntidad'   => $row->tipoEntidad,
 						'lstDonantes'   => array(),
-						'count'         => 0
+						'totalDonantes'         => 0
 					);
 				}
 
@@ -76,14 +77,15 @@ class Donante extends Session
 				// SI NO EXISTE EL DONANTE
 				if( $iDonador == -1 ){
 					$lstDonadores[ $iTipoEntidad ][ 'lstDonantes' ][] = array(
-						'idDonador'    => $row->idDonador,
-						'nombre'       => $row->nombre,
-						'telefono'     => $row->telefono,
-						'email'        => $row->email,
-						'tipoEntidad'  => $row->tipoEntidad,
-						'fechaIngreso' => $row->fechaIngreso,
+						'idDonador'     => $row->idDonador,
+						'nombre'        => $row->nombre,
+						'telefono'      => $row->telefono,
+						'email'         => $row->email,
+						'idTipoEntidad' => $row->idTipoEntidad,
+						'tipoEntidad'   => $row->tipoEntidad,
+						'fechaIngreso'  => $row->fechaIngreso,
 					);
-					$lstDonadores[ $iTipoEntidad ]['count'] ++;
+					$lstDonadores[ $iTipoEntidad ]['totalDonantes'] ++;
 				}
 
 

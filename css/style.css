@@ -25,6 +25,12 @@
     color: #fff;
 }
 
+#tb-donantes{
+	background: #00b3ca;
+    color: #fff;
+}
+
+
 .noBorder{
 	border-radius: 0;
 }
@@ -32,6 +38,11 @@
 .title-info{
 	color: #fff;
 	background-color: #00BCD4;
+}
+
+.title-editar{
+	color: #fff;
+	background-color: #259a8f;
 }
 
 .alerta{

@@ -13,6 +13,8 @@ miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 		fechaIngreso  : null
 	};
 
+	$scope.filtro = 'ninguno';
+
 	($scope.cargarInicio = function(){
 		$http.post('consultas.php', {accion: 'cargarCatDonantes'})
 		.success(function( data ){
@@ -44,6 +46,12 @@ miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 		}).error(function(data){
 			console.log(data);
 		});
+	};
+
+	$scope.editarDonador = function( donador ){
+		$scope.itemDonador = angular.copy( donador );
+		$scope.itemDonador.fechaIngreso;
+		$('#modalEditar').modal('show');
 	}
 
 	// GUARDAR DONADOR
@@ -91,6 +99,6 @@ miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 			});
 			
 		}
-	}
+	};
 	
 });

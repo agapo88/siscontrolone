@@ -40,3 +40,25 @@
 	right: 0;
 	margin: 15px;
 }
+
+.menu-opciones{
+	width: auto;
+	height: auto;
+	text-align: center;
+}
+
+.menu-opciones > .btn-opcion{
+	margin: 1px 0px;
+	padding: 3px 6px;
+	color: #3e6577;
+	background-color: #fff;
+	position: relative;
+	border: 1px solid #358ba5;
+}
+
+.menu-opciones > .btn-opcion:hover{
+	color: #fff;
+	background-color: #00BCD4;
+	transition: all .5s ease;
+	cursor: pointer;
+}

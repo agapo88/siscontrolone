@@ -11,6 +11,10 @@ miApp.config(function($routeProvider) {
 		templateUrl : 'views/form.familias.php',
 		controller  : 'ctrlFamilias'
 	})
+	.when('/donaciones', {
+		templateUrl : 'views/form.donaciones.php',
+		controller  : 'ctrlDonaciones'
+	})
 	.when('/tema/:idTema', {
 		templateUrl : 'tema.view.php',
 		controller  : 'ctrlTema'

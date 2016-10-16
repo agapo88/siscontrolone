@@ -46,6 +46,15 @@ switch ( $data->accion ) {
 
 		break;
 
+	case 'actualizarDonador':		// ACTUALIZAR DONADOR	
+		$donante = new Donante( $conexion );
+
+		$datos = $donante->actualizarDonador( $data->datos->idDonador, $data->datos->nombre, $data->datos->telefono, $data->datos->email, $data->datos->idTipoEntidad, $data->fechaIngreso);
+
+		echo json_encode( $datos );
+	
+		break;
+
 	case 'guardarDonador':		// GUARDAR DONADOR	
 		$donante = new Donante( $conexion );
 
@@ -58,7 +67,7 @@ switch ( $data->accion ) {
 	case 'cargarDonantes':		// CONSULTAR LISTA DE DONANTES
 		$donante = new Donante( $conexion );
 
-		$datos['lstEntidades'] = $donante->consultarDonantes();
+		$datos['lstEntidades'] = $donante->consultarDonantes( $data->filtro );
 
 		echo json_encode( $datos );
 		break;

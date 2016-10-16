@@ -10,15 +10,15 @@
    </div>
    <div class="col-sm-12">
       <b>AGRUPAR POR:</b>
-      <div class="btn-group" role="group" aria-label="...">
-         <button type="button" class="btn btn-default" ng-click="filtro='ninguno'">
-            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='ninguno', 'glyphicon-unchecked': filtro!='ninguno'}"></span> Ninguno
-         </button>
+      <div class="btn-group" role="group">
          <button type="button" class="btn btn-default" ng-click="filtro='tipoEntidad'">
-            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='tipoEntidad', 'glyphicon-unchecked': filtro!='tipoEntidad'}"></span> Tipo de Entidad
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='tipoEntidad', 'glyphicon-unchecked': filtro!='tipoEntidad'}"></span> Tipo Entidad
          </button>
          <button type="button" class="btn btn-default" ng-click="filtro='anio'">
-            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='anio', 'glyphicon-unchecked': filtro!='anio'}"></span> Año
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='anio', 'glyphicon-unchecked': filtro!='anio'}"></span> Año Ingreso
+         </button>
+         <button type="button" class="btn btn-default" ng-click="filtro='estado'">
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='estado', 'glyphicon-unchecked': filtro!='estado'}"></span> Estado
          </button>
       </div>
    </div>
@@ -33,12 +33,18 @@
       </form>
    </div>
    <div class="col-sm-12">
-      <div class="panel panel-default" ng-repeat="(ixEntidad, entidad) in lstEntidades ">
+      <div class="panel panel-info" ng-repeat="(ixEntidad, entidad) in lstEntidades ">
          <div class="panel-heading">
             <a ng-click="entidad.mostrar=!entidad.mostrar">
-               <strong>
                <span class="glyphicon" ng-class="{'glyphicon-chevron-right': entidad.mostrar, 'glyphicon-chevron-down': !entidad.mostrar}"></span>
-               {{ entidad.tipoEntidad }}
+               <strong ng-show="filtro=='tipoEntidad'">
+                  {{ entidad.tipoEntidad }}
+               </strong>
+               <strong ng-show="filtro=='anio'">
+                  {{ entidad.anio }}
+               </strong>
+               <strong ng-show="filtro=='estado'">
+                  {{ entidad.estadoDonador }}
                </strong>
             </a>
             <div class="pull-right">
@@ -50,23 +56,24 @@
          <div class="panel-body" ng-hide="entidad.mostrar">
             <table class="table table-striped table-hover">
                <thead>
-                  <tr id="tb-donantes">
+                  <tr>
                      <th class="text-center">No.</th>
                      <th class="text-center">Donador</th>
-                     <th class="text-center">Tipo Donador</th>
+                     <th class="text-center" ng-hide="filtro=='tipoEntidad'">Tipo Donador</th>
                      <th class="text-center">Telefono</th>
-                     <th class="text-center">Correo</th>
                      <th class="text-center">Fecha Ingreso</th>
+                     <th class="text-center">Correo</th>
                      <th class="text-center">Editar</th>
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="(ixDonante, donador) in entidad.lstDonantes | filter:searchDonador" ng-init="$idIndex = $index">
-                     <td class="text-center"> {{ $idIndex + 1 }} </td>
+                  <tr ng-repeat="(ixDonante, donador) in entidad.lstDonantes | filter:searchDonador || searchDonante" ng-init="$idIndex = $index">
+                     <td class="text-center">
+                      {{ $idIndex + 1 }} </td>
                      <td> {{ donador.nombre }} </td>
-                     <td class="text-center"> {{ donador.tipoEntidad }} </td>
+                     <td class="text-center" ng-hide="filtro=='tipoEntidad'"> {{ donador.tipoEntidad }} </td>
                      <td class="text-center"> {{ donador.telefono }} </td>
-                     <td class="text-center"> {{ donador.fechaIngreso }} </td>
+                     <td class="text-center"> {{ donador.fechaFormato }}  </td>
                      <td class="text-center"> {{ donador.email }} </td>
                      <td>
                         <!-- OPCIONES -->

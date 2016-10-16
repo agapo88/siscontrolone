@@ -93,5 +93,11 @@ miApp.controller('home', function($scope, $http){
         $('#modalAgregar').modal('hide');
     }
 
+    // OCULTAR VENTANA MODAL AGREGAR
+    $scope.hideModalEditar = function(){
+        $('#modalEditar').modal('hide');
+    }
+    
+
 	
 });

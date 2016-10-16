@@ -9,6 +9,20 @@
       </button>
    </div>
    <div class="col-sm-12">
+      <b>AGRUPAR POR:</b>
+      <div class="btn-group" role="group" aria-label="...">
+         <button type="button" class="btn btn-default" ng-click="filtro=''">
+            <span class="glyphicon" ng-class="{'glyphicon-ok': filtro==''}"></span> Ninguno
+         </button>
+         <button type="button" class="btn btn-default" ng-click="filtro='tipoEntidad'">
+            <span class="glyphicon" ng-class="{'glyphicon-ok': filtro=='tipoEntidad'}"></span> Tipo de Entidad
+         </button>
+         <button type="button" class="btn btn-default" ng-click="filtro='anio'">
+            <span class="glyphicon" ng-class="{'glyphicon-ok': filtro=='anio'}"></span> Año
+         </button>
+      </div>
+   </div>
+   <div class="col-sm-12">
       <form class="navbar-right" role="search">
          <div class="form-group">
             <label class="control-label col-sm-4">Buscar Donador:</label>
@@ -19,29 +33,56 @@
       </form>
    </div>
    <div class="col-sm-12">
-   3 TOTAL DONANTES;
-      <table class="table table-striped table-hover">
-         <thead>
-            <tr id="tb-title">
-               <th class="text-center">No.</th>
-               <th class="text-center">Donador</th>
-               <th class="text-center">Tipo Donador</th>
-               <th class="text-center">Telefono</th>
-               <th class="text-center">Correo</th>
-               <th class="text-center">Editar</th>
-            </tr>
-         </thead>
-         <tbody>
-            <tr ng-repeat="(ixDonante, donante) in lstDonantes | filter:searchDonador" ng-init="$idIndex = $index">
-               <td class="text-center"> {{ $idIndex + 1 }} </td>
-               <td> {{ donante.nombre }} </td>
-               <td class="text-center"> {{ donante.tipoEntidad }} </td>
-               <td class="text-center"> {{ donante.telefono }} </td>
-               <td class="text-center"> {{ donante.email }} </td>
-            </tr>
-         </tbody>
-      </table>
-               donante.idDonador
+      <div class="panel panel-default" ng-repeat="(ixEntidad, entidad) in lstEntidades ">
+         <div class="panel-heading">
+            <a ng-click="entidad.mostrar=!entidad.mostrar">
+               <strong>
+               <span class="glyphicon" ng-class="{'glyphicon-chevron-right': entidad.mostrar, 'glyphicon-chevron-down': !entidad.mostrar}"></span>
+               {{ entidad.tipoEntidad }}
+               </strong>
+            </a>
+         </div>
+         <div class="panel-body" ng-hide="entidad.mostrar">
+            <table class="table table-striped table-hover">
+               <thead>
+                  <tr id="tb-title">
+                     <th class="text-center">No.</th>
+                     <th class="text-center">Donador</th>
+                     <th class="text-center">Tipo Donador</th>
+                     <th class="text-center">Telefono</th>
+                     <th class="text-center">Correo</th>
+                     <th class="text-center">Fecha Ingreso</th>
+                     <th class="text-center">Editar</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="(ixDonante, donante) in entidad.lstDonantes | filter:searchDonador" ng-init="$idIndex = $index">
+                     <td class="text-center"> {{ $idIndex + 1 }} </td>
+                     <td> {{ donante.nombre }} </td>
+                     <td class="text-center"> {{ donante.tipoEntidad }} </td>
+                     <td class="text-center"> {{ donante.telefono }} </td>
+                     <td class="text-center"> {{ donante.fechaIngreso }} </td>
+                     <td class="text-center"> {{ donante.email }} </td>
+                     <td>
+                        <!-- OPCIONES -->
+                        <div class="menu-opciones">
+                           <button class="btn btn-xs btn-opcion" ng-click="removeMiembro( ixMiembro )" >
+                              <span class="glyphicon glyphicon-remove"></span>
+                           </button>
+                           <button class="btn btn-xs btn-opcion">
+                              <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
+                           </button>
+                           <button type="button" class="btn btn-sm btn-opcion" data-toggle="modal" data-target="#myModal" ng-click="openModalOficios( ixMiembro )">
+                              <span class="glyphicon glyphicon-plus"></span> Oficio
+                           </button>
+                        </div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+                     donante.idDonador
+         </div>
+      </div>
    </div>
 </div>
 

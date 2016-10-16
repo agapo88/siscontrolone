@@ -18,15 +18,15 @@ class Donante extends Session
 	// FUNCION PARA CONSULTAR DONANTES EN LA BD
 	function consultarDonantes(  $groupBy = 'tipoEntidad'){
 
-		$firstDate         = true;
+		$firstDate    = true;
 		$lstDonadores = array();
-		$donantes = array();
+		//$donantes   = array();
 		$sql = "SELECT 
 						idDonador,
 					    nombre,
 					    telefono,
 					    email,
-					    fechaIngreso,
+					    DATE_FORMAT(fechaIngreso, '%d/%m/%y') AS fechaIngreso,
 					    DATE_FORMAT(fechaIngreso, '%Y') AS anio,
     					DATE_FORMAT(fechaIngreso, '%m') AS mes,
 					    idTipoEntidad,
@@ -37,9 +37,56 @@ class Donante extends Session
 					    vstDonadores;";
 
 		if( $rs = $this->con->query( $sql ) ){
-
 			while( $row = $rs->fetch_object() ){
 				
+				$iTipoEntidad = -1;
+				$anio         = -1;
+				$iDonador     = -1;
+
+				// VER SI EXISTE ENTIDAD
+				foreach ($lstDonadores AS $ixTipoEntidad => $tipoEntidad) {
+					if( $tipoEntidad['idTipoEntidad'] == $row->idTipoEntidad ){
+						$iTipoEntidad = $ixTipoEntidad;
+						break;
+					}
+				}
+
+				// SI NO EXISTE TIPO DE ENTIDAD LO AGREGA
+				if( $iTipoEntidad == -1 ){
+					$iTipoEntidad = count( $lstDonadores );
+
+					$lstDonadores[] = array(
+						'idTipoEntidad' => (int) $row->idTipoEntidad,
+						'tipoEntidad'   => $row->tipoEntidad,
+						'lstDonantes'   => array(),
+						'count'         => 0
+					);
+				}
+
+				// VERIFICAR QUE VENGAN LOS DONANTES
+				foreach ($lstDonadores AS $ixTipoEntidad => $tipoEntidad) {
+					foreach ($tipoEntidad['lstDonantes'] AS $ixDonante => $donante) {
+						if( $donante['idDonador'] == $row->idDonador )		{
+							$iDonador = $ixDonante;
+							break;
+						}
+					}
+				}
+
+				// SI NO EXISTE EL DONANTE
+				if( $iDonador == -1 ){
+					$lstDonadores[ $iTipoEntidad ][ 'lstDonantes' ][] = array(
+						'idDonador'    => $row->idDonador,
+						'nombre'       => $row->nombre,
+						'telefono'     => $row->telefono,
+						'email'        => $row->email,
+						'tipoEntidad'  => $row->tipoEntidad,
+						'fechaIngreso' => $row->fechaIngreso,
+					);
+					$lstDonadores[ $iTipoEntidad ]['count'] ++;
+				}
+
+
 			}
 
 		}

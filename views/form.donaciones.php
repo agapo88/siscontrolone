@@ -106,7 +106,7 @@
             <b>TOTAL MIEMBROS: <span class="badge">{{ familia.lstMiembros.length }}</span></b>
          </button>
       </div>
-      {{familia}}
+      
       <!-- AGREGAR MIEMBROS -->
       <div class="form-group">
          <table class="table table-striped table-hover">

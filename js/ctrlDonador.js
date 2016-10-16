@@ -2,7 +2,7 @@ miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 	
 	$scope.$parent.menu = 'donantes';
 
-	$scope.lstDonantes = [];
+	$scope.lstEntidades = [];
 	$scope.lstTipoEntidad = [];
 	
 	$scope.donador = {
@@ -40,7 +40,7 @@ miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 		$http.post('consultas.php', {accion: 'cargarDonantes'})
 		.success(function( data ){
 			console.log( 'donantes', data );
-			$scope.lstDonantes = data.lstDonantes;
+			$scope.lstEntidades = data.lstEntidades;
 		}).error(function(data){
 			console.log(data);
 		});

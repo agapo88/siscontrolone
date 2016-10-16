@@ -58,7 +58,7 @@ switch ( $data->accion ) {
 	case 'cargarDonantes':		// CONSULTAR LISTA DE DONANTES
 		$donante = new Donante( $conexion );
 
-		$datos['lstDonantes'] = $donante->consultarDonantes();
+		$datos['lstEntidades'] = $donante->consultarDonantes();
 
 		echo json_encode( $datos );
 		break;

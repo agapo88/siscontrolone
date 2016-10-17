@@ -29,7 +29,7 @@
                <span class="input-group-btn">
                   <button class="btn btn-default" type="button">Buscar:</button>
                </span>
-               <input type="text" class="form-control" ng-model="searchDonador"  placeholder="Buscar donador">
+               <input type="text" class="form-control" ng-model="searchProducto"  placeholder="Buscar Producto">
             </div>
          </div>
       </div>
@@ -69,7 +69,7 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="(ixProducto, producto) in producto.lstProductos | filter:searchproducto || searchDonante" ng-init="$idIndex = $index">
+                  <tr ng-repeat="(ixProducto, producto) in producto.lstProductos | filter:searchProducto" ng-init="$idIndex = $index">
                      <td class="text-center">
                         {{ producto.idProducto }}
                      </td>

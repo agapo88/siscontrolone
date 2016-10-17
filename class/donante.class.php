@@ -2,7 +2,7 @@
 /**
 * DONANTES
 */
-class Donante extends Session
+class Donador extends Session
 {
 	
 	private $con;
@@ -143,6 +143,24 @@ class Donante extends Session
 
 			}
 
+		}
+
+		return $lstDonadores;
+	}
+
+	// FUNCIÓN CONSULTAR DATOS BÁSICOS DONADORES
+	function consultarDonadores(){
+		
+		$lstDonadores = array();
+
+		$sql = "SELECT 
+					    idDonador, nombre
+					FROM
+					    donador WHERE idEstadoDonador = 1;";
+
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() )
+				$lstDonadores[] = $row;
 		}
 
 		return $lstDonadores;

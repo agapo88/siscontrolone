@@ -103,115 +103,175 @@
 
 
 <!-- VENTANA MODAL AGREGAR -->
-<div class="" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-   <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <div class="modal-dialog" role="document">
       <div class="modal-content">
-         <div class="modal-header title-info">
+         <div class="modal-header title-success">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">
                <span class="glyphicon glyphicon-user"></span> Agregar Donador
             </h4>
          </div>
          <div class="modal-body">
+            <!-- TABS -->
+            <ul class="nav nav-tabs" role="tablist">
+               <li role="presentation" ng-class="{'active': tab==1}" ng-click="tab=1"><a role="tab">Fondo Común</a></li>
+               <li role="presentation" ng-class="{'active': tab==2}" ng-click="tab=2"><a role="tab">Productos</a></li>
+               <li role="presentation" ng-class="{'active': tab==3}" ng-click="tab=3"><a role="tab">Messages</a></li>
+            </ul>
+
             <div>
-
-              <!-- Nav tabs -->
-              <ul class="nav nav-tabs" role="tablist">
-
-                <li role="presentation" ng-class="{'active': tab==1}" ng-click="tab=1"><a role="tab">Home</a></li>
-                <li role="presentation" ng-class="{'active': tab==2}" ng-click="tab=2"><a role="tab">Profile</a></li>
-                <li role="presentation" ng-class="{'active': tab==3}" ng-click="tab=3"><a role="tab">Messages</a></li>
-                <li role="presentation" ng-class="{'active': tab==4}" ng-click="tab=4"><a role="tab">Settings</a></li>
-              </ul>
               <!-- Tab panes -->
-              <div class="tab-content">
-                  <div role="tabpanel" ng-class="{'active': tab==1}" class="tab-pane active" ng-show="tab==1">
-                     <h3>
-                        Bienvenido(a)
-                     </h3>
-                     Por favor ingrese el tipo de Donación
-
-                     <form class="form-horizontal" novalidate autocomplete="off">
-                        <div class="form-group">
-                           <label class="control-label col-sm-3">
-                              SELECCIONE PRODUCTO
-                           </label>
-                           <div class="col-sm-7">
-                              <select class="form-control" ng-model="producto.idProducto">
-                                 <option value="{{  }}"></option>
-                              </select>
-                              <input type="number" class="form-control" ng-model="producto.cantidad">
+              <div class="tab-content" >
+                  <div style="margin-top:15px">
+                     <!-- FONDO COMUN -->
+                     <div role="tabpanel" ng-show="tab==1">
+                        <form class="form-horizontal" novalidate autocomplete="off">
+                           
+                           <div class="form-group">
+                              <div class="col-sm-11 text-right">
+                                 <strong>DONADOR ANONIMO</strong>
+                                 <button type="button" class="btn btn-default noBorder" ng-class="{'btn-primary':donacionFondo.esAnonimo}" ng-click="donacionFondo.esAnonimo=!donacionFondo.esAnonimo">
+                                    <span class="glyphicon" ng-class="{'glyphicon-check': donacionFondo.esAnonimo==1, 'glyphicon-unchecked': !donacionFondo.esAnonimo}"></span> Si
+                                 </button>
+                                 <button type="button" class="btn btn-default noBorder" ng-class="{'btn-primary':!donacionFondo.esAnonimo}" ng-click="donacionFondo.esAnonimo=!donacionFondo.esAnonimo">
+                                    <span class="glyphicon" ng-class="{'glyphicon-check': !donacionFondo.esAnonimo, 'glyphicon-unchecked': donacionFondo.esAnonimo}"></span> No
+                                 </button>
+                              </div>
                            </div>
-                        </div>
-                        <div class="form-group">
-                           <label class="control-label col-sm-3">
-                              Cantidad
-                           </label>
-                           <div class="col-sm-7">
-                              <input type="number" class="form-control" ng-model="producto.cantidad">
+                           <div class="form-group">
+                              <label class="control-label col-sm-3">
+                                 Donador
+                              </label>
+                              <div class="col-sm-8">
+                                 <select class="form-control" ng-model="donacionFondo.idDonador">
+                                    <option value="{{ donador.idDonador }}" ng-repeat="donador in lstDonadores">
+                                       {{donador.nombre}}
+                                    </option>
+                                 </select>
+                              </div>
                            </div>
-                        </div>
-                        <div class="form-group">
-                           <label for="">Lista de Productos</label>
-                        </div>
-                     </form>
-                  </div>
-                  <div role="tabpanel" ng-class="{'active': tab==2}" class="tab-pane" ng-show="tab==2">
-                  </div>
-                  <div role="tabpanel" ng-class="{'active': tab==3}" class="tab-pane" ng-show="tab==3">
-                     pruebas...
-                  </div>
-                  <div role="tabpanel" ng-class="{'active': tab==4}" class="tab-pane" ng-show="tab==4">
-                     pruebas...
+                           <div class="form-group">
+                              <label class="control-label col-sm-3">
+                                 Moneda
+                              </label>
+                              <div class="col-sm-5">
+                                 <button type="button" class="btn btn-default noBorder" ng-class="{'btn-success':donacionFondo.idMoneda==1}" ng-click="donacionFondo.idMoneda=1">
+                                    <span class="glyphicon" ng-class="{'glyphicon-check': donacionFondo.idMoneda==1, 'glyphicon-unchecked': donacionFondo.idMoneda==2}"></span> Quetzales
+                                 </button>
+                                 <button type="button" class="btn btn-default noBorder" ng-class="{'btn-success':donacionFondo.idMoneda==2}" ng-click="donacionFondo.idMoneda=2">
+                                    <span class="glyphicon" ng-class="{'glyphicon-check': donacionFondo.idMoneda==2, 'glyphicon-unchecked': donacionFondo.idMoneda==1}"></span> Dolares
+                                 </button>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="control-label col-sm-3">
+                                 Monto
+                              </label>
+                              <div class="col-sm-5">
+                                 <input type="number" class="form-control" ng-model="donacionFondo.cantidad" step="0.01">
+                              </div>
+                           </div>
+                           <div class="form-group" ng-class="{'has-error': formAgregar.fechaDonacion.$invalid}">
+                              <label class="control-label col-sm-3">Fecha Ingreso:</label>
+                              <div class="col-sm-5">
+                                 <div class="input-group">
+                                    <span class="input-group-addon">
+                                       <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                    <input type="text" name="fechaDonacion" class="form-control" ng-model="donacionFondo.fechaDonacion" data-date-format="dd/MM/yyyy" data-date-type="number"  data-max-date="today" data-autoclose="1"  bs-datepicker>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="form-group" style="margin-top: 25px">
+                              <div class="col-sm-12 text-right">
+                                 <button type="button" class="btn btn-success btn-lg noBorder" ng-click="guardarDonacionFondo()">
+                                    <i class="glyphicon glyphicon-saved"></i> Guardar Donación
+                                 </button>
+                              </div>
+                              
+                           </div>
+                        </form>
+                     </div>
+                     <!-- FONDO PRODUCTOS -->
+                     <div role="tabpanel" ng-show="tab==2">
+                        <form class="form-horizontal" novalidate autocomplete="off">
+                           <div class="form-group">
+                              <div class="col-sm-11 text-right">
+                                 <strong>DONADOR ANONIMO</strong>
+                                 <button type="button" class="btn btn-default noBorder" ng-class="{'btn-primary':donacionFondo.esAnonimo}" ng-click="donacionFondo.esAnonimo=!donacionFondo.esAnonimo">
+                                    <span class="glyphicon" ng-class="{'glyphicon-check': donacionFondo.esAnonimo==1, 'glyphicon-unchecked': !donacionFondo.esAnonimo}"></span> Si
+                                 </button>
+                                 <button type="button" class="btn btn-default noBorder" ng-class="{'btn-primary':!donacionFondo.esAnonimo}" ng-click="donacionFondo.esAnonimo=!donacionFondo.esAnonimo">
+                                    <span class="glyphicon" ng-class="{'glyphicon-check': !donacionFondo.esAnonimo, 'glyphicon-unchecked': donacionFondo.esAnonimo}"></span> No
+                                 </button>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="control-label col-sm-3">
+                                 Donador
+                              </label>
+                              <div class="col-sm-8">
+                                 <select class="form-control" ng-model="donacionFondo.idDonador">
+                                    <option value="{{ donador.idDonador }}" ng-repeat="donador in lstDonadores">
+                                       {{donador.nombre}}
+                                    </option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="control-label col-sm-3">
+                                 Moneda
+                              </label>
+                              <div class="col-sm-5">
+                                 <button type="button" class="btn btn-default noBorder" ng-class="{'btn-success':donacionFondo.idMoneda==1}" ng-click="donacionFondo.idMoneda=1">
+                                    <span class="glyphicon" ng-class="{'glyphicon-check': donacionFondo.idMoneda==1, 'glyphicon-unchecked': donacionFondo.idMoneda==2}"></span> Quetzales
+                                 </button>
+                                 <button type="button" class="btn btn-default noBorder" ng-class="{'btn-success':donacionFondo.idMoneda==2}" ng-click="donacionFondo.idMoneda=2">
+                                    <span class="glyphicon" ng-class="{'glyphicon-check': donacionFondo.idMoneda==2, 'glyphicon-unchecked': donacionFondo.idMoneda==1}"></span> Dolares
+                                 </button>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="control-label col-sm-3">
+                                 Monto
+                              </label>
+                              <div class="col-sm-5">
+                                 <input type="number" class="form-control" ng-model="donacionFondo.cantidad">
+                              </div>
+                           </div>
+                           <div class="form-group" ng-class="{'has-error': formAgregar.fechaDonacion.$invalid}">
+                              <label class="control-label col-sm-3">Fecha Ingreso:</label>
+                              <div class="col-sm-5">
+                                 <div class="input-group">
+                                    <span class="input-group-addon">
+                                       <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                    <input type="text" name="fechaDonacion" class="form-control" ng-model="donacionFondo.fechaDonacion" data-date-format="dd/MM/yyyy" data-date-type="number"  data-max-date="today" data-autoclose="1"  bs-datepicker>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="form-group" style="margin-top: 25px">
+                              <div class="col-sm-12 text-right">
+                                 <button type="button" class="btn btn-success btn-lg noBorder" ng-click="guardarDonacionFondo()">
+                                    <i class="glyphicon glyphicon-saved"></i> Guardar Donación
+                                 </button>
+                              </div>
+                              
+                           </div>
+                        </form>
+                     </div>
+                     <div role="tabpanel" ng-show="tab==3">
+                        pruebas...
+                     </div>
                   </div>
               </div>
             </div>
-            <form class="form-horizontal" name="formAgregar">
-               <div class="form-group">
-                  <label class="control-label col-sm-3">Nombre:</label>
-                  <div class="col-sm-8">
-                     <input type="text" ng-model="donador.nombre" class="form-control">
-                  </div>
-               </div>
-               <div class="form-group"  ng-class="{'has-error': formAgregar.telefono.$invalid}">
-                  <label class="control-label col-sm-3">Telefono:</label>
-                  <div class="col-sm-8">
-                     <input type="text" name="telefono" minlength="8" maxlength="15" ng-model="donador.telefono" class="form-control">
-                  </div>
-               </div>
-               <div class="form-group" ng-class="{'has-error': formAgregar.email.$invalid}">
-                  <label class="control-label col-sm-3">Email:</label>
-                  <div class="col-sm-8">
-                     <input type="email" name="email" ng-model="donador.email" class="form-control">
-                  </div>
-               </div>
-               <div class="form-group">
-                  <label class="control-label col-sm-3">Tipo Donante:</label>
-                  <div class="col-sm-6">
-                     <select class="form-control" ng-model="donador.idTipoEntidad">
-                        <option value="{{tipoEntidad.idTipoEntidad}}" ng-repeat="tipoEntidad in lstTipoEntidad">
-                           {{tipoEntidad.tipoEntidad}}
-                        </option>
-                     </select>
-                  </div>
-               </div>
-               
-               <div class="form-group" ng-class="{'has-error': formAgregar.fechaIngreso.$invalid}">
-                  <label class="control-label col-sm-3">Fecha Ingreso:</label>
-                  <div class="col-sm-6">
-                     <div class="input-group">
-                        <span class="input-group-addon">
-                           <i class="glyphicon glyphicon-calendar"></i>
-                        </span>
-                        <input type="text" name="fechaIngreso" class="form-control" ng-model="donador.fechaIngreso" data-date-format="dd/MM/yyyy" data-date-type="number"  data-max-date="today" data-autoclose="1"  bs-datepicker>
-                     </div>
-                  </div>
-               </div>
-            </form>
          </div>
          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()"><i class="glyphicon glyphicon-log-out"></i> Cerrar</button>
-            <button type="button" class="btn btn-primary" ng-click="guardarDonador()"><i class="glyphicon glyphicon-saved"></i> Guardar Donador</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()">
+               <i class="glyphicon glyphicon-log-out"></i> Cerrar
+            </button>
          </div>
       </div>
    </div>

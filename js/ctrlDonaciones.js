@@ -15,40 +15,14 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 
 	$scope.tab = 1;
 
-	$scope.$watch('agregarMiembros', function(){
-		console.log( $scope.agregarMiembros );
-		if( $scope.agregarMiembros == true ){
-			$timeout(function(){
-				$('#miembroCui').focus();
-			}, 100);
-		}
-	});
-	
-	$scope.familia = {
-		nombre       : '',
-		fechaIngreso : '',
-		idArea       : '',
-		lstMiembros  : [
-			{
-				nombres         : 'Jose Antonio',
-				apellidos       : 'Perez García',
-				cui             : '0031231231231',
-				fechaNacimiento : '04/10/1999',
-				idGenero        : '1',
-				parentesco      : '',
-				idParentesco    : '3',
-			},
-			{
-				nombres         : 'Maria',
-				apellidos       : 'Perez García',
-				cui             : '0031231231231',
-				fechaNacimiento : '04/10/1999',
-				idGenero        : '2',
-				parentesco      : '',
-				idParentesco    : '3',
-			},
-		]
+	$scope.donacionFondo = {
+		esAnonimo     : true,
+		idDonador     : null,
+		cantidad      : null,
+		idMoneda      : 1,
+		fechaDonacion : ''
 	};
+
 
 	$scope.miembro = {
 		nombres         : '',
@@ -60,11 +34,13 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 		idParentesco    : null,
 	};
 
+	$scope.lstDonadores = [];
+
 	($scope.cargarInicio = function(){
-		$http.post('consultas.php', {accion: 'infoProducto'})
+		$http.post('consultas.php', {accion: 'infoDonacion'})
 		.success(function( data ){
-			$scope.cargarLstProveedores();
-			$scope.cargarLstProductos();
+			console.log(data);
+			$scope.lstDonadores = data.lstDonadores;
 		}).error(function(data){
 			console.log(data);
 		});
@@ -173,13 +149,13 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 
 	// RESETEAR VALORES
 	$scope.reset = function(){
-		$scope.donador = {
-				nombre        : '',
-				telefono      : '',
-				email         : '',
-				idTipoEntidad : null,
-				fechaIngreso  : null
-			};
+		$scope.donacionFondo = {
+			esAnonimo     : true,
+			idDonador     : null,
+			cantidad      : null,
+			idMoneda      : 1,
+			fechaDonacion : ''
+		};
 	}
 
 
@@ -216,44 +192,40 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 		});
 	}
 
-	// GUARDAR DONADOR
-	$scope.guardarFamilia = function(){
+	//var fechaIngreso = $filter('date')($scope.donador.fechaIngreso, "yyyy-MM-dd");
 
-		var familia = $scope.familia;
+	// GUARDAR FONDO COMUN
+	$scope.guardarDonacionFondo = function(){
+		console.log("accedio");
+
+		var fondoDonacion = $scope.donacionFondo;
 		var error = false;
 
-		if( !($scope.donador.nombre.length > 5)  ){
-			error = true;
-			$alert({title: 'Alerta: ', content: 'Nombre del donador muy corto, debe tener minimo 5 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
+		if( fondoDonacion.esAnonimo ){
+			if( !(fondoDonacion.idDonador) ){
+				error = true;
+				$alert({title: 'Alerta: ', content: 'No ha seleccionado el donador.', placement: 'top', type: 'warning', show: true, duration: 4});
+			}
 		}
-		else if( !($scope.donador.telefono.length > 3) ){
+		else if( !(fondoDonacion.cantidad > 0) ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'No de telefono corto, debe tener minimo 8 digitos.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'No ha ingresado una cantidad correcta.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.donador.email.length > 3) ){
+		else if( !(fondoDonacion.fechaDonacion) ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'Correo electronico Invalido, verifique.', placement: 'top', type: 'warning', show: true, duration: 4});
-		}
-		else if( !($scope.donador.idTipoEntidad) ){
-			error = true;
-			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
-		}
-		else if( !($scope.donador.fechaIngreso) ){
-
-			error = true;
-			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'No Ha ingresado una fecha correcta.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
 
 		// SI NO EXISTE ERROR
 		if( !error ){
-			var fechaIngreso = $filter('date')($scope.donador.fechaIngreso, "yyyy-MM-dd");
-			$http.post('consultas.php', {accion: 'guardarDonador', datos: $scope.donador, fechaIngreso: fechaIngreso})
+			var fechaDonacion = $filter('date')($scope.donacionFondo.fechaDonacion, "yyyy-MM-dd");
+			$http.post('consultas.php', {accion: 'guardarFondoComun', datos: $scope.donacionFondo, fechaDonacion: fechaDonacion})
 			.success(function(data){
 				console.log(data);
 				if( data.respuesta ){
 					$scope.$parent.hideModalAgregar();
 					$scope.reset();
-					$scope.consultarDonadores();
+					//$scope.consultarDonadores();
 					$alert({title: 'Mensaje: ', content: data.mensaje, placement: 'top', type: 'success', show: true, duration: 4});
 				}else{
 					$alert({title: 'Error: ', content: data.mensaje, placement: 'top', type: 'danger', show: true, duration: 4});
@@ -261,7 +233,6 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 			}).error(function(data){
 				console.log(data);
 			});
-			
 		}
 	}
 	

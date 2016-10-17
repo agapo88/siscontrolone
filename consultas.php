@@ -12,6 +12,7 @@ require_once 'class/donante.class.php';
 require_once 'class/producto.class.php';
 require_once 'class/proveedor.class.php';
 require_once 'class/areas.bodega.class.php';
+require_once 'class/donaciones.class.php';
 
 
 $datos    = array();
@@ -25,6 +26,22 @@ switch ( $data->accion ) {
 		echo json_encode( $datos );
 		
 		break;
+
+	/*** DONACIONES ***/
+	case 'infoDonacion':
+		$donador = new Donador( $conexion );
+		$datos['lstDonadores'] = $donador->consultarDonadores();
+		echo json_encode( $datos );
+		break;
+
+	case 'guardarFondoComun':
+		//var_dump( $data );
+		$donacion = new Donacion( $conexion );
+
+		$datos = $donacion->guardarFondoComun( $data->datos->esAnonimo, $data->datos->idDonador, $data->datos->cantidad, $data->datos->idMoneda, $data->fechaDonacion);
+		echo json_encode( $datos );
+		break;
+
 
 	/*** AREAS DE BODEGA ***/
 	case 'cargarSeccionBodega':
@@ -68,7 +85,7 @@ switch ( $data->accion ) {
 		break;
 
 
-	/***** DONANTES *****/
+	/***** FAMILIA *****/
 	case 'cargaDataFamilia':
 		$consulta = new Consultas( $conexion );
 		$datos['lstAreas']      = $consulta->consultarAreas();
@@ -77,6 +94,7 @@ switch ( $data->accion ) {
 		echo json_encode( $datos );
 		break;
 
+	
 	/***** DONANTES *****/
 
 	case 'cargarCatDonantes':
@@ -89,27 +107,27 @@ switch ( $data->accion ) {
 		break;
 
 	case 'actualizarDonador':		// ACTUALIZAR DONADOR	
-		$donante = new Donante( $conexion );
+		$donador = new Donador( $conexion );
 
-		$datos = $donante->actualizarDonador( $data->datos->idDonador, $data->datos->nombre, $data->datos->telefono, $data->datos->email, $data->datos->idTipoEntidad, $data->fechaIngreso);
+		$datos = $donador->actualizarDonador( $data->datos->idDonador, $data->datos->nombre, $data->datos->telefono, $data->datos->email, $data->datos->idTipoEntidad, $data->fechaIngreso);
 
 		echo json_encode( $datos );
 	
 		break;
 
 	case 'guardarDonador':		// GUARDAR DONADOR	
-		$donante = new Donante( $conexion );
+		$donador = new Donador( $conexion );
 
-		$datos = $donante->guardarDonador( $data->datos->nombre, $data->datos->telefono, $data->datos->email, $data->datos->idTipoEntidad, $data->fechaIngreso);
+		$datos = $donador->guardarDonador( $data->datos->nombre, $data->datos->telefono, $data->datos->email, $data->datos->idTipoEntidad, $data->fechaIngreso);
 
 		echo json_encode( $datos );
 	
 		break;
 
 	case 'cargarDonantes':		// CONSULTAR LISTA DE DONANTES
-		$donante = new Donante( $conexion );
+		$donador = new Donador( $conexion );
 
-		$datos['lstEntidades'] = $donante->consultarDonantes( $data->filtro );
+		$datos['lstEntidades'] = $donador->consultarDonantes( $data->filtro );
 
 		echo json_encode( $datos );
 		break;

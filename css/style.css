@@ -50,6 +50,11 @@
 	background-color: #337ab7;
 }
 
+.title-success{
+	color: #fff;
+	background-color: #2bb736;
+}
+
 .alerta{
 	position: fixed;
 	z-index: 2000;

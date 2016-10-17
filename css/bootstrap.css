@@ -3172,7 +3172,7 @@ fieldset[disabled] .btn-primary.focus {
 }
 .btn-success {
   color: #fff;
-  background-color: #5cb85c;
+  background-color: #3bad3b;
   border-color: #4cae4c;
 }
 .btn-success:focus,
@@ -4035,9 +4035,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #555;
+  color: #fff;
   cursor: default;
-  background-color: #fff;
+  background-color: #0d305a;
   border: 1px solid #ddd;
   border-bottom-color: transparent;
 }

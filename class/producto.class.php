@@ -29,6 +29,8 @@ class Producto extends Session
 					    seccionBodega,
 					    idTipoProducto,
 					    tipoProducto,
+					    cantidadMinima,
+					    cantidadMaxima,
 					    totalProducto,
 					    idUsuario,
 					    fechaHora
@@ -92,7 +94,9 @@ class Producto extends Session
 						'esPerecedero'    => (int) $row->esPerecedero,
 						'perecedero'      => strtoupper( $row->perecedero ),
 						'lstProductos'    => array(),
-						'totalProductos'  => 0
+						'totalProductos'  => 0,
+						'peligroMinimo'   => 0,
+						'peligroEscaces'  => 0,
 					);
 				}
 
@@ -116,9 +120,18 @@ class Producto extends Session
 						$ixSolicitud = $iPerecedero;
 					endif;
 
+					// GENERAR ALERTA STOCK BAJO
+					if( $row->totalProducto >= $row->cantidadMinima + 10 ):
+						$alertaStock = 1;
+					elseif( $row->totalProducto <= $row->cantidadMinima ):
+						$alertaStock = 2;
+					endif;
+
 					$lstProductos[ $ixSolicitud ][ 'lstProductos' ][] = array(
 						'idProducto'      => $row->idProducto,
 						'producto'        => $row->producto,
+						'cantidadMinima'  => $row->cantidadMinima,
+						'cantidadMaxima'  => $row->cantidadMaxima,
 						'observacion'     => $row->observacion,
 						'esPerecedero'    => $row->esPerecedero,
 						'perecedero'      => $row->perecedero,
@@ -127,9 +140,14 @@ class Producto extends Session
 						'idTipoProducto'  => $row->idTipoProducto,
 						'tipoProducto'    => $row->tipoProducto,
 						'totalProducto'   => $row->totalProducto ? $row->totalProducto : 0,
+						'alertaStock'	  => $alertaStock
 						
 					);
 					$lstProductos[ $ixSolicitud ]['totalProductos'] ++;
+					if( $alertaStock == 1 )
+						$lstProductos[ $ixSolicitud ]['alerta']++;
+					if( $alertaStock == 2 )
+						$lstProductos[ $ixSolicitud ]['peligroEscaces']++;
 				}
 
 			}
@@ -172,16 +190,18 @@ class Producto extends Session
 		return $lsTiposProducto;
 	}
 
-	function guardarProducto($producto, $perecedero, $idTipoProducto, $idSeccionBodega, $observacion){
+	function guardarProducto($producto, $perecedero, $idTipoProducto, $idSeccionBodega, $cantidadMinima, $cantidadMaxima, $observacion){
 
 		$_producto        = $this->con->real_escape_string( $producto );
-		$_perecedero      = (int) $perecedero ;
-		$_idTipoProducto  = (int) $idTipoProducto ;
-		$_idSeccionBodega = (int) $idSeccionBodega ;
+		$_perecedero      = (int) $perecedero;
+		$_idTipoProducto  = (int) $idTipoProducto;
+		$_idSeccionBodega = (int) $idSeccionBodega;
+		$_cantidadMinima  = (int) $cantidadMinima;
+		$_cantidadMaxima  = (int) $cantidadMaxima;
 		$_observacion     = $this->con->real_escape_string( $observacion );
 		$_idUsuario       = (int) $this->getIdUser();
 
-		$sql = "CALL registrarProducto( '{$producto}', {$_perecedero}, {$_idTipoProducto}, {$_idSeccionBodega}, '{$observacion}', {$_idUsuario});";
+		$sql = "CALL registrarProducto( '{$producto}', {$_perecedero}, {$_idTipoProducto}, {$_idSeccionBodega}, {$_cantidadMinima}, {$_cantidadMaxima}, '{$observacion}', {$_idUsuario});";
 
 		if( $rs = $this->con->query( $sql ) ){
 			// LIBERAR SIGUIENTE RESULTADO

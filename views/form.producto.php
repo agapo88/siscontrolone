@@ -63,13 +63,15 @@
                      <th class="text-center col-sm-4">Producto</th>
                      <th class="text-center">Tipo Producto</th>
                      <th class="text-center">Perecedero</th>
-                     <th class="text-center">Disponible</th>
+                     <th class="text-center">Mínima</th>
+                     <th class="text-center">Máxima</th>
+                     <th class="text-center">Disponible <button ng-click="sortBy('cantidadMinima')"></button></th>
                      <th class="text-center">Ubicación</th>
                      <th class="text-center">Editar</th>
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="(ixProducto, producto) in producto.lstProductos | filter:searchProducto" ng-init="$idIndex = $index">
+                  <tr ng-repeat="(ixProducto, producto) in producto.lstProductos | orderBy: '-cantidadMinima' | filter:searchProducto" ng-class="{'warning': producto.alertaStock==1,'danger': producto.alertaStock==2}">
                      <td class="text-center">
                         {{ producto.idProducto }}
                      </td>
@@ -87,6 +89,8 @@
                         {{ producto.tipoProducto }}
                      </td>
                      <td class="text-center"> {{ producto.perecedero }} </td>
+                     <td class="text-center"> {{ producto.cantidadMinima }}  </td>
+                     <td class="text-center"> {{ producto.cantidadMaxima }}  </td>
                      <td class="text-center"> {{ producto.totalProducto }}  </td>
                      <td class="text-center"> {{ producto.ubicacionBodega }} </td>
                      <td>
@@ -107,7 +111,6 @@
       </div>
    </div>
 </div>
-
 
 <!-- VENTANA MODAL AGREGAR -->
 <div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -150,7 +153,7 @@
                      Descripción Producto
                   </label>
                   <div class="col-sm-8">
-                     <input type="text" class="form-control" ng-model="producto.producto">
+                     <input type="text" class="form-control" maxlength="95" ng-model="producto.producto">
                   </div>
                </div>
                <div class="form-group">
@@ -165,6 +168,24 @@
                         No <span class="glyphicon" ng-class="{'glyphicon-check': !producto.perecedero, 'glyphicon-unchecked': producto.perecedero}"></span>
                      </button>
                   </div>
+               </div>
+               <div class="form-group">
+                  <label class="control-label col-sm-3">
+                     Cantidad Mínima
+                  </label>
+                  <div class="col-sm-4">
+                     <input type="number" class="form-control" ng-model="producto.cantidadMinima">
+                  </div>
+                  <span class="glyphicon glyphicon-triangle-bottom"></span>
+               </div>
+               <div class="form-group">
+                  <label class="control-label col-sm-3">
+                     Cantidad Máxima
+                  </label>
+                  <div class="col-sm-4">
+                     <input type="number" class="form-control" ng-model="producto.cantidadMaxima">
+                  </div>
+                  <span class="glyphicon glyphicon-triangle-top"></span>
                </div>
                <div class="form-group">
                   <label class="control-label col-sm-3">
@@ -183,8 +204,6 @@
       </div>
    </div>
 </div>
-
-
 
 <!-- VENTANA MODAL EDITAR -->
 <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

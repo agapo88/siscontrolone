@@ -22,6 +22,8 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $time
 		idSeccionBodega : null,
 		idTipoProducto  : null,
 		perecedero      : false,
+		cantidadMinima  : 0,
+		cantidadMaxima  : 0,
 		observacion     : ''
 	};
 
@@ -91,6 +93,8 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $time
 			idSeccionBodega : null,
 			idTipoProducto  : null,
 			perecedero      : false,
+			cantidadMinima  : 0,
+			cantidadMaxima  : 0,
 			observacion     : ''
 		};
 	};
@@ -119,6 +123,15 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $time
 			error = true;
 			$alert({title: 'Alerta: ', content: 'Nombre del producto muy corto, debe tener minimo 4 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
+		else if( !(producto.cantidadMinima > 0)  ){
+			error = true;
+			$alert({title: 'Alerta: ', content: 'No ha ingresado la cantidad Mínima.', placement: 'top', type: 'warning', show: true, duration: 4});
+		}
+		else if( !(producto.cantidadMaxima > 0 && producto.cantidadMaxima >= producto.cantidadMinima)  ){
+			error = true;
+			$alert({title: 'Alerta: ', content: 'La Cantidad máxima es menor a la cantidad Minima.', placement: 'top', type: 'warning', show: true, duration: 4});
+		}
+		
 
 		// SI NO EXISTE ERROR
 		if( !error ){

@@ -1,5 +1,4 @@
 var miApp = angular.module('proyecto', ['mgcrea.ngStrap','ngRoute','angularUtils.directives.dirPagination'], ['$provide', function($provide) {
-	//validar que el datepicker sea español
     var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
     $provide.value("$locale", {
             "DATETIME_FORMATS": {

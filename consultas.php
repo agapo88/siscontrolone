@@ -35,7 +35,6 @@ switch ( $data->accion ) {
 		break;
 
 	case 'guardarFondoComun':
-		//var_dump( $data );
 		$donacion = new Donacion( $conexion );
 
 		$datos = $donacion->guardarFondoComun( $data->datos->esAnonimo, $data->datos->idDonador, $data->datos->cantidad, $data->datos->idMoneda, $data->fechaDonacion);
@@ -67,7 +66,7 @@ switch ( $data->accion ) {
 	case 'guardarProducto':
 		$prod = $data->datos;
 		$producto = new Producto( $conexion );
-		$datos = $producto->guardarProducto( $prod->producto, $prod->perecedero, $prod->idTipoProducto, $prod->idSeccionBodega, $prod->observacion );
+		$datos = $producto->guardarProducto( $prod->producto, $prod->perecedero, $prod->idTipoProducto, $prod->idSeccionBodega, $prod->cantidadMinima, $prod->cantidadMaxima, $prod->observacion );
 		echo json_encode( $datos );
 		break;
 		

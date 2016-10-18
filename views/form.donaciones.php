@@ -103,10 +103,10 @@
 
 
 <!-- VENTANA MODAL AGREGAR -->
-<div class="" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
    <div class="modal-dialog  modal-lg" role="document">
       <div class="modal-content">
-         <div class="modal-header title-success">
+         <div class="modal-header title-primary">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">
                <span class="glyphicon glyphicon-user"></span> Agregar Donador
@@ -249,8 +249,8 @@
 
                            <!-- AGREGA PRODUCTOS -->
                            <div class="form-group" style="margin-left: 10px; margin-right: 10px">
-                              <label class="label label-info">Agregar Productos</label>
-                              <table class="table table-striped">
+                              <label class="label label-primary">Agregar Productos</label>
+                              <table class="table table-striped table-condensed">
                                  <thead>
                                     <tr>
                                        <th class="col-sm-3 text-center">Producto</th>
@@ -284,12 +284,16 @@
                                           </button>
                                        </td>
                                     </tr>
+                                    <tr> 
+                                       <td>
+                                          <!-- CANCELAR AGREGAR PRODUCTO -->
+                                          <button type="button" class="btn btn-danger btn-sm noBorder" ng-click="resetObject()">
+                                             CANCELAR
+                                          </button>
+                                       </td>
+                                    </tr>
                                  </tbody>
                               </table>
-                              <!-- CANCELAR AGREGAR PRODUCTO -->
-                              <button type="button" class="btn btn-danger btn-sm noBorder" ng-click="resetObject()">
-                                 CANCELAR
-                              </button>
                            </div>
                            <hr>
                            <div class="form-group" style="margin-left: 10px; margin-right: 10px">
@@ -309,7 +313,7 @@
                                     <tr ng-repeat="(ixProd, prod) in donacionProducto.lstProductos">
                                        <td>{{ prod.idProducto }}</td>
                                        <td>{{ prod.cantidad }}</td>
-                                       <td>{{ prod.precioUnitario }}</td>
+                                       <td>{{ prod.precioUnitario | number: 2 }}</td>
                                        <td>{{ prod.fechaCaducidad | date :  "dd/MM/y" }}</td>
                                        <td>{{ prod.cantidad * prod.precioUnitario | number: 2 }}</td>
                                        <td>

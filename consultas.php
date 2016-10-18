@@ -44,9 +44,8 @@ switch ( $data->accion ) {
 		break;
 
 	case 'guardarDonacionProducto':
-		var_dump( $data );
-
-		//$donacion = new Donacion( $conexion );
+		//var_dump( $data );
+		$donacion = new Donacion( $conexion );
 
 		$datos = $donacion->guardarDonacionProducto( $data->datos );
 		echo json_encode( $datos );

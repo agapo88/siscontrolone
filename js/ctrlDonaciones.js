@@ -151,6 +151,14 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 			idMoneda      : 1,
 			fechaDonacion : ''
 		};
+		$scope.donacionProducto = {
+			esAnonimo        : true,
+			idDonador        : null,
+			fechaAdquisicion : '',
+			tieneFactura     : false,
+			noFactura        : '',
+			lstProductos     : []
+		};
 	}
 
 
@@ -186,6 +194,13 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 			$http.post('consultas.php',{accion: 'guardarDonacionProducto', datos: $scope.donacionProducto})
 			.success(function(data){
 				console.log(data);
+				if( data.respuesta ){
+					$scope.$parent.hideModalAgregar();
+					$scope.reset();
+					$alert({title: 'Mensaje: ', content: data.mensaje, placement: 'top', type: 'success', show: true, duration: 4});
+				}else{
+					$alert({title: 'Error: ', content: data.mensaje, placement: 'top', type: 'danger', show: true, duration: 4});
+				}
 			}).error(function(data){
 				console.log(data);
 			});

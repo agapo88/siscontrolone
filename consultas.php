@@ -29,8 +29,10 @@ switch ( $data->accion ) {
 
 	/*** DONACIONES ***/
 	case 'infoDonacion':
-		$donador = new Donador( $conexion );
-		$datos['lstDonadores'] = $donador->consultarDonadores();
+		$donador   = new Donador( $conexion );
+		$producto  = new Producto( $conexion );
+		$datos['lstDonadores']   = $donador->consultarDonadores();
+		$datos['lstProductos']   = $producto->catalogoProductos();
 		echo json_encode( $datos );
 		break;
 
@@ -41,6 +43,14 @@ switch ( $data->accion ) {
 		echo json_encode( $datos );
 		break;
 
+	case 'guardarDonacionProducto':
+		var_dump( $data );
+
+		//$donacion = new Donacion( $conexion );
+
+		$datos = $donacion->guardarDonacionProducto( $data->datos );
+		echo json_encode( $datos );
+		break;
 
 	/*** AREAS DE BODEGA ***/
 	case 'cargarSeccionBodega':

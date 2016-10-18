@@ -1,15 +1,12 @@
-miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $timeout){
+miApp.controller('ctrlProductos', function($scope, $http, $alert){
 	
-	$scope.$parent.menu  = 'productos';
-	$scope.lstAreas      = [];
-
+	$scope.$parent.menu     = 'productos';
 	$scope.filtro           = "tipoProducto"
 	$scope.producto         = {};
 	$scope.itemProducto     = {};
+	$scope.lstAreas         = [];
 	$scope.lstProductos     = [];
-	$scope.lstProveedores   = [];
 	$scope.lstSeccionBodega = [];
-	$scope.tab              = 1;
 
 	$scope.$watch( 'filtro', function( _new, _old){
 		if( _new != _old ){
@@ -26,7 +23,6 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $time
 		cantidadMaxima  : 0,
 		observacion     : ''
 	};
-
 
 	// CARGAR LISTA DE PRODUCTOS
 	($scope.consultarProductos = function(){
@@ -72,20 +68,6 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $time
 		});
 	})();
 
-
-	// RESETEAR OBJETO
-	$scope.resetObject = function(){
-		$scope.miembro = {
-			nombres         : '',
-			apellidos       : '',
-			cui             : '',
-			fechaNacimiento : '',
-			idGenero        : '',
-			parentesco      : '',
-			idParentesco    : null,
-		};
-	};
-
 	// RESETEAR VALORES
 	$scope.reset = function(){
 		$scope.producto = {
@@ -98,12 +80,6 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $time
 			observacion     : ''
 		};
 	};
-
-	var indice = null;
-	$scope.openModalOficios = function( index ){
-		console.log( index );
-		indice = angular.copy( index );
-	}
 
 	// GUARDAR DONADOR
 	$scope.guardarProducto = function(){
@@ -132,7 +108,6 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert, $filter, $time
 			$alert({title: 'Alerta: ', content: 'La Cantidad máxima es menor a la cantidad Minima.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
 		
-
 		// SI NO EXISTE ERROR
 		if( !error ){
 			$http.post('consultas.php', {accion: 'guardarProducto', datos: $scope.producto})

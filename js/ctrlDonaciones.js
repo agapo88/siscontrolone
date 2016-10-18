@@ -11,9 +11,11 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 	$scope.itemProducto = {};
 
 	$scope.lstProductos = [];
+	$scope.lstDonadores = [];
+
 	$scope.lstProveedores = [];
 
-	$scope.tab = 1;
+	$scope.tab = 2;
 
 	$scope.donacionFondo = {
 		esAnonimo     : true,
@@ -23,39 +25,37 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 		fechaDonacion : ''
 	};
 
-
-	$scope.miembro = {
-		nombres         : '',
-		apellidos       : '',
-		cui             : '',
-		fechaNacimiento : '',
-		idGenero        : null,
-		parentesco      : '',
-		idParentesco    : null,
+	$scope.donacionProducto = {
+		esAnonimo        : true,
+		idDonador        : null,
+		fechaAdquisicion : '',
+		tieneFactura     : false,
+		noFactura        : '',
+		lstProductos     : []
 	};
 
-	$scope.lstDonadores = [];
+	$scope.$watch('donacionProducto.tieneFactura', function(){
+		if( $scope.donacionProducto.tieneFactura == true )
+			$timeout(function(){
+				$('#numeroFactura').focus();
+			});
+		else
+			$timeout(function(){
+				$('#cantidadDonacion').focus();
+			});
+	});
+
 
 	($scope.cargarInicio = function(){
 		$http.post('consultas.php', {accion: 'infoDonacion'})
 		.success(function( data ){
 			console.log(data);
-			$scope.lstDonadores = data.lstDonadores;
+			$scope.lstDonadores   = data.lstDonadores;
+			$scope.lstProductos   = data.lstProductos;
 		}).error(function(data){
 			console.log(data);
 		});
 	})();
-
-	// CARGAR LISTA DE PROVEEDORES
-	$scope.cargarLstProveedores = function(){
-		$http.post('consultas.php', {accion: 'cargarProveedores'}).success(function(data){
-			console.log(data);
-			$scope.lstProveedores = data.lstProveedores;
-			
-		}).error(function(data){
-			console.log(data);
-		});
-	}
 
 	// CARGAR LISTA DE PRODUCTOS
 	$scope.cargarLstProductos = function(){
@@ -70,80 +70,75 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 
 	// RESETEAR OBJETO
 	$scope.resetObject = function(){
-		$scope.miembro = {
-			nombres         : '',
-			apellidos       : '',
-			cui             : '',
-			fechaNacimiento : '',
-			idGenero        : '',
-			parentesco      : '',
-			idParentesco    : null,
+		$scope.dcProducto = {
+			idProducto     : null,
+			cantidad       : null,
+			precioUnitario : null,
 		};
 	};
 
+	$scope.bloquearFecha = 0;
+	$scope.$watch('dcProducto.idProducto', function(){
+
+		for (var i = 0; i < $scope.lstProductos.length; i++) {
+			console.log( $scope.lstProductos[i] );
+			if( $scope.lstProductos[i].idProducto == $scope.dcProducto.idProducto){
+				$scope.bloquearFecha = parseInt( $scope.lstProductos[i].esPerecedero );
+				break;
+			}
+		}
+
+	});
+
+	$scope.dcProducto = {};
 	// AGREGAR MIEMRBO A LA FAMILIA
-	$scope.addMiembro = function(){
+	$scope.addProducto = function(){
 
-		var miembro = $scope.miembro;
-		var error   = false;
+		var dcProducto   = $scope.dcProducto;
+		var error        = false;
 
-		if( miembro.cui && !(miembro.cui.length == 13) ){
+
+		if( !(dcProducto.idProducto) ){
 			error = true;
-			$alert({title: 'Notificación: ', content: 'No. de <b>CUI<b> Invalido, debe tener 13 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Notificación: ', content: 'No ha seleccionado el producto.', placement: 'top', type: 'warning', show: true, duration: 4});
 			return;
 		}
-		else if( !(miembro.nombres.length > 2) ){
+		else if( !(dcProducto.cantidad && dcProducto.cantidad > 0) ){
 			error = true;
-			$alert({title: 'Notificación: ', content: 'Nombre del familiar muy corto, debe tener minimo 3 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Notificación: ', content: 'No ha ingresado la cantidad.', placement: 'top', type: 'warning', show: true, duration: 4});
 			return;
 		}
-		else if( !(miembro.apellidos.length > 2) ){
+		else if( !(dcProducto.precioUnitario && dcProducto.precioUnitario > 0) ){
 			error = true;
-			$alert({title: 'Notificación: ', content: 'Apellidos del familiar son cortos, debe tener minimo 3 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Notificación: ', content: 'No Ha ingresado el precio unitario.', placement: 'top', type: 'warning', show: true, duration: 4});
 			return;
 		}
-		else if( !(miembro.fechaNacimiento) ){
-			error = true;
-			$alert({title: 'Notificación: ', content: 'Debe ingresar la fecha de Nacimiento.', placement: 'top', type: 'warning', show: true, duration: 4});
-			return;
-		}
-		else if( !(miembro.idGenero) ){
-			error = true;
-			$alert({title: 'Notificación: ', content: 'Debe seleccionar el género.', placement: 'top', type: 'warning', show: true, duration: 4});
-			return;
-		}
-		else if( !(miembro.idParentesco) ){
-			error = true;
-			$alert({title: 'Notificación: ', content: 'Debe seleccionar un parentesco.', placement: 'top', type: 'warning', show: true, duration: 4});
-			return;
-		}
-		else if( miembro.idParentesco==9 && !(miembro.idParentesco.length > 2 ) ){
-			error = true;
-			$alert({title: 'Notificación: ', content: 'Debe ingresar el otro Parentesco.', placement: 'top', type: 'warning', show: true, duration: 4});
-			return;
+		else if( $scope.bloquearFecha ){
+			if (!(dcProducto.fechaCaducidad) ){
+				error = true;
+				$alert({title: 'Notificación: ', content: 'Debe ingresar la fecha de Caducidad.', placement: 'top', type: 'warning', show: true, duration: 4});
+				return;
+			}			
 		}
 
 		// SI NO EXISTE ERROR
 		if( !error ){
+			var fechaCaducidad = $filter('date')($scope.dcProducto.fechaCaducidad, "yyyy-MM-dd");
+
 			// AGREGA AL ARREGLO LOS VALORES DEL OBJETO
-			$scope.familia.lstMiembros.push({
-				nombres         : miembro.nombres,
-				apellidos       : miembro.apellidos,
-				cui             : miembro.cui,
-				fechaNacimiento : miembro.fechaNacimiento,
-				idGenero        : miembro.idGenero,
-				parentesco      : miembro.parentesco,
-				idParentesco    : miembro.idParentesco,
-				lstOcupacion    : [],
+			$scope.donacionProducto.lstProductos.push({
+				idProducto     : dcProducto.idProducto,
+				cantidad       : dcProducto.cantidad,
+				precioUnitario : dcProducto.precioUnitario,
+				fechaCaducidad : fechaCaducidad,
 			});
-			$scope.resetObject();
-			$scope.agregarMiembros = false;
+			$scope.dcProducto = {};
 		}
 	};
 
-	// QUITAR MIEMBRO DE LA LISTA
-	$scope.removeMiembro = function( index ){
-		$scope.familia.lstMiembros.splice( index, 1 );
+	// QUITAR PRODUCTO
+	$scope.removerProducto = function( index ){
+		$scope.donacionProducto.lstProductos.splice( index, 1 );
 	};
 
 
@@ -159,49 +154,50 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 	}
 
 
-	var indice = null;
-	$scope.openModalOficios = function( index ){
-		console.log( index );
-		indice = angular.copy( index );
-	}
-
-
-	// AGREGAR OCUPACIÓN
-	$scope.agregarOficios = function(){
-		console.log( $scope.familia.lstMiembros[ indice ] );
-
-		$scope.familia.lstMiembros[ indice ].lstOcupacion.push({
-			prueba : 'uno',
-			dos    : 'dos',
-			tres   : 'tres',
-			cuatro : 'cuatro',
-			cinco  : 'cinco'
-		});
-	}
-
-
-
-	// CONSULTAR LISTA DONANTES
-	$scope.consultarDonadores = function(){
-		$http.post('consultas.php', {accion: 'cargarDonantes'})
-		.success(function( data ){
-			console.log( 'donantes', data );
-			$scope.lstDonantes = data.lstDonantes;
-		}).error(function(data){
-			console.log(data);
-		});
-	}
-
 	//var fechaIngreso = $filter('date')($scope.donador.fechaIngreso, "yyyy-MM-dd");
+	// GUARDAR DONACION PRODUCTO
+	$scope.guardarDonacionProducto = function(){
+		var error = false;
+
+		if( !($scope.donacionProducto.esAnonimo) ){
+			if( !( $scope.donacionProducto.idDonador ) ){
+				error = true;
+				$alert({title: 'Notificación: ', content: 'No ha seleccionado al donador, verifique.', placement: 'top', type: 'warning', show: true, duration: 4});
+			}
+		}
+		else if( !($scope.donacionProducto.fechaDonacion)  ){
+			error = true;
+			$alert({title: 'Notificación: ', content: 'No ha ingresado fecha de Adquisición.', placement: 'top', type: 'warning', show: true, duration: 4});
+		}
+		else if( $scope.donacionProducto.tieneFactura ){
+			if( !( $scope.donacionProducto.noFactura > 0 ) ){
+				error = true;
+				$alert({title: 'Notificación: ', content: 'No ha ingresado factura, verifique.', placement: 'top', type: 'warning', show: true, duration: 4});
+			}
+		}
+
+		else if( $scope.donacionProducto.lstProductos.length == 0 ){
+			error = true;
+			$alert({title: 'Notificación: ', content: 'No ha ingresado productos, verifique.', placement: 'top', type: 'warning', show: true, duration: 4});
+		}
+
+		if( !error ){
+			$scope.donacionProducto.fecha = $filter('date')($scope.donacionProducto.fechaDonacion, "yyyy-MM-dd");
+			$http.post('consultas.php',{accion: 'guardarDonacionProducto', datos: $scope.donacionProducto})
+			.success(function(data){
+				console.log(data);
+			}).error(function(data){
+				console.log(data);
+			});
+		}
+	}
 
 	// GUARDAR FONDO COMUN
 	$scope.guardarDonacionFondo = function(){
-		console.log("accedio");
-
 		var fondoDonacion = $scope.donacionFondo;
 		var error = false;
 
-		if( fondoDonacion.esAnonimo ){
+		if( !fondoDonacion.esAnonimo ){
 			if( !(fondoDonacion.idDonador) ){
 				error = true;
 				$alert({title: 'Alerta: ', content: 'No ha seleccionado el donador.', placement: 'top', type: 'warning', show: true, duration: 4});
@@ -225,7 +221,6 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 				if( data.respuesta ){
 					$scope.$parent.hideModalAgregar();
 					$scope.reset();
-					//$scope.consultarDonadores();
 					$alert({title: 'Mensaje: ', content: data.mensaje, placement: 'top', type: 'success', show: true, duration: 4});
 				}else{
 					$alert({title: 'Error: ', content: data.mensaje, placement: 'top', type: 'danger', show: true, duration: 4});

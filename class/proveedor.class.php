@@ -18,9 +18,9 @@ class Proveedor
 	function consultarProveedores(){
 		$lstProveedores = array();
 		$sql = "SELECT 
-					    idProducto, producto, esPerecedero
+					    idProveedor, proveedor
 					FROM
-					    producto";
+					    proveedor;";
 		
 		if( $rs = $this->con->query( $sql ) ){
 			while( $row = $rs->fetch_object() ){

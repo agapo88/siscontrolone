@@ -56,6 +56,35 @@
             </div>
          </div>
          <div class="panel-body" ng-hide="producto.mostrar">
+            <div class="text-right">
+               <div class="btn-group " role="group" aria-label="...">
+                  <div class="btn-group" role="group">
+                     <button type="button" class="btn btn-sm btn-success">
+                        Stock Alto
+                        <span class="badge">
+                           {{producto.totalStockAlto}}
+                        </span>
+                     </button>
+                  </div>
+                  <div class="btn-group" role="group">
+                     <button type="button" class="btn btn-sm btn-warning">
+                        Alerta Stock
+                        <span class="badge">
+                           {{producto.totalAlertas}}
+                        </span>
+                     </button>
+                  </div>
+                  <div class="btn-group" role="group">
+                     <button type="button" class="btn btn-sm btn-danger">
+                        Stock Vacio
+                        <span class="badge">
+                           {{producto.totalStockVacio}}
+                        </span>
+                     </button>
+                  </div>
+               </div>
+            </div>
+            <br>
             <table class="table table-striped table-hover">
                <thead>
                   <tr>
@@ -65,13 +94,13 @@
                      <th class="text-center">Perecedero</th>
                      <th class="text-center">Mínima</th>
                      <th class="text-center">Máxima</th>
-                     <th class="text-center">Disponible <button ng-click="sortBy('cantidadMinima')"></button></th>
+                     <th class="text-center">Disponible</th>
                      <th class="text-center">Ubicación</th>
                      <th class="text-center">Editar</th>
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="(ixProducto, producto) in producto.lstProductos | orderBy: '-cantidadMinima' | filter:searchProducto" ng-class="{'warning': producto.alertaStock==1,'danger': producto.alertaStock==2}">
+                  <tr ng-repeat="(ixProducto, producto) in producto.lstProductos | orderBy: '-cantidadMinima' | filter:searchProducto" ng-class="{'danger': producto.alertaStock==1,'warning': producto.alertaStock==2,'success': producto.alertaStock==3}">
                      <td class="text-center">
                         {{ producto.idProducto }}
                      </td>

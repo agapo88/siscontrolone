@@ -95,8 +95,9 @@ class Producto extends Session
 						'perecedero'      => strtoupper( $row->perecedero ),
 						'lstProductos'    => array(),
 						'totalProductos'  => 0,
-						'peligroMinimo'   => 0,
-						'peligroEscaces'  => 0,
+						'totalStockVacio' => 0,
+						'totalAlertas'    => 0,
+						'totalStockAlto'  => 0,
 					);
 				}
 
@@ -120,11 +121,14 @@ class Producto extends Session
 						$ixSolicitud = $iPerecedero;
 					endif;
 
-					// GENERAR ALERTA STOCK BAJO
-					if( $row->totalProducto >= $row->cantidadMinima + 10 ):
+					$alertaStock = 0;
+					// GENERAR ALERTA STOCK BAJO / ALTO / VACIO
+					if( $row->totalProducto < $row->cantidadMinima ):
 						$alertaStock = 1;
-					elseif( $row->totalProducto <= $row->cantidadMinima ):
+					elseif( $row->totalProducto <= $row->cantidadMinima + 15 ):
 						$alertaStock = 2;
+					elseif( $row->totalProducto > $row->cantidadMaxima ):
+						$alertaStock = 3;
 					endif;
 
 					$lstProductos[ $ixSolicitud ][ 'lstProductos' ][] = array(
@@ -141,13 +145,16 @@ class Producto extends Session
 						'tipoProducto'    => $row->tipoProducto,
 						'totalProducto'   => $row->totalProducto ? $row->totalProducto : 0,
 						'alertaStock'	  => $alertaStock
-						
 					);
-					$lstProductos[ $ixSolicitud ]['totalProductos'] ++;
 					if( $alertaStock == 1 )
-						$lstProductos[ $ixSolicitud ]['alerta']++;
+						$lstProductos[ $ixSolicitud ]['totalStockVacio'] ++;
 					if( $alertaStock == 2 )
-						$lstProductos[ $ixSolicitud ]['peligroEscaces']++;
+						$lstProductos[ $ixSolicitud ]['totalAlertas'] ++;
+					if( $alertaStock == 3 )
+						$lstProductos[ $ixSolicitud ]['totalStockAlto'] ++;
+
+					$lstProductos[ $ixSolicitud ]['totalProductos'] ++;
+
 				}
 
 			}

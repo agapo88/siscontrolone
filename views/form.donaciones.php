@@ -14,11 +14,11 @@
          <button type="button" class="btn btn-default" ng-click="filtro='tipoEntidad'">
             <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='tipoEntidad', 'glyphicon-unchecked': filtro!='tipoEntidad'}"></span> Tipo Entidad
          </button>
-         <button type="button" class="btn btn-default" ng-click="filtro='anio'">
-            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='anio', 'glyphicon-unchecked': filtro!='anio'}"></span> Año Ingreso
+         <button type="button" class="btn btn-default" ng-click="filtro='fechaDonacion'">
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='fechaDonacion', 'glyphicon-unchecked': filtro!='fechaDonacion'}"></span> Fecha Donación
          </button>
-         <button type="button" class="btn btn-default" ng-click="filtro='estado'">
-            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='estado', 'glyphicon-unchecked': filtro!='estado'}"></span> Estado
+         <button type="button" class="btn btn-default" ng-click="filtro='moneda'">
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='moneda', 'glyphicon-unchecked': filtro!='moneda'}"></span> Moneda
          </button>
       </div>
    </div>
@@ -35,27 +35,27 @@
       </div>
    </div>
    <div class="col-sm-12">
-      <div class="panel panel-info" ng-repeat="(ixEntidad, entidad) in lstEntidades ">
+      <div class="panel panel-fondo" ng-repeat="(ixFondo, fondoComun) in lstFondoComun ">
          <div class="panel-heading">
-            <a ng-click="entidad.mostrar=!entidad.mostrar">
-               <span class="glyphicon" ng-class="{'glyphicon-chevron-right': entidad.mostrar, 'glyphicon-chevron-down': !entidad.mostrar}"></span>
+            <a ng-click="fondoComun.mostrar=!fondoComun.mostrar">
+               <span class="glyphicon" ng-class="{'glyphicon-chevron-right': fondoComun.mostrar, 'glyphicon-chevron-down': !fondoComun.mostrar}"></span>
                <strong ng-show="filtro=='tipoEntidad'">
-                  {{ entidad.tipoEntidad }}
+                  {{ fondoComun.tipoEntidad }}
                </strong>
-               <strong ng-show="filtro=='anio'">
-                  {{ entidad.anio }}
+               <strong ng-show="filtro=='fechaDonacion'">
+                  {{ fondoComun.fechaDonacion }}
                </strong>
-               <strong ng-show="filtro=='estado'">
-                  {{ entidad.estadoDonador }}
+               <strong ng-show="filtro=='moneda'">
+                  {{ fondoComun.moneda }}
                </strong>
             </a>
             <div class="pull-right">
                <label class="label label-primary">
-                  <strong>TOTAL: <span class="badge">{{entidad.totalDonantes}}</span></strong>
+                  <strong>TOTAL: <span class="badge">{{fondoComun.totalDonacionEntidad}}</span></strong>
                </label>
             </div>
          </div>
-         <div class="panel-body" ng-hide="entidad.mostrar">
+         <div class="panel-body" ng-hide="fondoComun.mostrar">
             <table class="table table-striped table-hover">
                <thead>
                   <tr>
@@ -64,33 +64,27 @@
                      <th class="text-center" ng-if="filtro!='tipoEntidad'">Tipo Donador</th>
                      <th class="text-center">Telefono</th>
                      <th class="text-center">Fecha Ingreso</th>
-                     <th class="text-center">Correo</th>
+                     <th class="text-center">Telefono</th>
+                     <th class="text-center">Donación</th>
                      <th class="text-center">Editar</th>
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="(ixDonante, donador) in entidad.lstDonantes | filter:searchDonador || searchDonante" ng-init="$idIndex = $index">
+                  <tr ng-repeat="(ixFondo, fondo) in fondoComun.lstFondos | filter:searchDonador || searchDonante" ng-init="$idIndex = $index">
                      <td class="text-center">
                       {{ $idIndex + 1 }} </td>
-                     <td> {{ donador.nombre }} </td>
-                     <td class="text-center" ng-if="filtro!='tipoEntidad'"> {{ donador.tipoEntidad }} </td>
-                     <td class="text-center"> {{ donador.telefono }} </td>
-                     <td class="text-center"> {{ donador.fechaFormato </td>
-                     <td class="text-center"> {{ donador.email }} </td>
+                     <td> {{ fondo.nombre }} </td>
+                     <td class="text-center" ng-if="filtro!='tipoEntidad'"> {{ fondo.tipoEntidad }} </td>
+                     <td class="text-center"> {{ fondo.telefono }} </td>
+                     <td class="text-center"> {{ fondo.fechaDonacion }} </td>
+                     <td class="text-center"> {{ fondo.telefono }} </td>
+                     <td class="text-right"> {{ fondo.tipoMoneda + (fondo.donacion | number:2) }} </td>
                      <td>
                         <!-- OPCIONES -->
                         <div class="menu-opciones">
-                           <button class="btn btn-xs btn-opcion" ng-click="removeMiembro( ixMiembro )" >
-                              <span class="glyphicon glyphicon-trash"></span>
-                           </button>
                            <button class="btn btn-xs btn-opcion" ng-click="editarDonador( donador )">
                               <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
                            </button>
-                           <!--
-                           <button type="button" class="btn btn-sm btn-opcion" data-toggle="modal" data-target="#myModal" ng-click="openModalOficios( ixMiembro )">
-                              <span class="glyphicon glyphicon-plus"></span> Oficio
-                           </button>
-                           -->
                         </div>
                      </td>
                   </tr>

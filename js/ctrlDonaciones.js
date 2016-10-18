@@ -1,7 +1,7 @@
 miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $timeout){
 	
 	$scope.$parent.menu  = 'donaciones';
-
+	$scope.filtro        = "tipoEntidad"
 	$scope.lstFamilias   = [];
 	$scope.lstGeneros    = [];
 	$scope.lstAreas      = [];
@@ -15,7 +15,7 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 
 	$scope.lstProveedores = [];
 
-	$scope.tab = 2;
+	$scope.tab = 1;
 
 	$scope.donacionFondo = {
 		esAnonimo     : true,
@@ -33,6 +33,25 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 		noFactura        : '',
 		lstProductos     : []
 	};
+
+	$scope.$watch( 'filtro', function( _new, _old){
+		if( _new != _old ){
+			$scope.consultarDonaciones();
+		}
+	});
+
+	$scope.lstFondoComun = [];
+	// CARGAR LISTA DE PRODUCTOS
+	($scope.consultarDonaciones = function(){
+		$http.post('consultas.php',{accion: 'consultarFondoComun', filtro: $scope.filtro})
+		.success(function(data){
+			console.log(data);
+			$scope.lstFondoComun = data.lstFondoComun;
+		}).error(function(data){
+			console.log(data);
+		});
+	})();
+
 
 	$scope.$watch('donacionProducto.tieneFactura', function(){
 		if( $scope.donacionProducto.tieneFactura == true )
@@ -67,7 +86,6 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 		});
 	}
 
-
 	// RESETEAR OBJETO
 	$scope.resetObject = function(){
 		$scope.dcProducto = {
@@ -96,7 +114,6 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 
 		var dcProducto   = $scope.dcProducto;
 		var error        = false;
-
 
 		if( !(dcProducto.idProducto) ){
 			error = true;
@@ -141,7 +158,6 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 		$scope.donacionProducto.lstProductos.splice( index, 1 );
 	};
 
-
 	// RESETEAR VALORES
 	$scope.reset = function(){
 		$scope.donacionFondo = {
@@ -161,8 +177,6 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 		};
 	}
 
-
-	//var fechaIngreso = $filter('date')($scope.donador.fechaIngreso, "yyyy-MM-dd");
 	// GUARDAR DONACION PRODUCTO
 	$scope.guardarDonacionProducto = function(){
 		var error = false;
@@ -235,6 +249,7 @@ miApp.controller('ctrlDonaciones', function($scope, $http, $alert, $filter, $tim
 				console.log(data);
 				if( data.respuesta ){
 					$scope.$parent.hideModalAgregar();
+					$scope.consultarDonaciones();
 					$scope.reset();
 					$alert({title: 'Mensaje: ', content: data.mensaje, placement: 'top', type: 'success', show: true, duration: 4});
 				}else{

@@ -47,9 +47,9 @@ class Producto extends Session
 
 				// VER TIPO DE AGRUPACIÓN
 				if( $groupBy == 'tipoProducto' ): 		// TIPOPRODUCTO
-					foreach ($lstProductos AS $ixtipoProducto => $tipoProducto) {
+					foreach ($lstProductos AS $ixTipoProducto => $tipoProducto) {
 						if( $tipoProducto['idTipoProducto'] == $row->idTipoProducto ){
-							$iTipoProducto = $ixtipoProducto;
+							$iTipoProducto = $ixTipoProducto;
 							break;
 						}
 					}

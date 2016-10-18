@@ -5765,16 +5765,44 @@ button.list-group-item-danger.active:focus {
   cursor: pointer;
 }
 
-.panel-info > .panel-heading + .panel-collapse > .panel-body {
+.panel-fondo > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #bce8f1;
 }
-.panel-info > .panel-heading .badge {
+.panel-fondo > .panel-heading .badge {
   color: #0565b1;
   background-color: #fff;
 }
-.panel-info > .panel-footer + .panel-collapse > .panel-body {
+.panel-fondo > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #bce8f1;
 }
+
+.panel-fondo {
+  border-color: #98a7f9;
+}
+.panel-fondo > .panel-heading {
+  color: #fff;
+  background-color: #4857af;
+  border-color: #38448e;
+}
+/*** AGREGADO ***/
+.panel-fondo > .panel-heading > a {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
+.panel-fondo > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #bce8f1;
+}
+.panel-fondo > .panel-heading .badge {
+  color: #0565b1;
+  background-color: #fff;
+}
+.panel-fondo > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #bce8f1;
+}
+
 .panel-warning {
   border-color: #faebcc;
 }

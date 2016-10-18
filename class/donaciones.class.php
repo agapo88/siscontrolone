@@ -14,6 +14,127 @@ class Donacion extends Session
 		$this->con = $conexion;
 	}
 
+	function consultarFondoComun( $groupBy = 'tipoEntidad' ){
+		$lstFondoComun = array();
+
+		$sql = "SELECT 
+				    idFondoComun,
+				    idDonador,
+				    nombre,
+				    telefono,
+				    idTipoEntidad,
+				    tipoEntidad,
+				    donacion,
+				    fechaDonacion,
+				    idMoneda,
+				    moneda,
+				    total
+				FROM
+				    vstFondoComun;";
+
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+				
+				$iTipoEntidad   = -1;
+				$iFechaDonacion = -1;
+				$iMoneda        = -1;
+				$iFondo         = -1;
+
+				// VER TIPO DE AGRUPACIÓN
+				if( $groupBy == 'tipoEntidad' ): 		// TIPOPRODUCTO
+					foreach ($lstFondoComun AS $ixTipoEntidad => $tipoEntidad) {
+						if( $tipoEntidad['idTipoEntidad'] == $row->idTipoEntidad ){
+							$iTipoEntidad = $ixTipoEntidad;
+							break;
+						}
+					}
+
+				elseif( $groupBy == 'fechaDonacion' ):			// SECCION BODEGA
+					foreach ($lstFondoComun AS $ixFondoComun => $fechaDonacion) {
+						if( $fechaDonacion['fechaDonacion'] == $row->fechaDonacion ){
+							$iFechaDonacion = $ixFondoComun;
+							break;
+						}
+					}
+
+				elseif( $groupBy == 'moneda' ):			// CLASIFICACION
+					foreach ($lstFondoComun AS $ixMoneda => $moneda) {
+						if( $moneda['idMoneda'] == $row->idMoneda ){
+							$iMoneda = $ixMoneda;
+							break;
+						}
+					}
+
+				endif;
+
+				// SI NO EXISTE EL TIPO LO AGREGA
+				if( $iTipoEntidad == -1 AND $iFechaDonacion == -1 AND $iMoneda == -1 ){
+
+					if( $groupBy == 'tipoEntidad' ):				// TIPOPRODUCTO
+						$iTipoEntidad = count( $lstFondoComun );
+
+					elseif( $groupBy == 'fechaDonacion' ):			// BODEGA
+						$iFechaDonacion = count( $lstFondoComun );
+
+					elseif( $groupBy == 'moneda' ):			// CLASIFICACION
+						$iMoneda = count( $lstFondoComun );
+
+					endif;
+
+					$lstFondoComun[] = array(
+						'idTipoEntidad'        => (int) $row->idTipoEntidad,
+						'tipoEntidad'          => $row->tipoEntidad,
+						'fechaDonacion'        => $row->fechaDonacion,
+						'idMoneda'             => $row->idMoneda,
+						'moneda'               => $row->moneda,
+						'total'                => $row->total,
+						'totalDonacionEntidad' => 0,
+						'lstFondos'         => array(),
+					);
+				}
+
+				// VERIFICAR QUE VENGAN LOS LOS PRODUCTOS
+				foreach ($lstFondoComun AS $ixFondoComun => $fondoComun) {
+					foreach ($fondoComun['lstFondos'] AS $ixFondo => $fondo) {
+						if( $fondo['idFondoComun'] == $row->idFondoComun ){
+							$iFondo = $ixFondo;
+							break;
+						}
+					}
+				}
+
+				// SI NO EXISTE EL DONANTE
+				if( $iFondo == -1 ){
+					if( $groupBy == 'tipoEntidad' ):			// TIPO PRODUCTO
+						$ixSolicitud = $iTipoEntidad;
+					elseif( $groupBy == 'fechaDonacion' ):		// SECCION BODEGA
+						$ixSolicitud = $iFechaDonacion;
+					elseif( $groupBy == 'moneda' ):		// CLASIFICACION
+						$ixSolicitud = $iMoneda;
+					endif;
+
+
+					$lstFondoComun[ $ixSolicitud ][ 'lstFondos' ][] = array(
+						'idFondoComun'  => $row->idFondoComun,
+						'idDonador'     => $row->idDonador,
+						'nombre'        => $row->idDonador ? $row->nombre : 'Donador Anónimo',
+						'telefono'      => $row->telefono,
+						'tipoEntidad'   => $row->idDonador ? $row->tipoEntidad : 'Donador Anónimo',
+						'donacion'      => $row->donacion,
+						'fechaDonacion' => $row->fechaDonacion,
+						'tipoMoneda'    => $row->idMoneda == 1 ? 'Q.' : '$.',
+					);
+
+					//$lstFondoComun[ $ixSolicitud ]['totalProductos'] ++;
+					$lstFondoComun[ $ixSolicitud ]['totalDonacionEntidad'] += $row->donacion;
+				}
+
+			}
+		}
+
+		return $lstFondoComun;
+	}
+
 	// GUARDAR DONACION PRODUCTO
 	function guardarDonacionProducto( $lstProductosD ){
 

@@ -44,12 +44,20 @@ switch ( $data->accion ) {
 		break;
 
 	case 'guardarDonacionProducto':
-		//var_dump( $data );
 		$donacion = new Donacion( $conexion );
 
 		$datos = $donacion->guardarDonacionProducto( $data->datos );
 		echo json_encode( $datos );
 		break;
+
+	case 'consultarFondoComun':
+		$donacion = new Donacion( $conexion );
+
+		$datos['lstFondoComun'] = $donacion->consultarFondoComun( $data->filtro );
+		echo json_encode( $datos );
+
+		break;
+
 
 	/*** AREAS DE BODEGA ***/
 	case 'cargarSeccionBodega':

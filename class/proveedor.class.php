@@ -2,7 +2,7 @@
 /**
 * PROVEEDOR
 */
-class Proveedor
+class Proveedor extends session
 {
 	
 	private $con;

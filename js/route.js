@@ -23,7 +23,11 @@ miApp.config(function($routeProvider) {
 		templateUrl : 'views/form.producto.php',
 		controller  : 'ctrlProductos'
 	})
-	
+	.when('/compras', {
+		templateUrl : 'views/form.compras.php',
+		controller  : 'ctrlCompras'
+	})
+
 	.when('/tema/:idTema', {
 		templateUrl : 'tema.view.php',
 		controller  : 'ctrlTema'

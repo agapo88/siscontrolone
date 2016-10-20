@@ -27,6 +27,21 @@ switch ( $data->accion ) {
 		echo json_encode( $datos );
 		
 		break;
+	/*** COMPRAS ***/
+	case 'inicioCompras':
+		$donacion  = new Donacion( $conexion );
+		$producto  = new Producto( $conexion );
+		$proveedor = new Proveedor( $conexion );
+
+		$datos['lstMontos']      = $donacion->cargarMontosFondo();
+		$datos['lstProductos']   = $producto->catalogoProductos();
+		$datos['lstProveedores'] = $proveedor->consultarProveedores();
+		echo json_encode( $datos );
+		break;
+
+	case 'guardarCompra':
+		var_dump( $data );
+		break;
 
 	/*** DONACIONES ***/
 	case 'infoDonacion':

@@ -15,31 +15,13 @@
          <ul class="nav navbar-nav">
             <li ng-class="{'active':menu=='inicio'}"><a href="#">Inicio <span class="sr-only">(current)</span></a></li>
 
-            <li class="dropdown" ng-class="{'active':menu=='donaciones'}">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Donaciones <span class="caret"></span></a>
-               <ul class="dropdown-menu">
-                  <li><a href="#/donaciones">Donaciones</a></li>
-                  <li><a href="#/donaciones/fondoComun">Fondo Común</a></li>
-                  <li><a href="#">Beneficiarios</a></li>
-                  <li><a href="#">Suministros</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#">Desastres</a></li>
-               </ul>
-            </li>
-
-            <li ng-class="{'active':menu=='reporte'}"><a href="#">Reportes</a></li>
-            <li ng-class="{'active':menu=='donantes'}"><a href="#/donantes">Donantes</a></li>
-            <li ng-class="{'active':menu=='familias'}"><a href="#/familias">Familias</a></li>
-            <li ng-class="{'active':menu=='productos'}"><a href="#/productos">Productos</a></li>
             
-         
-            <li class="dropdown">
-               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
+
+            <li class="dropdown"  >
+               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Donación <span class="caret"></span></a>
                <ul class="dropdown-menu">
-                  <li><a href="#">Donantes</a></li>
-                  <li><a href="#">Donadores</a></li>
-                  <li><a href="#">Beneficiarios</a></li>
-                  <li><a href="#">Suministros</a></li>
+                  <li><a href="#/donaciones/fondoComun">Fondo Común</a></li>
+                  
                   <li role="separator" class="divider"></li>
                   <li><a href="#">Desastres</a></li>
                </ul>
@@ -58,8 +40,23 @@
                </ul>
             </li>
          </ul>
-         
+
          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{'active':menu=='comprarProducto'}"><a href="#/compras">Comprar</a></li>
+            <li ng-class="{'active':menu=='reporte'}"><a href="#">Reportes</a></li>
+            <li class="dropdown">
+               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
+               <ul class="dropdown-menu">
+                  <li ng-class="{'active':menu=='donaciones'}"><a href="#/donaciones">Donaciones</a></li>
+                  <li ng-class="{'active':menu=='productos'}"><a href="#/productos">Productos</a></li>
+                  <li ng-class="{'active':menu=='donantes'}"><a href="#/donantes">Donantes</a></li>
+                  <li ng-class="{'active':menu=='familias'}"><a href="#/familias">Familias</a></li>
+                  <li><a href="#">Beneficiarios</a></li>
+                  <li><a href="#">Suministros</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">Desastres</a></li>
+               </ul>
+            </li>
             <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
          </ul>
       </div>

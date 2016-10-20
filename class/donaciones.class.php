@@ -221,7 +221,6 @@ class Donacion extends Session
 		return $respuesta;
 	}
 
-
 	// GUARDAR DONACIONES DEL FONDO COMUN
 	function guardarFondoComun($esAnonimo, $idDonador, $donacion, $idMoneda, $fechaDonacion){
 
@@ -253,6 +252,24 @@ class Donacion extends Session
 		$respuesta = array( 'respuesta' => $this->respuesta, 'mensaje' => $this->mensaje );
 
 		return $respuesta;	
+	}
+
+	// CONSULTAR FONDO COMUN POR MONEDA
+	function cargarMontosFondo(){
+		$lstTotalFondos = array();
+
+		$sql = "SELECT cc.idMoneda, moneda, total 
+					FROM controlCaja As cc
+						JOIN moneda AS m
+							ON m.idMoneda = cc.idMoneda";
+
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+				$lstTotalFondos[] = $row;
+			}
+		}
+
+		return $lstTotalFondos;
 	}
 
 }

@@ -83,7 +83,6 @@ miApp.controller('ctrlProductos', function($scope, $http, $alert){
 
 	// GUARDAR DONADOR
 	$scope.guardarProducto = function(){
-
 		var producto = $scope.producto;
 		var error = false;
 

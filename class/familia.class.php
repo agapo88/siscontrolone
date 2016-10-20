@@ -41,15 +41,16 @@ class Familia extends Session
 		if( $rs = $this->con->query( $sql ) ){
 			while( $row = $rs->fetch_object() ){
 				
-				$iDepartamento = -1;
 				$iEstado       = -1;
-				$iFamilia      = -1;
+				$iDepartamento = -1;
 				$iMunicipio    = -1;
-				$iAnio = -1;
+
+				$iFamilia      = -1;
+				$iAnio         = -1;
 
 				// VER TIPO DE AGRUPACIÓN
-				if( $groupBy == 'departamento' ): 		//TIPOENTIDAD
-					// VER SI EXISTE ENTIDAD
+				if( $groupBy == 'departamento' ): 		// DEPARTAMENTO
+					// VER SI EXISTE DEPARTAMENTO
 					foreach ($lstFamiliasB AS $ixDepartamento => $departamento) {
 						if( $departamento['idDepartamento'] == $row->idDepartamento ){
 							$iDepartamento = $ixDepartamento;
@@ -91,7 +92,9 @@ class Familia extends Session
 
 					endif;
 
-					$lstFamiliasB[] = array(
+					$iDepartamento = count( $lstFamiliasB );
+
+					$lstFamiliasB[ $iDepartamento ] = array(
 						'idDepartamento'     => (int) $row->idDepartamento,
 						'departamento'       => $row->departamento,
 						'lstMunicipios'      => array(),
@@ -99,14 +102,11 @@ class Familia extends Session
 					);
 				}
 
-
 				// VERIFICAR QUE EXISTA EL DEPARTAMENTO
-				foreach ($lstFamiliasB AS $ixDepartamento => $departamento) {
-					foreach ($departamento['lstMunicipios'] AS $ixMunicipio => $municipio) {
-						if( $municipio['idMunicipio'] == $row->idMunicipio )		{
-							$iMunicipio = $ixMunicipio;
-							break;
-						}
+				foreach ($lstFamiliasB[ $iDepartamento ]['lstMunicipios'] AS $ixMunicipio => $municipio) {
+					if( $municipio['idMunicipio'] == $row->idMunicipio && $municipio['idDepartamento'] == $row->idDepartamento ){
+						$iMunicipio = $ixMunicipio;
+						break;
 					}
 				}
 
@@ -123,54 +123,50 @@ class Familia extends Session
 					$iMunicipio = count( $lstFamiliasB[ $ixSolicitud ]['lstMunicipios'] );
 
 					$lstFamiliasB[ $ixSolicitud ][ 'lstMunicipios' ][ $iMunicipio ] = array(
-							'idMunicipio' => $row->idMunicipio,
-							'municipio'   => $row->municipio,
-							'lstFamilias' => array(),
+							'idDepartamento' => $row->idDepartamento,
+							'departamento'   => $row->departamento,
+							'idMunicipio'    => $row->idMunicipio,
+							'municipio'      => $row->municipio,
+							'lstFamilias'    => array(),
+							'subTotal'       => 0,
 						);
 					
-				}
-
+				}				
 
 				
 				// VERIFICAR QUE EXISTA LA FAMILIA
-				foreach ($lstFamiliasB AS $ixDepartamento => $departamento) {
-					foreach ($departamento['lstMunicipios'] AS $municipio) {
-						var_dump( $municipio );
-						foreach ($municipio['lstFamilias'] AS $ixFamilia => $familia) {
-							if( $familia['idFamilia'] == $row->idFamilia )		{
-								$iFamilia = $ixFamilia;
-							}
+				foreach ($lstFamiliasB[ $ixSolicitud ]['lstMunicipios'] AS $ixMunicipio => $municipio) {
+					// var_dump( $municipio )
+					foreach ($municipio['lstFamilias'] AS $ixFamilia => $familia) {
+						if( $familia['idFamilia'] == $row->idFamilia && $familia['idMunicipio'] == $row->idMunicipio   ) {
+							$iFamilia = $ixFamilia;
 							break;
-							
 						}
 					}
 				}
 
-				// SI NO EXISTE EL DONANTE
+				// SI NO EXISTE FAMILIA
 				if( $iFamilia == -1 ){
-
-				//	$iFamilia = count( $lstFamiliasB[ $ixSolicitud ][ 'lstMunicipios' ][ $iMunicipio ][ 'lstFamilias' ] );
-
-					$lstFamiliasB[ $ixSolicitud ]['lstMunicipios'][ $iMunicipio ]['lstFamilias'] = 
+					$lstFamiliasB[ $ixSolicitud ]['lstMunicipios'][ $iMunicipio ]['lstFamilias'][] = 
 						array(
 							'idFamilia'     => $row->idFamilia,
 							'nombreFamilia' => $row->nombreFamilia,
 							'idEstado'      => $row->idEstado,
 							'area'          => $row->area,
 							'direccion'     => $row->direccion,
+							'idMunicipio'   => $row->idMunicipio,
 							'municipio'     => $row->municipio,
 							'estado'        => $row->estado,
-							'fechaIngreso'  => $row->fechaIngreso,
-							
+							'fechaIngreso'  => $row->fechaIngreso
 						);
-					//$lstFamiliasB[ $ixSolicitud ]['totalDonantes'] ++;
+					$lstFamiliasB[ $ixSolicitud ]['totalFamiliasDepto']++;
 				}
-/**/
-
+	
 			}
 
 		}
 
+		//var_dump( $lstFamiliasB );
 		return $lstFamiliasB;
 	}
 

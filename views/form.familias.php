@@ -106,7 +106,7 @@
             <b>TOTAL MIEMBROS: <span class="badge">{{ familia.lstMiembros.length }}</span></b>
          </button>
       </div>
-      {{familia}}
+      
       <!-- AGREGAR MIEMBROS -->
       <div class="form-group">
          <table class="table table-striped table-hover">
@@ -303,53 +303,63 @@
                </strong>
             </a>
             <div class="pull-right">
-               <label class="label label-primary">
-                  <strong>TOTAL: <span class="badge">{{familiaB.totalDonantes}}</span></strong>
+               <label class="label label-success">
+                  <strong>TOTAL: <span class="badge">{{familiaB.totalFamiliasDepto}}</span></strong>
                </label>
             </div>
          </div>
          <div class="panel-body" ng-hide="familiaB.mostrar">
-            <table class="table table-striped table-hover">
-               <thead>
-                  <tr>
-                     <th class="text-center">No.</th>
-                     <th class="text-center">Donador</th>
-                     <th class="text-center" ng-if="filtro!='departamento'">Tipo Donador</th>
-                     <th class="text-center">Telefono</th>
-                     <th class="text-center">Estado</th>
-                     <th class="text-center">Fecha Ingreso</th>
-                     <th class="text-center">Correo</th>
-                     <th class="text-center">Editar</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr ng-repeat="(ixFamilia, familia) in familiaB.lstFamilias | filter:searchfamilia || searchDonante" ng-init="$idIndex = $index">
-                     <td class="text-center">
-                      {{ $idIndex + 1 }} </td>
-                     <td> {{ familia.nombreFamilia }} </td>
-                     <td class="text-center" ng-if="filtro!='departamento'"> {{ familia.departamento }} </td>
-                     <td class="text-center"> {{ familia.municipio }} </td>
-                     <td class="text-center"> {{ familia.estado }}  </td>
-                     <td class="text-center"> {{ familia.fechaIngreso }} </td>
-                     <td>
-                        <!-- OPCIONES -->
-                        <div class="menu-opciones">
-                           <button class="btn btn-xs btn-opcion" ng-click="removeMiembro( ixMiembro )" >
-                              <span class="glyphicon glyphicon-trash"></span>
-                           </button>
-                           <button class="btn btn-xs btn-opcion" ng-click="editarfamilia( donador )">
-                              <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
-                           </button>
-                           <!--
-                           <button type="button" class="btn btn-sm btn-opcion" data-toggle="modal" data-target="#myModal" ng-click="openModalOficios( ixMiembro )">
-                              <span class="glyphicon glyphicon-plus"></span> Oficio
-                           </button>
-                           -->
-                        </div>
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
+            <div class="panel panel-dafault" ng-repeat="(ixMunicipio, municipio) in familiaB.lstMunicipios">
+               <div class="panel-heading">
+                  <h3 class="panel-title">{{municipio.municipio}}</h3>
+               </div>
+               <div class="panel-body">
+                  <table class="table table-striped table-hover">
+                     <thead>
+                        <tr>
+                           <th class="text-center">No.</th>
+                           <th class="text-center">Donador</th>
+                           <th class="text-center" ng-if="filtro!='departamento'">Tipo Donador</th>
+                           <th class="text-center">Telefono</th>
+                           <th class="text-center">Estado</th>
+                           <th class="text-center">Fecha Ingreso</th>
+                           <th class="text-center">Correo</th>
+                           <th class="text-center">Editar</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr ng-repeat="(ixFamilia, familia) in municipio.lstFamilias | filter:searchfamilia || searchDonante" ng-init="$idIndex = $index">
+                           <td class="text-center">
+                            {{ $idIndex + 1 }} </td>
+                           <td> {{ familia.nombreFamilia }} </td>
+                           <td class="text-center" ng-if="filtro!='departamento'"> {{ familia.departamento }} </td>
+                           <td class="text-center"> {{ familia.municipio }} </td>
+                           <td class="text-center"> {{ familia.estado }}  </td>
+                           <td class="text-center"> {{ familia.fechaIngreso }} </td>
+                           <td>
+                              <!-- OPCIONES -->
+                              <div class="menu-opciones">
+                                 <button class="btn btn-xs btn-opcion" ng-click="removeMiembro( ixMiembro )" >
+                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                 </button>
+                                 <button class="btn btn-xs btn-opcion" ng-click="removeMiembro( ixMiembro )" >
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                 </button>
+                                 <button class="btn btn-xs btn-opcion" ng-click="editarfamilia( donador )">
+                                    <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
+                                 </button>
+                                 <!--
+                                 <button type="button" class="btn btn-sm btn-opcion" data-toggle="modal" data-target="#myModal" ng-click="openModalOficios( ixMiembro )">
+                                    <span class="glyphicon glyphicon-plus"></span> Oficio
+                                 </button>
+                                 -->
+                              </div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
          </div>
       </div>
    </div>

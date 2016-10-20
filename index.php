@@ -14,7 +14,6 @@
 		<!-- VISTA -->
 		<div ng-view></div>
 	</div>
-	
 
 	<!-- LIBRERIAS -->
 	<script type="text/javascript" src="js/libs/jquery-1.12.1.min.js"></script>
@@ -31,8 +30,7 @@
 	<script type="text/javascript" src="js/ctrlFamilias.js"></script>
 	<script type="text/javascript" src="js/ctrlDonaciones.js"></script>
 	<script type="text/javascript" src="js/ctrlProductos.js"></script>
-	
-
+	<script type="text/javascript" src="js/ctrlCompras.js"></script>
 
 </body>
 </html>

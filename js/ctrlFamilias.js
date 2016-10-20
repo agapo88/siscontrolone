@@ -6,6 +6,8 @@ miApp.controller('ctrlFamilias', function($scope, $http, $alert, $filter, $timeo
 	$scope.lstGeneros    = [];
 	$scope.lstAreas      = [];
 	$scope.lstParentesco = [];
+	$scope.filtro        = "departamento";
+
 
 	$scope.$watch('agregarMiembros', function(){
 		console.log( $scope.agregarMiembros );
@@ -59,6 +61,18 @@ miApp.controller('ctrlFamilias', function($scope, $http, $alert, $filter, $timeo
 			$scope.lstParentesco = data.lstParentesco;
 			$scope.lstGeneros    = data.lstGeneros;
 			//$scope.consultarDonadores();
+		}).error(function(data){
+			console.log(data);
+		});
+	})();
+
+	
+	$scope.lstFamiliasB = [];
+	($scope.consultarFamilias = function(){
+		$http.post('consultas.php',{accion: 'consultarFamilias'})
+		.success(function(data){
+			console.log(data);
+			$scope.lstFamiliasB = data.lstFamiliasB;
 		}).error(function(data){
 			console.log(data);
 		});

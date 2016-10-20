@@ -26,6 +26,7 @@ class Donacion extends Session
 				    tipoEntidad,
 				    donacion,
 				    fechaDonacion,
+				    DATE_FORMAT(fechaDonacion, '%d/%m/%Y') AS fechaDonador,
 				    idMoneda,
 				    moneda,
 				    total
@@ -121,7 +122,7 @@ class Donacion extends Session
 						'telefono'      => $row->telefono,
 						'tipoEntidad'   => $row->idDonador ? $row->tipoEntidad : 'Donador Anónimo',
 						'donacion'      => $row->donacion,
-						'fechaDonacion' => $row->fechaDonacion,
+						'fechaDonacion' => $row->fechaDonador,
 						'tipoMoneda'    => $row->idMoneda == 1 ? 'Q.' : '$.',
 					);
 

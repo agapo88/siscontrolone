@@ -258,7 +258,101 @@
          </button>
       </div>
    </form>
-<div class="col-sm-12">
+</div>
+
+
+   <div class="col-sm-12">
+      <b>AGRUPAR POR:</b>
+      <div class="btn-group" role="group">
+         <button type="button" class="btn btn-default" ng-click="filtro='departamento'">
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='departamento', 'glyphicon-unchecked': filtro!='departamento'}"></span> Departamentos
+         </button>
+         <button type="button" class="btn btn-default" ng-click="filtro='anio'">
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='anio', 'glyphicon-unchecked': filtro!='anio'}"></span> Año Ingreso
+         </button>
+         <button type="button" class="btn btn-default" ng-click="filtro='estado'">
+            <span class="glyphicon" ng-class="{'glyphicon-check': filtro=='estado', 'glyphicon-unchecked': filtro!='estado'}"></span> Estado
+         </button>
+      </div>
+   </div>
+   <div class="col-sm-12">
+      <div class="row">
+         <div class="col-sm-offset-8 col-sm-4">
+            <div class="input-group">
+               <span class="input-group-btn">
+                  <button class="btn btn-default" type="button">Buscar:</button>
+               </span>
+               <input type="text" class="form-control" ng-model="searchDonador"  placeholder="Buscar donador">
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-sm-12">
+      <div class="panel panel-info" ng-repeat="(ixFamilias, familiaB) in lstFamiliasB ">
+         <div class="panel-heading">
+            <a ng-click="familiaB.mostrar=!familiaB.mostrar">
+               <span class="glyphicon" ng-class="{'glyphicon-chevron-right': familiaB.mostrar, 'glyphicon-chevron-down': !familiaB.mostrar}"></span>
+               <strong ng-show="filtro=='departamento'">
+                  {{ familiaB.departamento }}
+               </strong>
+               <strong ng-show="filtro=='anio'">
+                  {{ familiaB.anio }}
+               </strong>
+               <strong ng-show="filtro=='estado'">
+                  {{ familiaB.estadoDonador }}
+               </strong>
+            </a>
+            <div class="pull-right">
+               <label class="label label-primary">
+                  <strong>TOTAL: <span class="badge">{{familiaB.totalDonantes}}</span></strong>
+               </label>
+            </div>
+         </div>
+         <div class="panel-body" ng-hide="familiaB.mostrar">
+            <table class="table table-striped table-hover">
+               <thead>
+                  <tr>
+                     <th class="text-center">No.</th>
+                     <th class="text-center">Donador</th>
+                     <th class="text-center" ng-if="filtro!='departamento'">Tipo Donador</th>
+                     <th class="text-center">Telefono</th>
+                     <th class="text-center">Estado</th>
+                     <th class="text-center">Fecha Ingreso</th>
+                     <th class="text-center">Correo</th>
+                     <th class="text-center">Editar</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="(ixFamilia, familia) in familiaB.lstFamilias | filter:searchfamilia || searchDonante" ng-init="$idIndex = $index">
+                     <td class="text-center">
+                      {{ $idIndex + 1 }} </td>
+                     <td> {{ familia.nombreFamilia }} </td>
+                     <td class="text-center" ng-if="filtro!='departamento'"> {{ familia.departamento }} </td>
+                     <td class="text-center"> {{ familia.municipio }} </td>
+                     <td class="text-center"> {{ familia.estado }}  </td>
+                     <td class="text-center"> {{ familia.fechaIngreso }} </td>
+                     <td>
+                        <!-- OPCIONES -->
+                        <div class="menu-opciones">
+                           <button class="btn btn-xs btn-opcion" ng-click="removeMiembro( ixMiembro )" >
+                              <span class="glyphicon glyphicon-trash"></span>
+                           </button>
+                           <button class="btn btn-xs btn-opcion" ng-click="editarfamilia( donador )">
+                              <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
+                           </button>
+                           <!--
+                           <button type="button" class="btn btn-sm btn-opcion" data-toggle="modal" data-target="#myModal" ng-click="openModalOficios( ixMiembro )">
+                              <span class="glyphicon glyphicon-plus"></span> Oficio
+                           </button>
+                           -->
+                        </div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
 
 
 <!-- VENTANA MODAL AGREGAR -->

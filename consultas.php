@@ -13,6 +13,7 @@ require_once 'class/producto.class.php';
 require_once 'class/proveedor.class.php';
 require_once 'class/areas.bodega.class.php';
 require_once 'class/donaciones.class.php';
+require_once 'class/familia.class.php';
 
 
 $datos    = array();
@@ -110,6 +111,12 @@ switch ( $data->accion ) {
 		echo json_encode( $datos );
 		break;
 
+	case 'consultarFamilias':
+		$familia = new Familia( $conexion );
+		$datos['lstFamiliasB'] = $familia->consultarFamilias();
+
+		echo json_encode( $datos );
+		break;
 	
 	/***** DONANTES *****/
 

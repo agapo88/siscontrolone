@@ -1,7 +1,7 @@
 miApp.controller('ctrlProductos', function($scope, $http, $alert){
 	
 	$scope.$parent.menu     = 'productos';
-	$scope.filtro           = "tipoProducto"
+	$scope.filtro           = "tipoProducto";
 	$scope.producto         = {};
 	$scope.itemProducto     = {};
 	$scope.lstAreas         = [];

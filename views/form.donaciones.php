@@ -29,7 +29,7 @@
                <span class="input-group-btn">
                   <button class="btn btn-default" type="button">Buscar:</button>
                </span>
-               <input type="text" class="form-control" ng-model="searchDonador"  placeholder="Buscar donador">
+               <input type="text" class="form-control" ng-model="searchDonador"  placeholder="Buscar donación">
             </div>
          </div>
       </div>
@@ -66,27 +66,21 @@
                      <th class="text-center">Fecha Ingreso</th>
                      <th class="text-center">Telefono</th>
                      <th class="text-center">Donación</th>
-                     <th class="text-center">Editar</th>
                   </tr>
                </thead>
                <tbody>
                   <tr ng-repeat="(ixFondo, fondo) in fondoComun.lstFondos | filter:searchDonador || searchDonante" ng-init="$idIndex = $index">
                      <td class="text-center">
                       {{ $idIndex + 1 }} </td>
-                     <td> {{ fondo.nombre }} </td>
+                     <td>
+                        <span class="glyphicon glyphicon-user" ng-hide="fondo.idDonador"></span>
+                        {{ fondo.nombre }}
+                     </td>
                      <td class="text-center" ng-if="filtro!='tipoEntidad'"> {{ fondo.tipoEntidad }} </td>
                      <td class="text-center"> {{ fondo.telefono }} </td>
                      <td class="text-center"> {{ fondo.fechaDonacion }} </td>
                      <td class="text-center"> {{ fondo.telefono }} </td>
                      <td class="text-right"> {{ fondo.tipoMoneda + (fondo.donacion | number:2) }} </td>
-                     <td>
-                        <!-- OPCIONES -->
-                        <div class="menu-opciones">
-                           <button class="btn btn-xs btn-opcion" ng-click="editarDonador( donador )">
-                              <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
-                           </button>
-                        </div>
-                     </td>
                   </tr>
                </tbody>
             </table>

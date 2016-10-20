@@ -10,7 +10,8 @@
 	background: rgba(5,50,75,0.90);
 	border-radius: 0 0 2.5em 0;
 	position: relative;
-	box-shadow: 1px 2px 1px #888;
+	box-shadow: 0 1px 0 1px #ccc;
+	
 	text-align: center;
 }
 

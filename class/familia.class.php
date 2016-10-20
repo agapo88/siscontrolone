@@ -42,10 +42,10 @@ class Familia extends Session
 			while( $row = $rs->fetch_object() ){
 				
 				$iDepartamento = -1;
-				$iAnio          = -1;
-				$iEstado        = -1;
-				$iFamilia       = -1;
-				$iMunicipio = -1;
+				$iEstado       = -1;
+				$iFamilia      = -1;
+				$iMunicipio    = -1;
+				$iAnio = -1;
 
 				// VER TIPO DE AGRUPACIÓN
 				if( $groupBy == 'departamento' ): 		//TIPOENTIDAD
@@ -99,6 +99,7 @@ class Familia extends Session
 					);
 				}
 
+
 				// VERIFICAR QUE EXISTA EL DEPARTAMENTO
 				foreach ($lstFamiliasB AS $ixDepartamento => $departamento) {
 					foreach ($departamento['lstMunicipios'] AS $ixMunicipio => $municipio) {
@@ -129,37 +130,42 @@ class Familia extends Session
 					
 				}
 
+
+				
 				// VERIFICAR QUE EXISTA LA FAMILIA
 				foreach ($lstFamiliasB AS $ixDepartamento => $departamento) {
-					foreach ($departamento['lstMunicipios'] AS $ixMunicipio => $municipio) {
+					foreach ($departamento['lstMunicipios'] AS $municipio) {
+						var_dump( $municipio );
 						foreach ($municipio['lstFamilias'] AS $ixFamilia => $familia) {
-							if( $familia['idFamilia'] == $row->idFamilia ) {
+							if( $familia['idFamilia'] == $row->idFamilia )		{
 								$iFamilia = $ixFamilia;
-								break;
 							}
+							break;
+							
 						}
 					}
 				}
 
-
-
 				// SI NO EXISTE EL DONANTE
 				if( $iFamilia == -1 ){
 
-					$lstFamiliasB[ $ixSolicitud ][ 'lstMunicipios' ][ $iMunicipio ][ 'lstFamilias' ][] = array(
-						'idFamilia'     => $row->idFamilia,
-						'nombreFamilia' => $row->nombreFamilia,
-						'idEstado'      => $row->idEstado,
-						'area'          => $row->area,
-						'direccion'     => $row->direccion,
-						'municipio'     => $row->municipio,
-						'estado'        => $row->estado,
-						'fechaIngreso'  => $row->fechaIngreso,
-						
-					);
+				//	$iFamilia = count( $lstFamiliasB[ $ixSolicitud ][ 'lstMunicipios' ][ $iMunicipio ][ 'lstFamilias' ] );
+
+					$lstFamiliasB[ $ixSolicitud ]['lstMunicipios'][ $iMunicipio ]['lstFamilias'] = 
+						array(
+							'idFamilia'     => $row->idFamilia,
+							'nombreFamilia' => $row->nombreFamilia,
+							'idEstado'      => $row->idEstado,
+							'area'          => $row->area,
+							'direccion'     => $row->direccion,
+							'municipio'     => $row->municipio,
+							'estado'        => $row->estado,
+							'fechaIngreso'  => $row->fechaIngreso,
+							
+						);
 					//$lstFamiliasB[ $ixSolicitud ]['totalDonantes'] ++;
 				}
-
+/**/
 
 			}
 

@@ -6,28 +6,27 @@
       </span>
    </div>
    <div class="col-sm-12">
-      <form class="form-horizontal" novalidate autocomplete="off">
-         <div class="form-group text-right">
-            <div class="col-sm-12">
-               <div class="col-sm-12 text-right">
-                  <strong>MONEDA</strong>
-                  <button type="button" class="btn btn-default noBorder" ng-class="{'btn-success':compras.idTipoMoneda==1}" ng-click="compras.idTipoMoneda=1">
-                     <span class="glyphicon" ng-class="{'glyphicon-check': compras.idTipoMoneda==1, 'glyphicon-unchecked': !compras.idTipoMoneda}"></span> QUETZALES
-                  </button>
-                  <button type="button" class="btn btn-default noBorder" ng-class="{'btn-success':compras.idTipoMoneda == 2}" ng-click="compras.idTipoMoneda=2">
-                     <span class="glyphicon" ng-class="{'glyphicon-check': !compras.idTipoMoneda, 'glyphicon-unchecked': compras.idTipoMoneda}"></span> DOLARES
-                  </button>
-               </div>
-            </div>
-            <div class="col-sm-12">
-               <h3 ng-show="compras.idTipoMoneda==1">
-                  TOTAL: Q.{{ compras.totalQuetzales - subTotalQuetzales() | number: 2 }} 
-               </h3>
-               <h3 ng-show="compras.idTipoMoneda==2">
-                  TOTAL: $.{{ compras.totalDolares - subTotalDolares() | number: 2 }} 
-               </h3>
-            </div>
+            
+      <div class="col-sm-12 text-right">
+         <strong>MONEDA</strong>
+         <button type="button" class="btn btn-default noBorder" ng-class="{'btn-success':idTipoMoneda==1}" ng-click="idTipoMoneda=1">
+            <span class="glyphicon" ng-class="{'glyphicon-check': idTipoMoneda==1, 'glyphicon-unchecked': idTipoMoneda==2}"></span> QUETZALES
+         </button>
+         <button type="button" class="btn btn-default noBorder" ng-class="{'btn-success':idTipoMoneda == 2}" ng-click="idTipoMoneda=2">
+            <span class="glyphicon" ng-class="{'glyphicon-check': idTipoMoneda==2, 'glyphicon-unchecked': idTipoMoneda==1}"></span> DOLARES
+         </button>
+      </div>
+      <div class="form-group text-right">
+         <div class="col-sm-12">
+            <h3 ng-show="idTipoMoneda==1">
+               TOTAL: Q.{{ compras.totalQuetzales - subTotalQuetzales() | number: 2 }} 
+            </h3>
+            <h3 ng-show="idTipoMoneda==2">
+               TOTAL: $.{{ comprasD.totalDolares - subTotalDolares() | number: 2 }} 
+            </h3>
          </div>
+      </div>
+      <form class="form-horizontal" novalidate autocomplete="off" ng-show="idTipoMoneda==1">
          <div class="form-group">
             <label class="control-label col-sm-3">
                No. Factura
@@ -125,7 +124,7 @@
                </thead>
                <tbody>
                   <!-- QUETZALES -->
-                  <tr ng-repeat="(ixProd, prod) in compras.lstProductosQ" ng-show="compras.lstProductosQ.length > 0">
+                  <tr ng-repeat="(ixProd, prod) in compras.lstProductos" ng-show="compras.lstProductos.length > 0">
                      <td>{{ prod.idProducto }}</td>
                      <td class="text-center">
                         <select class="selectpicker" ng-model="prod.idProducto" disabled>
@@ -151,43 +150,9 @@
                         </button>
                      </td>
                   </tr>
-                  <tr id="tb-title" ng-show="compras.lstProductosQ.length > 0">
+                  <tr id="tb-title" ng-show="compras.lstProductos.length > 0">
                      <td colspan="7" class="text-right">
                         <strong> SUBTOTAL {{ subTotalQuetzales() | number: 2 }}</strong>
-                     </td>
-                     <td></td>
-                  <td>
-                  </tr>
-                  <!-- DOLARES -->
-                  <tr ng-repeat="(ixProd, prod) in compras.lstProductosD" ng-show="compras.lstProductosD.length > 0">
-                     <td>{{ prod.idProducto }}</td>
-                     <td class="text-center">
-                        <select class="form-control" ng-model="prod.idProducto" disabled>
-                           <option value="{{ producto.idProducto }}" ng-repeat="producto in lstProductos">
-                              {{producto.producto}}
-                           </option>
-                        </select>
-                     </td>
-                     <td class="text-center">
-                        <select class="selectpicker" ng-model="prod.idProveedor" disabled>
-                           <option value="{{ proveedor.idProveedor }}" ng-repeat="proveedor in lstProveedores">
-                              {{ proveedor.proveedor }} 
-                           </option>
-                        </select>
-                     </td>
-                     <td class="text-center">{{ prod.cantidad }}</td>
-                     <td class="text-right">{{ prod.precioUnitario | number: 2 }}</td>
-                     <td class="text-center">{{ prod.fechaCaducidad | date :  "dd/MM/y" }}</td>
-                     <td class="text-right">{{ prod.cantidad * prod.precioUnitario | number: 2 }}</td>
-                     <td class="text-center">
-                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteProdQuetzales( ixProd )">
-                           <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                     </td>
-                  </tr>
-                  <tr id="tb-title" ng-show="compras.lstProductosD.length > 0">
-                     <td colspan="7" class="text-right">
-                        <strong>SUBTOTAL {{ subTotalDolares() | number: 2 }}</strong>
                      </td>
                      <td></td>
                   <td>

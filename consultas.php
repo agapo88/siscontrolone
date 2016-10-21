@@ -7,13 +7,14 @@ $data = json_decode( file_get_contents("php://input") );
 
 require_once 'class/conexion.class.php';
 require_once 'class/session.class.php';
-require_once 'class/consultas.class.php';
-require_once 'class/donante.class.php';
-require_once 'class/producto.class.php';
-require_once 'class/proveedor.class.php';
 require_once 'class/areas.bodega.class.php';
+require_once 'class/consultas.class.php';
+require_once 'class/compras.class.php';
+require_once 'class/donante.class.php';
 require_once 'class/donaciones.class.php';
 require_once 'class/familia.class.php';
+require_once 'class/producto.class.php';
+require_once 'class/proveedor.class.php';
 
 
 $datos    = array();
@@ -39,8 +40,10 @@ switch ( $data->accion ) {
 		echo json_encode( $datos );
 		break;
 
-	case 'guardarCompra':
-		var_dump( $data );
+	case 'guardarCompras':
+		$compra = new Compra( $conexion );
+		$datos = $compra->guardarCompras();
+		echo json_encode( $datos );
 		break;
 
 	/*** DONACIONES ***/

@@ -156,7 +156,7 @@ class Donacion extends Session
 
 		$this->con->query( "START TRANSACTION" );
 
-		$sql = "CALL agregarCompraDonacion({$_idDonador}, '{$_fechaAdquisicion}', {$_noFactura}, {$_idUsuario});";
+		$sql = "CALL agregarCompraDonacion({$_idDonador}, '{$_fechaAdquisicion}', {$_noFactura}, NULL, {$_idUsuario});";
 
 		if( $rs = $this->con->query( $sql ) ){
 			// LIBERAR SIGUIENTE RESULTADO

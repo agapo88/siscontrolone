@@ -1,24 +1,30 @@
 miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 	
 	$scope.$parent.menu = 'compras';
-	
+	$scope.idTipoMoneda = 1;
 	$scope.compras = {
-		idTipoMoneda   : 1,
-		noFactura      : null,
-		fechaIngreso   : null,
-		totalQuetzales : 0,
-		totalDolares   : 0,
-		idProveedor    : "1",
-		lstProductosQ  : [],
-		lstProductosD  : [],
+		idMoneda : 1,
+		noFactura    : null,
+		fechaIngreso : null,
+		totalDolares : 0,
+		idProveedor  : "1",
+		lstProductos : [],
 	};
 
+	$scope.comprasD = {
+		idMoneda : 2,
+		noFactura    : null,
+		fechaIngreso : null,
+		totalDolares : 0,
+		idProveedor  : "1",
+		lstProductos : [],
+	};
 
 	$scope.subTotalQuetzales = function(){
 
 		var subTotalQuetzales = 0;
-		for (var i = 0; i < $scope.compras.lstProductosQ.length; i++) {
-			subTotalQuetzales += ($scope.compras.lstProductosQ[i].cantidad * $scope.compras.lstProductosQ[i].precioUnitario );
+		for (var i = 0; i < $scope.compras.lstProductos.length; i++) {
+			subTotalQuetzales += ($scope.compras.lstProductos[i].cantidad * $scope.compras.lstProductos[i].precioUnitario );
 		}
 		return subTotalQuetzales;
 
@@ -26,8 +32,8 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 
 	$scope.subTotalDolares = function(){
 		var subTotalDolares = 0;
-		for (var i = 0; i < $scope.compras.lstProductosD.length; i++) {
-			subTotalDolares += ($scope.compras.lstProductosD[i].cantidad * $scope.compras.lstProductosD[i].precioUnitario );
+		for (var i = 0; i < $scope.comprasD.lstProductos.length; i++) {
+			subTotalDolares += ($scope.comprasD.lstProductos[i].cantidad * $scope.comprasD.lstProductos[i].precioUnitario );
 		}
 		return subTotalDolares;
 	};
@@ -40,7 +46,7 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 		.success(function( data ){
 			console.log(data);
 			$scope.compras.totalQuetzales = parseFloat( data.lstMontos[0].total );
-			$scope.compras.totalDolares   = parseFloat( data.lstMontos[1].total );
+			$scope.comprasD.totalDolares   = parseFloat( data.lstMontos[1].total );
 			$scope.lstProductos   = data.lstProductos;
 			$scope.lstProveedores = data.lstProveedores;
 			$scope.lstMontos      = data.lstMontos;
@@ -71,15 +77,14 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 	}
 
 	$scope.deleteProdQuetzales = function( index ){
-		$scope.compras.lstProductosQ.splice( index, 1);
+		$scope.compras.lstProductos.splice( index, 1);
 	}
 
 	// AGREGAR TOTAL
 	$scope.detalleCompra = {};
-	$scope.addCompra = function(){
-
-		var detalleCompra   = $scope.detalleCompra;
-		var error        = false;
+	$scope.addCompra = function( idTipoMoneda ){
+		var error         = false;
+		var detalleCompra = $scope.detalleCompra;
 
 		if( !(detalleCompra.idProducto) ){
 			error = true;
@@ -106,7 +111,7 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 
 		// VALIDACIÓN QUETZALES
 		if ( $scope.compras.idTipoMoneda == 1 ){
-			if( $scope.compras.lstProductosQ.length > 0 ){
+			if( $scope.compras.lstProductos.length > 0 ){
 				if( !($scope.compras.totalQuetzales >= $scope.subTotalQuetzales() + (detalleCompra.cantidad * detalleCompra.precioUnitario) ) ){
 					error = true;
 					$alert({title: 'Alerta: ', content: 'No tiene disponibilidad de dinero en quetzales.', placement: 'top', type: 'danger', show: true, duration: 5});
@@ -118,49 +123,20 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 				}
 			}
 		}
-		// VALIDACIÓN DOLARES
-		if ( $scope.compras.idTipoMoneda == 2  ){
-			if( $scope.compras.lstProductosD.length > 0 ){
-				if( !($scope.compras.totalDolares >= $scope.subTotalDolares() + (detalleCompra.cantidad * detalleCompra.precioUnitario) ) ){
-					error = true;
-					$alert({title: 'Alerta: ', content: 'No tiene disponibilidad de dinero en quetzales.', placement: 'top', type: 'danger', show: true, duration: 5});
-				}
-			}else{
-				if( !($scope.compras.totalDolares >= (detalleCompra.cantidad * detalleCompra.precioUnitario) ) ){
-					error = true;
-					$alert({title: 'Alerta: ', content: 'La cantidad ingresada supera el monto disponible en dolares.', placement: 'top', type: 'danger', show: true, duration: 5});
-				}
-			}
-		}
-
 
 		// SI NO EXISTE ERROR
 		if( !error ){
 			var fechaCaducidad = $filter('date')($scope.detalleCompra.fechaCaducidad, "yyyy-MM-dd");
 
-			if( $scope.compras.idTipoMoneda == 1  ){
-				// AGREGA AL ARREGLO LOS VALORES DEL OBJETO
-				$scope.compras.lstProductosQ.push({
-					idProducto     : detalleCompra.idProducto,
-					cantidad       : detalleCompra.cantidad,
-					precioUnitario : detalleCompra.precioUnitario,
-					idProveedor    : $scope.compras.idProveedor,
-					fechaCaducidad : fechaCaducidad,
-					idTipoMoneda   : $scope.compras.idTipoMoneda,
-				});
-			};
+			// AGREGA AL ARREGLO LOS VALORES DEL OBJETO
+			$scope.compras.lstProductos.push({
+				idProducto     : detalleCompra.idProducto,
+				cantidad       : detalleCompra.cantidad,
+				precioUnitario : detalleCompra.precioUnitario,
+				idProveedor    : $scope.compras.idProveedor,
+				fechaCaducidad : fechaCaducidad
+			});
 
-			if( $scope.compras.idTipoMoneda == 2 ){
-				// AGREGA AL ARREGLO LOS VALORES DEL OBJETO
-				$scope.compras.lstProductosD.push({
-					idProducto     : detalleCompra.idProducto,
-					cantidad       : detalleCompra.cantidad,
-					precioUnitario : detalleCompra.precioUnitario,
-					idProveedor    : $scope.compras.idProveedor,
-					fechaCaducidad : fechaCaducidad,
-					idTipoMoneda   : $scope.compras.idTipoMoneda,
-				});
-			};
 			$scope.detalleCompra = {};
 		}
 	};
@@ -191,7 +167,7 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 			error = true;
 			$alert({title: 'Alerta: ', content: 'No ha seleccionado la fecha de ingreso.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.compras.lstProductosQ.length > 0 || $scope.compras.lstProductosD.length > 0 ) ){
+		else if( !($scope.compras.lstProductos.length > 0 || $scope.compras.lstProductosD.length > 0 ) ){
 			error = true;
 			$alert({title: 'Alerta: ', content: 'No ha registrado ningún producto.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
@@ -199,11 +175,11 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 		// SI NO EXISTE ERROR
 		if( !error ){
 			var fechaIngreso = $filter('date')($scope.compras.fechaIngreso, "yyyy-MM-dd");
-			$http.post('consultas.php', {accion: 'guardarCompra', datos: $scope.compras, fechaIngreso: fechaIngreso})
+			$http.post('consultas.php', {accion: 'guardarCompras', datos: $scope.compras, fechaIngreso: fechaIngreso})
 			.success(function(data){
 				console.log(data);
 				if( data.respuesta ){
-					$scope.reset();
+					//$scope.reset();
 					$alert({title: 'Mensaje: ', content: data.mensaje, placement: 'top', type: 'success', show: true, duration: 4});
 				}else{
 					$alert({title: 'Error: ', content: data.mensaje, placement: 'top', type: 'danger', show: true, duration: 4});

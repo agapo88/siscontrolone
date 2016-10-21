@@ -24,7 +24,7 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 
 		var subTotalQuetzales = 0;
 		for (var i = 0; i < $scope.compras.lstProductos.length; i++) {
-			subTotalQuetzales += ($scope.compras.lstProductos[i].cantidad * $scope.compras.lstProductos[i].precioUnitario );
+			subTotalQuetzales += ($scope.compras.lstProductos[i].cantidad * parseFloat($scope.compras.lstProductos[i].precioUnitario) );
 		}
 		return subTotalQuetzales;
 
@@ -33,7 +33,7 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 	$scope.subTotalDolares = function(){
 		var subTotalDolares = 0;
 		for (var i = 0; i < $scope.comprasD.lstProductos.length; i++) {
-			subTotalDolares += ($scope.comprasD.lstProductos[i].cantidad * $scope.comprasD.lstProductos[i].precioUnitario );
+			subTotalDolares += ($scope.comprasD.lstProductos[i].cantidad * parseFloat($scope.comprasD.lstProductos[i].precioUnitario) );
 		}
 		return subTotalDolares;
 	};
@@ -136,8 +136,6 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 			}			
 		}
 
-		console.log("pRECIO UNITARTIO:::", detalleCompra.precioUnitario);
-
 		// VALIDACIÓN QUETZALES
 		if ( idTipoMoneda == 1 ){
 			if( $scope.compras.lstProductos.length > 0 ){
@@ -177,7 +175,7 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 				$scope.compras.lstProductos.push({
 					idProducto     : detalleCompra.idProducto,
 					cantidad       : detalleCompra.cantidad,
-					precioUnitario : parseFloat( detalleCompra.precioUnitario ),
+					precioUnitario : detalleCompra.precioUnitario,
 					idProveedor    : $scope.compras.idProveedor,
 					fechaCaducidad : fechaCaducidad
 				});
@@ -187,7 +185,7 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 				$scope.comprasD.lstProductos.push({
 					idProducto     : detalleCompra.idProducto,
 					cantidad       : detalleCompra.cantidad,
-					precioUnitario : parseFloat( detalleCompra.precioUnitario ),
+					precioUnitario : detalleCompra.precioUnitario,
 					idProveedor    : $scope.compras.idProveedor,
 					fechaCaducidad : fechaCaducidad
 				});		

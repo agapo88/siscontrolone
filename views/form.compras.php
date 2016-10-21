@@ -150,7 +150,7 @@
                      </td>
                      <td class="text-center">
                         <div ng-show="editarProd">
-                           <input type="number" class="form-control" ng-model="prod.cantidad" min="1">
+                           <input type="number" class="form-control" ng-model="prod.cantidad" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
                         </div>
                         <div ng-show="!editarProd">
                            {{ prod.cantidad }}
@@ -158,7 +158,7 @@
                      </td>
                      <td class="text-right">
                         <div ng-show="editarProd">
-                           <input type="number" class="form-control" ng-model="prod.precioUnitario" min="1">
+                           <input type="number" class="form-control" ng-model="prod.precioUnitario" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
                         </div>
                         <div ng-show="!editarProd">
                            {{ prod.precioUnitario | number }}

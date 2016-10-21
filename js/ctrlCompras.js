@@ -123,7 +123,7 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 			$alert({title: 'Notificación: ', content: 'No ha ingresado la cantidad.', placement: 'top', type: 'warning', show: true, duration: 4});
 			return;
 		}
-		else if( !(detalleCompra.precioUnitario && detalleCompra.precioUnitario > 0) ){
+		else if( !(detalleCompra.precioUnitario && detalleCompra.precioUnitario > 0.01) ){
 			error = true;
 			$alert({title: 'Notificación: ', content: 'No Ha ingresado el precio unitario.', placement: 'top', type: 'warning', show: true, duration: 4});
 			return;
@@ -136,16 +136,16 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 			}			
 		}
 
+		console.log("pRECIO UNITARTIO:::", detalleCompra.precioUnitario);
+
 		// VALIDACIÓN QUETZALES
 		if ( idTipoMoneda == 1 ){
 			if( $scope.compras.lstProductos.length > 0 ){
-				console.log( "mayor que 0 " );
 				if( !($scope.compras.totalQuetzales >= $scope.subTotalQuetzales() + (detalleCompra.cantidad * detalleCompra.precioUnitario) ) ){
 					error = true;
 					$alert({title: 'Alerta: ', content: 'No tiene disponibilidad de dinero en quetzales.', placement: 'top', type: 'danger', show: true, duration: 5});
 				}
 			}else{
-				console.log( "Sin Datos " );
 				if( !($scope.compras.totalQuetzales >= (detalleCompra.cantidad * detalleCompra.precioUnitario) ) ){
 					error = true;
 					$alert({title: 'Alerta: ', content: 'La cantidad ingresada supera el monto disponible en quetzales.', placement: 'top', type: 'danger', show: true, duration: 5});
@@ -177,7 +177,7 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 				$scope.compras.lstProductos.push({
 					idProducto     : detalleCompra.idProducto,
 					cantidad       : detalleCompra.cantidad,
-					precioUnitario : detalleCompra.precioUnitario,
+					precioUnitario : parseFloat( detalleCompra.precioUnitario ),
 					idProveedor    : $scope.compras.idProveedor,
 					fechaCaducidad : fechaCaducidad
 				});
@@ -187,7 +187,7 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 				$scope.comprasD.lstProductos.push({
 					idProducto     : detalleCompra.idProducto,
 					cantidad       : detalleCompra.cantidad,
-					precioUnitario : detalleCompra.precioUnitario,
+					precioUnitario : parseFloat( detalleCompra.precioUnitario ),
 					idProveedor    : $scope.compras.idProveedor,
 					fechaCaducidad : fechaCaducidad
 				});		
@@ -197,6 +197,31 @@ miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 		}
 	};
 
+
+	$scope.verNombreProducto = function( idProducto ){
+		var nombreProducto = "";
+
+		for (var i = 0; i < $scope.lstProductos.length; i++) {
+			if( $scope.lstProductos[i].idProducto == idProducto){
+				nombreProducto = $scope.lstProductos[i].producto;
+				break;
+			}
+		}
+
+		return nombreProducto;
+	}
+
+	$scope.verNombreProveedor = function( idProveedor ){
+		var nombreProveedor = "";
+		for (var i = 0; i < $scope.lstProveedores.length; i++) {
+			if( $scope.lstProveedores[i].idProveedor == idProveedor){
+				nombreProveedor = $scope.lstProveedores[i].proveedor;
+				break;
+			}
+		}
+
+		return nombreProveedor;
+	}
 
 
 	// RESETEAR VALORES

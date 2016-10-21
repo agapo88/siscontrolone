@@ -78,10 +78,10 @@
                         </select>
                      </td>
                      <td class="text-center">
-                        <input type="number" class="form-control" ng-model="detalleCompra.cantidad">
+                        <input type="number" class="form-control" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" ng-model="detalleCompra.cantidad">
                      </td>
                      <td class="text-left">
-                        <input type="number" class="form-control" ng-model="detalleCompra.precioUnitario">
+                        <input type="number" class="form-control" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" ng-model="detalleCompra.precioUnitario">
                      </td>
                      <td class="text-left">
                         <input type="text" class="form-control" ng-model="detalleCompra.fechaCaducidad" data-date-format="dd/MM/yyyy" data-date-type="number" data-min-date="today" data-autoclose="1" bs-datepicker ng-disabled="!bloquearFecha">
@@ -125,29 +125,68 @@
                <tbody>
                   <!-- QUETZALES -->
                   <tr ng-repeat="(ixProd, prod) in compras.lstProductos" ng-show="compras.lstProductos.length > 0">
-                     <td>{{ prod.idProducto }}</td>
+                     <td>
+                        {{ prod.idProducto }}
+                     </td>
                      <td class="text-center">
-                        <select class="selectpicker" ng-model="prod.idProducto" disabled>
+                        <select class="form-control" ng-model="prod.idProducto" ng-show="editarProd">
                            <option value="{{ producto.idProducto }}" ng-repeat="producto in lstProductos">
                               {{producto.producto}}
                            </option>
                         </select>
+                        <div ng-show="!editarProd">
+                           {{ verNombreProducto(prod.idProducto) }}
+                        </div>
                      </td>
                      <td class="text-center">
-                        <select class="selectpicker" ng-model="prod.idProveedor" disabled>
+                        <select class="form-control" ng-model="prod.idProveedor" ng-show="editarProd">
                            <option value="{{ proveedor.idProveedor }}" ng-repeat="proveedor in lstProveedores">
                               {{ proveedor.proveedor }} 
                            </option>
                         </select>
+                        <div ng-show="!editarProd">
+                           {{ verNombreProveedor(prod.idProveedor) }}
+                        </div>
                      </td>
-                     <td class="text-center">{{ prod.cantidad }}</td>
-                     <td class="text-right">{{ prod.precioUnitario | number: 2 }}</td>
-                     <td class="text-center">{{ prod.fechaCaducidad | date :  "dd/MM/y" }}</td>
+                     <td class="text-center">
+                        <div ng-show="editarProd">
+                           <input type="number" class="form-control" ng-model="prod.cantidad" min="1">
+                        </div>
+                        <div ng-show="!editarProd">
+                           {{ prod.cantidad }}
+                        </div>
+                     </td>
+                     <td class="text-right">
+                        <div ng-show="editarProd">
+                           <input type="number" class="form-control" ng-model="prod.precioUnitario" min="1">
+                        </div>
+                        <div ng-show="!editarProd">
+                           {{ prod.precioUnitario | number }}
+                        </div>
+                     </td>
+                     <td class="text-center">
+                        <div ng-show="editarProd">
+                           <input type="text" class="form-control" ng-model="prod.fechaCaducidad" data-date-format="dd/MM/yyyy" data-date-type="number" data-min-date="today" data-autoclose="1" bs-datepicker ng-disabled="!bloquearFecha">
+                        </div>
+                        <div ng-show="!editarProd">
+                           {{ prod.fechaCaducidad | date :  "dd/MM/y" }}
+                        </div>
+                     </td>
                      <td class="text-right">{{ prod.cantidad * prod.precioUnitario | number: 2 }}</td>
                      <td class="text-center">
-                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteProdQuetzales( ixProd )">
-                           <span class="glyphicon glyphicon-remove"></span>
-                        </button>
+                        <!-- OPCIONES -->
+                        <div class="menu-opciones">
+                           <button type="button" class="btn btn-xs btn-opcion" ng-click="editarProd=!editarProd" ng-show="editarProd">
+                              <span class="glyphicon glyphicon-ok"></span>
+                           </button>
+                           <button type="button" class="btn btn-xs btn-opcion" ng-click="editarProd=!editarProd" ng-show="!editarProd">
+                              <span class="glyphicon glyphicon-pencil"></span>
+                           </button>
+                           <button type="button" class="btn btn-xs btn-opcion" ng-click="deleteProdQuetzales( ixProd )" ng-show="!editarProd">
+                              <span class="glyphicon glyphicon-remove"></span>
+                           </button>
+                        </div>
+                     
                      </td>
                   </tr>
                   <tr id="tb-title" ng-show="compras.lstProductos.length > 0">

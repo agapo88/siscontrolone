@@ -19,7 +19,6 @@ class Familia extends Session
 	// FUNCION PARA CONSULTAR DONANTES EN LA BD
 	function consultarFamilias( $groupBy = 'departamento'){
 
-
 		$lstFamiliasB = array();
 
 		$sql = "SELECT 
@@ -44,7 +43,6 @@ class Familia extends Session
 				$iEstado       = -1;
 				$iDepartamento = -1;
 				$iMunicipio    = -1;
-
 				$iFamilia      = -1;
 				$iAnio         = -1;
 
@@ -79,7 +77,7 @@ class Familia extends Session
 				endif;
 
 				// SI NO EXISTE TIPO DE ENTIDAD Y/O AÑO
-				if( $iDepartamento == -1 AND $iAnio == -1 AND $iEstado == -1 ){
+				if( $iDepartamento == -1 ){
 
 					if( $groupBy == 'departamento' ):				// TIPOENTIDAD
 						$iDepartamento = count( $lstFamiliasB );
@@ -92,10 +90,8 @@ class Familia extends Session
 
 					endif;
 
-					$iDepartamento = count( $lstFamiliasB );
-
 					$lstFamiliasB[ $iDepartamento ] = array(
-						'idDepartamento'     => (int) $row->idDepartamento,
+						'idDepartamento'     => $row->idDepartamento,
 						'departamento'       => $row->departamento,
 						'lstMunicipios'      => array(),
 						'totalFamiliasDepto' => 0
@@ -104,22 +100,22 @@ class Familia extends Session
 
 				// VERIFICAR QUE EXISTA EL DEPARTAMENTO
 				foreach ($lstFamiliasB[ $iDepartamento ]['lstMunicipios'] AS $ixMunicipio => $municipio) {
-					if( $municipio['idMunicipio'] == $row->idMunicipio && $municipio['idDepartamento'] == $row->idDepartamento ){
+					if( $municipio['idMunicipio'] == $row->idMunicipio AND $municipio['idDepartamento'] == $row->idDepartamento ){
 						$iMunicipio = $ixMunicipio;
 						break;
 					}
 				}
 
+				if( $groupBy == 'departamento' ):		// TIPOENTIDAD
+					$ixSolicitud = $iDepartamento;
+				elseif( $groupBy == 'anio' ):			// AÑO
+					$ixSolicitud = $iAnio;
+				elseif( $groupBy == 'estado' ):			// ESTADO
+					$ixSolicitud = $iEstado;
+				endif;
+
 				// SI NO EXISTE MUNICIPIO
 				if( $iMunicipio == -1 ){
-					if( $groupBy == 'departamento' ):		// TIPOENTIDAD
-						$ixSolicitud = $iDepartamento;
-					elseif( $groupBy == 'anio' ):			// AÑO
-						$ixSolicitud = $iAnio;
-					elseif( $groupBy == 'estado' ):			// ESTADO
-						$ixSolicitud = $iEstado;
-					endif;
-
 					$iMunicipio = count( $lstFamiliasB[ $ixSolicitud ]['lstMunicipios'] );
 
 					$lstFamiliasB[ $ixSolicitud ][ 'lstMunicipios' ][ $iMunicipio ] = array(
@@ -129,8 +125,7 @@ class Familia extends Session
 							'municipio'      => $row->municipio,
 							'lstFamilias'    => array(),
 							'subTotal'       => 0,
-						);
-					
+						);					
 				}				
 
 				
@@ -138,11 +133,13 @@ class Familia extends Session
 				foreach ($lstFamiliasB[ $ixSolicitud ]['lstMunicipios'] AS $ixMunicipio => $municipio) {
 					// var_dump( $municipio )
 					foreach ($municipio['lstFamilias'] AS $ixFamilia => $familia) {
-						if( $familia['idFamilia'] == $row->idFamilia && $familia['idMunicipio'] == $row->idMunicipio   ) {
+						if( $familia['idFamilia'] == $row->idFamilia && $familia['idMunicipio'] == $row->idMunicipio && $familia['idDepartamento'] == $row->idDepartamento ) {
 							$iFamilia = $ixFamilia;
 							break;
 						}
 					}
+					if ( $iFamilia != -1 )
+						break;
 				}
 
 				// SI NO EXISTE FAMILIA
@@ -154,6 +151,7 @@ class Familia extends Session
 							'idEstado'      => $row->idEstado,
 							'area'          => $row->area,
 							'direccion'     => $row->direccion,
+							'idDepartamento'=> $row->idDepartamento,
 							'idMunicipio'   => $row->idMunicipio,
 							'municipio'     => $row->municipio,
 							'estado'        => $row->estado,
@@ -166,7 +164,6 @@ class Familia extends Session
 
 		}
 
-		//var_dump( $lstFamiliasB );
 		return $lstFamiliasB;
 	}
 

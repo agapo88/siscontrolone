@@ -1,6 +1,8 @@
 miApp.controller('ctrlFamilias', function($scope, $http, $alert, $filter, $timeout){
 	
+
 	$scope.$parent.menu  = 'familias';
+	$scope.tab = 1;
 
 	$scope.lstFamilias   = [];
 	$scope.lstGeneros    = [];
@@ -17,6 +19,7 @@ miApp.controller('ctrlFamilias', function($scope, $http, $alert, $filter, $timeo
 			}, 100);
 		}
 	});
+
 	
 	$scope.familia = {
 		nombre       : '',
@@ -60,13 +63,23 @@ miApp.controller('ctrlFamilias', function($scope, $http, $alert, $filter, $timeo
 			$scope.lstAreas      = data.lstAreas;
 			$scope.lstParentesco = data.lstParentesco;
 			$scope.lstGeneros    = data.lstGeneros;
-			//$scope.consultarDonadores();
 		}).error(function(data){
 			console.log(data);
 		});
 	})();
 
-	
+	$scope.lstAyudasFam = [];
+	$scope.verDonacionesFamilia = function( idFamilia ){
+		$http.post('consultas.php',{accion: 'verDonacionesFamilia', idFamilia: idFamilia})
+		.success(function(data){
+			console.log(data);
+			$scope.lstAyudasFam = data.lstAyudasFam;
+		}).error(function(data){
+			console.log(data);
+		});
+	}
+
+
 	$scope.lstFamiliasB = [];
 	($scope.consultarFamilias = function(){
 		$http.post('consultas.php',{accion: 'consultarFamilias'})

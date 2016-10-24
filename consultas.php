@@ -15,6 +15,7 @@ require_once 'class/donaciones.class.php';
 require_once 'class/familia.class.php';
 require_once 'class/producto.class.php';
 require_once 'class/proveedor.class.php';
+require_once 'class/reportes.class.php';
 
 
 $datos    = array();
@@ -77,6 +78,13 @@ switch ( $data->accion ) {
 
 		break;
 
+	case 'verDonacionesFamilia':
+			$ayudaFamilia = new Reporte(  $conexion );
+			$idFamilia = $data->idFamilia;
+			$datos['lstAyudasFam'] = $ayudaFamilia->verDonacionesFamilia( $idFamilia );
+
+			echo json_encode( $datos );
+			break;
 
 	/*** AREAS DE BODEGA ***/
 	case 'cargarSeccionBodega':

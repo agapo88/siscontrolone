@@ -24,7 +24,7 @@ class Familia extends Session
 		$sql = "SELECT 
 				    idFamilia,
 				    nombreFamilia,
-				    fechaIngreso,
+				    DATE_FORMAT(fechaIngreso, '%d/%m/%Y') AS fechaIngreso,
 				    idArea,
 				    area,
 				    direccion,
@@ -44,7 +44,7 @@ class Familia extends Session
 				$iDepartamento = -1;
 				$iMunicipio    = -1;
 				$iFamilia      = -1;
-				$iAnio         = -1;
+				$iFechaIngreso = -1;
 
 				// VER TIPO DE AGRUPACIÓN
 				if( $groupBy == 'departamento' ): 		// DEPARTAMENTO
@@ -52,15 +52,6 @@ class Familia extends Session
 					foreach ($lstFamiliasB AS $ixDepartamento => $departamento) {
 						if( $departamento['idDepartamento'] == $row->idDepartamento ){
 							$iDepartamento = $ixDepartamento;
-							break;
-						}
-					}
-
-				elseif( $groupBy == 'anio' ):			// AÑO
-					// VER SI EXISTE ENTIDAD
-					foreach ($lstFamiliasB AS $ixAnio => $anio) {
-						if( $anio['anio'] == $row->anio ){
-							$iAnio = $ixAnio;
 							break;
 						}
 					}
@@ -79,13 +70,10 @@ class Familia extends Session
 				// SI NO EXISTE TIPO DE ENTIDAD Y/O AÑO
 				if( $iDepartamento == -1 ){
 
-					if( $groupBy == 'departamento' ):				// TIPOENTIDAD
+					if( $groupBy == 'departamento' ):					// DEPARTAMENTO
 						$iDepartamento = count( $lstFamiliasB );
 
-					elseif( $groupBy == 'anio' ):					// AÑO
-						$iAnio = count( $lstFamiliasB );
-
-					elseif( $groupBy == 'estado' ):					// AÑO
+					elseif( $groupBy == 'estado' ):						// ESTADO ECONOMICO
 						$iEstado = count( $lstFamiliasB );
 
 					endif;
@@ -108,8 +96,6 @@ class Familia extends Session
 
 				if( $groupBy == 'departamento' ):		// TIPOENTIDAD
 					$ixSolicitud = $iDepartamento;
-				elseif( $groupBy == 'anio' ):			// AÑO
-					$ixSolicitud = $iAnio;
 				elseif( $groupBy == 'estado' ):			// ESTADO
 					$ixSolicitud = $iEstado;
 				endif;
@@ -158,6 +144,7 @@ class Familia extends Session
 							'fechaIngreso'  => $row->fechaIngreso
 						);
 					$lstFamiliasB[ $ixSolicitud ]['totalFamiliasDepto']++;
+					$lstFamiliasB[ $ixSolicitud ]['lstMunicipios'][ $iMunicipio ]['subTotal']++;
 				}
 	
 			}
@@ -166,7 +153,6 @@ class Familia extends Session
 
 		return $lstFamiliasB;
 	}
-
 
 }
 ?>

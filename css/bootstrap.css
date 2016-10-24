@@ -6035,6 +6035,11 @@ button.close {
     width: 900px;
   }
 }
+
+.modal-xl {
+    width: 95%;
+}
+
 .tooltip {
   position: absolute;
   z-index: 1070;

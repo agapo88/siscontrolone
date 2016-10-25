@@ -31,20 +31,6 @@
 }
 
 
-Executing SQL script in server
-ERROR: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-SQL Code:
-        INSERT INTO `db_siscontrolone`.`aportePadrino` (`idFamilia`, `idDonador`, `anio`, `idMes`, `cantidad`, `idDesastre`) 
-        VALUES (27, 4, 2016, 2, 600, )
-
-SQL script execution finished: statements: 1302 succeeded, 1 failed
-
-Fetching back view definitions in final form.
-5 views were read back.
-
-
-
-
 .noBorder{
 	border-radius: 0;
 }

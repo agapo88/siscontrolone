@@ -128,7 +128,7 @@
                <input type="text" ng-model="familia.nombre" name="familia" ng-minlength="5" class="form-control" placeholder="Nombre de la Familia">
             </div>
             <label class="control-label col-sm-2">Área:</label>
-            <div class="col-sm-2">
+            <div class="col-sm-3 col-md-2">
                <select class="form-control" ng-model="familia.idArea">
                   <option value="{{area.idArea}}" ng-repeat="area in lstAreas">
                      {{area.area}}
@@ -143,7 +143,7 @@
             </div>
             <div ng-class="{'has-error': formAgregar.fechaIngreso.$invalid}">
                <label class="control-label col-sm-2">Fecha Ingreso:</label>
-               <div class="col-sm-2">
+               <div class="col-sm-3 col-md-2">
                   <div class="input-group">
                      <span class="input-group-addon">
                         <i class="glyphicon glyphicon-calendar"></i>

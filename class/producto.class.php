@@ -186,7 +186,7 @@ class Producto extends Session
 		$sql = "SELECT 
 					    idTipoProducto, tipoProducto
 					FROM
-					    tipoproducto;";
+					    tipoProducto;";
 		
 		if( $rs = $this->con->query( $sql ) ){
 			while( $row = $rs->fetch_object() ){

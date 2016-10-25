@@ -158,7 +158,7 @@
                                  <input type="number" class="form-control" ng-model="donacionFondo.cantidad" step="0.01">
                               </div>
                               <label class="control-label col-sm-2">Fecha Ingreso:</label>
-                              <div class="col-sm-3">
+                              <div class="col-sm-4 col-md-3">
                                  <div class="input-group">
                                     <span class="input-group-addon">
                                        <i class="glyphicon glyphicon-calendar"></i>
@@ -219,13 +219,13 @@
                               <label class="control-label col-sm-3">
                                  No. Factura
                               </label>
-                              <div class="col-sm-3">
+                              <div class="col-sm-4 col-md-3">
                                  <input type="number" class="form-control" id="numeroFactura" ng-model="noFactura">
                               </div>
                            </div>
                            <div class="form-group">
                               <label class="control-label col-sm-3">Fecha Adquisición:</label>
-                              <div class="col-sm-3">
+                              <div class="col-sm-4 col-md-3">
                                  <div class="input-group">
                                     <span class="input-group-addon">
                                        <i class="glyphicon glyphicon-calendar"></i>

@@ -51,7 +51,7 @@
             </a>
             <div class="pull-right">
                <label class="label label-primary">
-                  <strong>TOTAL: <span class="badge">{{fondoComun.totalDonacionEntidad}}</span></strong>
+                  <strong>TOTAL: <span class="badge">{{fondoComun.totalDonacionEntidad | number: 2}}</span></strong>
                </label>
             </div>
          </div>
@@ -264,7 +264,7 @@
                                           <input type="number" class="form-control" ng-model="dcProducto.precioUnitario">
                                        </td>
                                        <td>
-                                          <input type="text" class="form-control" ng-model="dcProducto.fechaCaducidad" data-date-format="dd/MM/yyyy" data-date-type="number" data-max-date="today" data-autoclose="1" bs-datepicker ng-disabled="!bloquearFecha">
+                                          <input type="text" class="form-control" ng-model="dcProducto.fechaCaducidad" data-date-format="dd/MM/yyyy" data-date-type="number" data-min-date="today" data-autoclose="1" bs-datepicker ng-disabled="!bloquearFecha">
                                        </td>
                                        <td>
                                           <button type="button" class="btn btn-xs btn-success" ng-click="addProducto()">

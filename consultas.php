@@ -32,16 +32,19 @@ switch ( $data->accion ) {
 	/*** PROVEEDORES ***/
 	case 'inicioProveedor':
 		$producto  = new Producto( $conexion );
-		$proveedor = new Proveedor( $conexion );
-
 		$datos['lstProductos']   = $producto->catalogoProductos();
-		$datos['lstProveedores'] = $proveedor->consultarProveedores();
 
 		echo json_encode( $datos );
 		break;
 
-	case 'guardarProveedor':
-		var_dump( $data );
+	case 'consultarProveedores':		// CONSULTAR LISTA DE PROVEEDORES
+		$proveedor = new Proveedor( $conexion );
+		$datos['lstProveedores'] = $proveedor->cargarListaProveedores();
+
+		echo json_encode( $datos );
+		break;
+
+	case 'guardarProveedor':		// GUARDAR PROVEEDOR
 		$proveedor = new Proveedor( $conexion );
 		$datos = $proveedor->registrarProveedor( $data->datos->nombre, $data->datos->telefono, $data->datos->email );
 		echo json_encode( $datos );

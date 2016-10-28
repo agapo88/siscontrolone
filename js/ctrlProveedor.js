@@ -22,6 +22,20 @@ miApp.controller('ctrlProveedor', function($scope, $http, $alert){
 
 	$scope.proveedor = {};
 
+	($scope.cargarProveedores = function(){
+		$http.post('consultas.php', {accion: 'consultarProveedores'})
+		.success(function(data){
+			console.log(data);
+			$scope.lstProveedores = data.lstProveedores;
+		}).error(function(data){
+			console.log(data);
+		});
+	})();
+
+	$scope.reset = function(){
+		$scope.proveedor = {};
+	};
+
 	// GUARDAR PROVEEDOR
 	$scope.guardarProveedor = function(){
 		var proveedor = $scope.proveedor;
@@ -48,7 +62,7 @@ miApp.controller('ctrlProveedor', function($scope, $http, $alert){
 				if( data.respuesta ){
 					$scope.$parent.hideModalAgregar();
 					$scope.reset();
-					$scope.consultarProveedores();
+					$scope.cargarProveedores();
 					$alert({title: 'Mensaje: ', content: data.mensaje, placement: 'top', type: 'success', show: true, duration: 4});
 				}else{
 					$alert({title: 'Error: ', content: data.mensaje, placement: 'top', type: 'danger', show: true, duration: 4});

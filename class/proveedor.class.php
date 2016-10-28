@@ -40,7 +40,7 @@ class Proveedor extends session
 		$_email          = $this->con->real_escape_string( $email );
 
 		$sql = "CALL ingresarProveedor('{$_nombreProveedor}', '{$_telefono}', '{$_email}')";
-		
+
 		if( $rs = $this->con->query( $sql ) ){
 
 			$this->con->next_result();
@@ -56,6 +56,22 @@ class Proveedor extends session
 		$respuesta = array( 'respuesta' => $this->respuesta, 'mensaje' => $this->mensaje );
 
 		return $respuesta;
+	}
+
+	function cargarListaProveedores(){
+		$lstProveedores = array();
+		$sql = "SELECT 
+				    idProveedor, proveedor, telefono, email
+				FROM
+				    proveedor";
+
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+				$lstProveedores[] = $row;
+			}
+		}
+
+		return $lstProveedores;
 	}
 
 

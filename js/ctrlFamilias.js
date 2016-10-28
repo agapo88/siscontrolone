@@ -1,4 +1,4 @@
-miApp.controller('ctrlFamilias', function($scope, $http, $alert, $filter, $timeout){
+﻿miApp.controller('ctrlFamilias', function($scope, $http, $alert, $filter, $timeout){
 	
 
 	$scope.$parent.menu  = 'familias';

@@ -1,4 +1,4 @@
-miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
+﻿miApp.controller('ctrlDonador', function($scope, $http, $alert, $filter){
 	
 	$scope.$parent.menu = 'donantes';
 

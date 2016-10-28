@@ -1,4 +1,4 @@
-miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
+﻿miApp.controller('ctrlCompras', function($scope, $http, $alert, $filter){
 	
 	$scope.$parent.menu = 'compras';
 	$scope.idTipoMoneda = 1;

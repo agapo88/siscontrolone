@@ -103,12 +103,10 @@
                </tbody>
             </table>
          </div>
-         <hr>
          <div class="form-group text-center">
             <legend>LISTADO DE PRODUCTOS</legend>
          </div>
          <div class="form-group" style="margin-left: 5px; margin-right: 5px">
-            <label class="label label-info">Listado de Productos</label>
             <table class="table table-striped">
                <thead>
                   <tr>
@@ -290,7 +288,6 @@
             <legend>LISTADO DE PRODUCTOS</legend>
          </div>
          <div class="form-group" style="margin-left: 5px; margin-right: 5px">
-            <label class="label label-info">Listado de Productos</label>
             <table class="table table-striped">
                <thead>
                   <tr>
@@ -342,7 +339,7 @@
                </tbody>
             </table>
          </div>
-         <div class="form-group" style="margin-top: 20px">
+         <div class="form-group" style="margin-top: 5px">
             <div class="col-sm-12 text-right">
                <button type="button" class="btn btn-success btn-lg noBorder" ng-click="guardarCompraQ()">
                   <i class="glyphicon glyphicon-saved"></i> Guardar Compra

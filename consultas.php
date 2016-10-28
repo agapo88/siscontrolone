@@ -17,7 +17,6 @@ require_once 'class/producto.class.php';
 require_once 'class/proveedor.class.php';
 require_once 'class/reportes.class.php';
 
-
 $datos    = array();
 $conexion = new Conexion();
 
@@ -29,6 +28,25 @@ switch ( $data->accion ) {
 		echo json_encode( $datos );
 		
 		break;
+
+	/*** PROVEEDORES ***/
+	case 'inicioProveedor':
+		$producto  = new Producto( $conexion );
+		$proveedor = new Proveedor( $conexion );
+
+		$datos['lstProductos']   = $producto->catalogoProductos();
+		$datos['lstProveedores'] = $proveedor->consultarProveedores();
+
+		echo json_encode( $datos );
+		break;
+
+	case 'guardarProveedor':
+		var_dump( $data );
+		$proveedor = new Proveedor( $conexion );
+		$datos = $proveedor->registrarProveedor( $data->datos->nombre, $data->datos->telefono, $data->datos->email );
+		echo json_encode( $datos );
+		break;
+
 	/*** COMPRAS ***/
 	case 'inicioCompras':
 		$donacion  = new Donacion( $conexion );
@@ -79,12 +97,12 @@ switch ( $data->accion ) {
 		break;
 
 	case 'verDonacionesFamilia':
-			$ayudaFamilia = new Reporte(  $conexion );
-			$idFamilia = $data->idFamilia;
-			$datos['lstAyudasFam'] = $ayudaFamilia->verDonacionesFamilia( $idFamilia );
+		$ayudaFamilia = new Reporte(  $conexion );
+		$idFamilia = $data->idFamilia;
+		$datos['lstAyudasFam'] = $ayudaFamilia->verDonacionesFamilia( $idFamilia );
 
-			echo json_encode( $datos );
-			break;
+		echo json_encode( $datos );
+		break;
 
 	/*** AREAS DE BODEGA ***/
 	case 'cargarSeccionBodega':
@@ -145,7 +163,6 @@ switch ( $data->accion ) {
 		break;
 	
 	/***** DONANTES *****/
-
 	case 'cargarCatDonantes':
 		$consulta = new Consultas( $conexion );
 

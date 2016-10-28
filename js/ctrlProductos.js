@@ -1,4 +1,4 @@
-miApp.controller('ctrlProductos', function($scope, $http, $alert){
+﻿miApp.controller('ctrlProductos', function($scope, $http, $alert){
 	
 	$scope.$parent.menu     = 'productos';
 	$scope.filtro           = "tipoProducto";

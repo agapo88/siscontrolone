@@ -1,4 +1,4 @@
-miApp.controller('ctrlIngresar', function($scope, $http, $routeParams, $timeout){
+﻿miApp.controller('ctrlIngresar', function($scope, $http, $routeParams, $timeout){
 
 	$scope.subirArchivo        = true;
 	$scope.catArea             = [];

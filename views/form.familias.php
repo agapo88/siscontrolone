@@ -23,8 +23,7 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="modalReporte">
    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
-
-         <div  ng-repeat="ayudaFamilia in lstAyudasFam">
+         <div ng-repeat="ayudaFamilia in lstAyudasFam">
             <div class="modal-header title-info">
                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                <blockquote>

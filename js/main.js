@@ -1,4 +1,4 @@
-var miApp = angular.module('proyecto', ['mgcrea.ngStrap','ngRoute','angularUtils.directives.dirPagination'], ['$provide', function($provide) {
+﻿var miApp = angular.module('proyecto', ['mgcrea.ngStrap','ngRoute','angularUtils.directives.dirPagination'], ['$provide', function($provide) {
     var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
     $provide.value("$locale", {
             "DATETIME_FORMATS": {
@@ -72,7 +72,8 @@ miApp.config(function($alertProvider) {
     animation: 'am-fade-and-slide-top',
     placement: 'top'
   });
-})
+});
+
 
 miApp.controller('home', function($scope, $http){
 	$scope.menu = 'inicio';

@@ -72,25 +72,26 @@ class Donacion extends Session
 				if( $iTipoEntidad == -1 AND $iFechaDonacion == -1 AND $iMoneda == -1 ){
 
 					if( $groupBy == 'tipoEntidad' ):				// TIPOPRODUCTO
-						$iTipoEntidad = count( $lstFondoComun );
+						$ixSolicitud = $iTipoEntidad = count( $lstFondoComun );
 
 					elseif( $groupBy == 'fechaDonacion' ):			// BODEGA
-						$iFechaDonacion = count( $lstFondoComun );
+						$ixSolicitud = $iFechaDonacion = count( $lstFondoComun );
 
 					elseif( $groupBy == 'moneda' ):			// CLASIFICACION
-						$iMoneda = count( $lstFondoComun );
+						$ixSolicitud = $iMoneda = count( $lstFondoComun );
 
 					endif;
 
-					$lstFondoComun[] = array(
+					$lstFondoComun[ $ixSolicitud ] = array(
 						'idTipoEntidad'        => (int) $row->idTipoEntidad,
 						'tipoEntidad'          => $row->tipoEntidad,
 						'fechaDonacion'        => $row->fechaDonacion,
+						'fechaDonador'	       => $row->fechaDonador,
 						'idMoneda'             => $row->idMoneda,
 						'moneda'               => $row->moneda,
 						'total'                => $row->total,
 						'totalDonacionEntidad' => 0,
-						'lstFondos'         => array(),
+						'lstFondos'            => array(),
 					);
 				}
 
@@ -105,15 +106,15 @@ class Donacion extends Session
 				}
 
 				// SI NO EXISTE EL DONANTE
-				if( $iFondo == -1 ){
-					if( $groupBy == 'tipoEntidad' ):			// TIPO PRODUCTO
-						$ixSolicitud = $iTipoEntidad;
-					elseif( $groupBy == 'fechaDonacion' ):		// SECCION BODEGA
-						$ixSolicitud = $iFechaDonacion;
-					elseif( $groupBy == 'moneda' ):		// CLASIFICACION
-						$ixSolicitud = $iMoneda;
-					endif;
+				if( $groupBy == 'tipoEntidad' ):			// TIPO PRODUCTO
+					$ixSolicitud = $iTipoEntidad;
+				elseif( $groupBy == 'fechaDonacion' ):		// SECCION BODEGA
+					$ixSolicitud = $iFechaDonacion;
+				elseif( $groupBy == 'moneda' ):		// CLASIFICACION
+					$ixSolicitud = $iMoneda;
+				endif;
 
+				if( $iFondo == -1 ){
 
 					$lstFondoComun[ $ixSolicitud ][ 'lstFondos' ][] = array(
 						'idFondoComun'  => $row->idFondoComun,
@@ -126,7 +127,6 @@ class Donacion extends Session
 						'tipoMoneda'    => $row->idMoneda == 1 ? 'Q.' : '$.',
 					);
 
-					//$lstFondoComun[ $ixSolicitud ]['totalProductos'] ++;
 					$lstFondoComun[ $ixSolicitud ]['totalDonacionEntidad'] += $row->donacion;
 				}
 

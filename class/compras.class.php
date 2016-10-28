@@ -82,8 +82,7 @@ class Compra extends Session
 				$compra->fechaCaducidad = "'".$compra->fechaCaducidad ."'";
 
 			$sql = "CALL adquisionProducto ({$idCompraDonacion}, {$compra->idProducto}, {$compra->idProveedor}, $compra->cantidad, $compra->precioUnitario, $compra->fechaCaducidad );";
-
-//			echo $sql;
+			
 			if( $rs = $this->con->query( $sql) ){
 
 				$this->con->next_result();

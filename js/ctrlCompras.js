@@ -258,6 +258,7 @@
 			.success(function(data){
 				console.log(data);
 				if( data.respuesta ){
+					$scope.cargarInicio();
 					$scope.resetObject(1);
 					$alert({title: 'Mensaje: ', content: data.mensaje, placement: 'top', type: 'success', show: true, duration: 4});
 				}else{
@@ -294,6 +295,7 @@
 			.success(function(data){
 				console.log(data);
 				if( data.respuesta ){
+					$scope.cargarInicio();
 					$scope.resetObject(2);
 					$alert({title: 'Mensaje: ', content: data.mensaje, placement: 'top', type: 'success', show: true, duration: 4});
 				}else{

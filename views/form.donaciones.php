@@ -43,7 +43,7 @@
                   {{ fondoComun.tipoEntidad }}
                </strong>
                <strong ng-show="filtro=='fechaDonacion'">
-                  {{ fondoComun.fechaDonacion }}
+                  {{ fondoComun.fechaDonador }}
                </strong>
                <strong ng-show="filtro=='moneda'">
                   {{ fondoComun.moneda }}

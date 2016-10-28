@@ -15,7 +15,14 @@
 
 
          <ul class="nav navbar-nav navbar-right">
-            <li ng-class="{'active':menu=='comprarProducto'}"><a href="#/compras">Compras</a></li>
+            <li class="dropdown" ng-class="{'active':menu=='compras'}">
+               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Compras <span class="caret"></span></a>
+               <ul class="dropdown-menu">
+                  <li ng-class="{'active':menu=='comprarProducto'}"><a href="#/compras">Compras</a></li>
+                  <li><a href="#">Ver Compras</a></li>
+               </ul>
+            </li>
+
             <li ng-class="{'active':menu=='reporte'}"><a href="#">Reportes</a></li>
             <li class="dropdown">
                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>

@@ -117,14 +117,13 @@
    <li role="presentation" ng-class="{'active': tab==2}" ng-click="tab=2"><a role="tab">Agregar Familia</a></li>
 </ul>
 
-
    <!-- AGREGAR FAMILIAS -->
    <div class="col-sm-12" ng-show="tab==2" style="margin-top: 50px">
       <form class="form-horizontal" name="formAgregar">
          <div class="form-group" ng-class="{'has-error': formAgregar.familia.$invalid}">
             <label class="control-label col-sm-2">Familia:</label>
             <div class="col-sm-5">
-               <input type="text" ng-model="familia.nombre" name="familia" ng-minlength="5" class="form-control" placeholder="Nombre de la Familia">
+               <input type="text" id="nombreFamilia" ng-model="familia.nombre" name="familia" ng-minlength="5" class="form-control" placeholder="Nombre de la Familia">
             </div>
             <label class="control-label col-sm-2">Área:</label>
             <div class="col-sm-3 col-md-2">
@@ -176,7 +175,9 @@
                <b>TOTAL MIEMBROS: <span class="badge">{{ familia.lstMiembros.length }}</span></b>
             </button>
          </div>
-         
+         <legend class="text-center">
+            Listado de Miembros
+         </legend>
          <!-- AGREGAR MIEMBROS -->
          <div class="form-group">
             <table class="table table-striped table-hover">
@@ -274,12 +275,10 @@
                         </div>
                      </td>
                   </tr>
-
                   <!-- AGREGAR MIEMBROS -->
                   <tr ng-show="agregarMiembros">
                      <td class="text-center">
                         <input type="text" class="form-control" id="miembroCui" maxlength="13" ng-model="miembro.cui">
-                        456456
                      </td>
                      <td class="text-center">
                         <input type="text" name="" class="form-control" maxlength="45" ng-model="miembro.nombres">
@@ -325,6 +324,11 @@
          <div class="form-group" ng-show="!agregarMiembros">
             <button type="button" class="btn btn-info btn-sm noBorder" ng-click="agregarMiembros=!agregarMiembros">
                <span class="glyphicon glyphicon-plus-sign"></span> Agregar Miembro
+            </button>
+         </div>
+         <div class="form-group text-center">
+            <button type="button" class="btn btn-success btn-lg noBorder" ng-click="guardarFamilia()">
+               <span class="glyphicon glyphicon-saved"></span> Guardar Familia
             </button>
          </div>
       </form>

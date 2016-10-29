@@ -19,12 +19,24 @@
 		}
 	});
 
+	$scope.$watch('tab', function(){
+		if( $scope.tab == 2){
+			$timeout(function(){
+				$('#nombreFamilia').focus();
+				
+			});
+		}
+	});
+
 	
 	$scope.familia = {
-		nombre       : '',
-		fechaIngreso : '',
-		idArea       : '',
-		lstMiembros  : [
+		nombre         : 'Familia ',
+		fechaIngreso   : '',
+		direccion      : '',
+		idArea         : null,
+		idMunicipio    : null,
+		idDepartamento : null,
+		lstMiembros    : [
 			{
 				nombres         : 'Jose Antonio',
 				apellidos       : 'Perez García',
@@ -199,13 +211,15 @@
 	// RESETEAR VALORES
 	$scope.reset = function(){
 		$scope.familia = {
-				nombre       : '',
-				fechaIngreso : '',
-				idArea       : '',
-				lstMiembros  : []
-			};
-	}
-
+			nombre         : 'Familia',
+			fechaIngreso   : '',
+			direccion      : '',
+			idArea         : null,
+			idMunicipio    : null,
+			idDepartamento : null,
+			lstMiembros    : []
+		};
+	};
 
 	// CONSULTAR LISTA DONANTES
 	$scope.consultarDonadores = function(){
@@ -216,7 +230,7 @@
 		}).error(function(data){
 			console.log(data);
 		});
-	}
+	};
 
 	// GUARDAR DONADOR
 	$scope.guardarFamilia = function(){
@@ -224,30 +238,38 @@
 		var familia = $scope.familia;
 		var error = false;
 
-		if( !($scope.donador.nombre.length > 5)  ){
+		if( !(familia.nombre && familia.nombre.length > 9)  ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'Nombre del donador muy corto, debe tener minimo 5 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'El nombre de la familia debe tener mínimo 10 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.donador.telefono.length > 3) ){
+		else if( !(familia.idArea && familia.idArea != null) ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'No de telefono corto, debe tener minimo 8 digitos.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'No ha seleccionado el área de pertenencia.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.donador.email.length > 3) ){
+		else if( !(familia.direccion && familia.direccion.length > 7) ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'Correo electronico Invalido, verifique.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'La dirección de la familia debe tener más de 7 caracteres.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.donador.idTipoEntidad) ){
+		else if( !(familia.fechaIngreso) ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'No ha ingresado fecha de Ingreso.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
-		else if( !($scope.donador.fechaIngreso) ){
-
+		else if( !(familia.idDepartamento && familia.idDepartamento != null) ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'No ha seleccionado el departamento.', placement: 'top', type: 'warning', show: true, duration: 4});
+		}
+		else if( !(familia.idMunicipio && familia.idMunicipio != null) ){
+			error = true;
+			$alert({title: 'Alerta: ', content: 'No ha seleccionado el Municipio.', placement: 'top', type: 'warning', show: true, duration: 4});
+		}else if( !(familia.lstMiembros.length >0) ){
+			error = true;
+			$alert({title: 'Alerta: ', content: 'Aun no ingresa miembros de la familia.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
 
 		// SI NO EXISTE ERROR
 		if( !error ){
+			console.log("Accedio");
+			/*
 			var fechaIngreso = $filter('date')($scope.donador.fechaIngreso, "yyyy-MM-dd");
 			$http.post('consultas.php', {accion: 'guardarDonador', datos: $scope.donador, fechaIngreso: fechaIngreso})
 			.success(function(data){
@@ -263,7 +285,7 @@
 			}).error(function(data){
 				console.log(data);
 			});
-			
+			*/
 		}
 	}
 	

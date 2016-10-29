@@ -1,8 +1,8 @@
 ﻿miApp.controller('ctrlFamilias', function($scope, $http, $alert, $filter, $timeout, $routeParams){
-	
 
-	$scope.idFamiliaSel =$routeParams.idFamilia;
-	console.log( $scope.idFamiliaSel );
+	$scope.idFamiliaSel = $routeParams.idFamilia;
+	console.log($scope.idFamiliaSel);
+
 	$scope.$parent.menu  = 'familias';
 	$scope.tab = 1;
 
@@ -28,6 +28,26 @@
 			});
 		}
 	});
+
+	//$scope.familiaSeleccionada = {};
+	$scope.copiarFamilia = function( familia ){
+		console.log(familia);
+		$scope.familiaSeleccionada = angular.copy( familia );
+		console.log( $scope.familiaSeleccionada );
+	};
+
+	if( $scope.idFamiliaSel != undefined ){
+		$http.post('consultas.php',{accion: 'verMiembrosFamilia', idFamilia: $scope.idFamiliaSel})
+		.success(function(data){
+			$scope.lstMiembrosFamilia = data.lstMiembrosFamilia;
+			console.log(data);
+		}).error(function(data){
+			console.log(data);
+		});
+	};
+
+
+	$scope.lstMiembrosFamilia = [];
 
 	$scope.familia = {
 		nombre         : 'Familia ',
@@ -98,6 +118,10 @@
 		.success(function(data){
 			console.log(data);
 			$scope.lstAyudasFam = data.lstAyudasFam;
+			if( data.lstAyudasFam.length > 0 )
+				$('#modalReporte').modal('show');
+			else
+				$alert({title: 'Notificación: ', content: 'No se encontraron Ayudas para esta familia.', placement: 'top', type: 'info', show: true, duration: 4});
 		}).error(function(data){
 			console.log(data);
 		});
@@ -111,7 +135,7 @@
 			if( data.lstHistorialFamilia.length > 0 )
 				$('#modalSeguimiento').modal('show');
 			else
-				$alert({title: 'Notificación: ', content: 'No se encontro seguimientos para esta familia.', placement: 'top', type: 'warning', show: true, duration: 4});
+				$alert({title: 'Notificación: ', content: 'No se encontró seguimientos para esta familia.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}).error(function(data){
 			console.log(data);
 		});

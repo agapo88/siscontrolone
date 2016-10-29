@@ -302,5 +302,69 @@ class Familia extends Session
 		}
 	}
 
+	function verMiembrosFamilia( $idFamilia ){
+
+		$lstMiembrosFam = array();
+		$sql = "SELECT 
+					    idMiembro,
+					    cui,
+					    nombres,
+					    apellidos,
+					    fechaNacimiento,
+					    edad,
+					    idParentesco,
+					    otroParentesco,
+					    parentesco,
+					    idFamilia,
+					    nombreFamilia,
+					    fechaIngreso,
+					    direccion,
+					    idGenero,
+					    genero
+					FROM
+					    vstMiembrosFamilia
+				WHERE idFamilia = {$idFamilia};";
+
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+				
+				$iMiembro = -1;
+
+				if( !count($lstMiembrosFam) ){
+					$lstMiembrosFam[0] = array(
+							'idFamilia'    => $row->idFamilia,
+							'nombreFamilia'      => $row->nombreFamilia,
+							'fechaIngreso' => $row->fechaIngreso,
+							'direccion'    => $row->direccion,
+							'lstMiembros'  => array()
+						);
+				}
+
+				foreach ($lstMiembrosFam[0]['lstMiembros'] AS $ixMiembro => $miembro) {
+					if( $miembro['idMiembro'] == $row->idMiembro ){
+						$iMiembro = $ixMiembro;
+						break;
+					}
+				}
+
+				if( $iMiembro == -1 ){
+
+					$lstMiembrosFam[0]['lstMiembros'][] = array(
+							'idMiembro'       => $row->idMiembro,
+							'cui'             => $row->cui,
+							'nombres'         => $row->nombres,
+							'apellidos'       => $row->apellidos,
+							'parentesco'      => $row->idParentesco == 99 ? $row->otroParentesco : $row->parentesco,
+							'genero'          => $row->genero,
+							'fechaNacimiento' => $row->fechaNacimiento,
+							'edad'            => $row->edad,
+						);
+				}
+			}
+		}
+
+		return $lstMiembrosFam;
+	}
+
 }
 ?>

@@ -423,18 +423,18 @@
                               <td>
                                  <!-- OPCIONES -->
                                  <div class="menu-opciones">
-                                    <button class="btn btn-xs btn-opcion" data-toggle="modal" data-target="#modalReporte" ng-click="verDonacionesFamilia( familia.idFamilia )" >
+                                    <button class="btn btn-xs btn-opcion" ng-click="verDonacionesFamilia( familia.idFamilia )" >
                                        <span class="glyphicon glyphicon-folder-open"></span>
                                     </button>
                                     <button class="btn btn-xs btn-opcion" ng-click="verSeguimiento( familia.idFamilia )" >
                                        <span class="glyphicon glyphicon-comment"></span>
                                     </button>
+                                    <a href="#familias/{{ familia.idFamilia }}" class="btn btn-sm btn-opcion" ng-click="copiarFamilia( familia )" title="Ver Miembros">
+                                       <span class="glyphicon glyphicon-user"></span>
+                                    </a>
                                     <button class="btn btn-xs btn-opcion" ng-click="editarfamilia( donador )">
                                        <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
                                     </button>
-                                    <a href="#familias/{{ familia.idFamilia }}" class="btn btn-sm btn-opcion" ng-click="openModalOficios( ixMiembro )" title="Ver Miembros">
-                                       <span class="glyphicon glyphicon-user"></span>
-                                    </a>
                                     <!--
                                     <button type="button" class="btn btn-sm btn-opcion" ng-click="openModalOficios( ixMiembro )">
                                        <span class="glyphicon glyphicon-plus"></span> Oficio

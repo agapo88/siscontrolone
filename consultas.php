@@ -191,6 +191,13 @@ switch ( $data->accion ) {
 		$familia = new Familia( $conexion );
 		$datos   = $familia->guardarFamilia();
 
+		echo json_encode( $datos );
+		break;
+
+	case 'verMiembrosFamilia':
+		$familia = new Familia( $conexion );
+		$datos   = $familia->verMiembrosFamilia( $data->idFamilia );
+
 		echo json_encode( $datos );		
 		break;
 	

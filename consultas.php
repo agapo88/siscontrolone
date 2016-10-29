@@ -29,6 +29,12 @@ switch ( $data->accion ) {
 		
 		break;
 
+
+	case 1:
+		$reportes = new Reporte( $conexion );
+		$reportes->generarInserts();
+		break;
+
 	/*** PROVEEDORES ***/
 	case 'inicioProveedor':
 		$producto  = new Producto( $conexion );
@@ -161,6 +167,13 @@ switch ( $data->accion ) {
 	case 'consultarFamilias':
 		$familia = new Familia( $conexion );
 		$datos['lstFamiliasB'] = $familia->consultarFamilias();
+
+		echo json_encode( $datos );
+		break;
+
+	case 'verHistorialEconomico':
+		$familia = new Familia( $conexion );
+		$datos['lstHistorialFamilia'] = $familia->verHistorialEconomico( $data->idFamilia );
 
 		echo json_encode( $datos );
 		break;

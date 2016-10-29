@@ -34,6 +34,6 @@
 	<script type="text/javascript" src="js/ctrlProductos.js"></script>
 	<script type="text/javascript" src="js/ctrlCompras.js"></script>
 	<script type="text/javascript" src="js/ctrlProveedor.js"></script>
-
+	<script type="text/javascript" src="js/ctrlReportes.js"></script>
 </body>
 </html>

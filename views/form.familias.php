@@ -91,25 +91,6 @@
    <div class="title-section">
       <span class="titulo">FAMILIAS</span>
    </div>
-
-   <!--
-   <div class="col-sm-12 text-right">
-      <button type="button" class="btn btn-primary btn-sm noBorder" ng-mouseleave="hoveri=false" ng-mouseenter="hoveri=true" data-toggle="modal" data-target="#modalAgregar">
-         <span class="glyphicon" ng-class="{'glyphicon-plus-sign': hoveri, 'glyphicon-plus':!hoveri}"></span>
-         Agregar Donador
-      </button>
-   </div>
-   <div class="col-sm-12">
-      <form class="navbar-right" role="search">
-         <div class="form-group">
-            <label class="control-label col-sm-4">Buscar Donador:</label>
-            <div class="col-sm-8">
-               <input type="text" class="form-control" ng-model="searchDonador" placeholder="Buscar donador">
-            </div>
-         </div>
-      </form>
-   </div>
-   -->
 </div>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -425,7 +406,7 @@
                                        <span class="glyphicon glyphicon-folder-open"></span>
                                     </button>
                                     <button class="btn btn-xs btn-opcion" ng-click="removeMiembro( ixMiembro )" >
-                                       <span class="glyphicon glyphicon-trash"></span>
+                                       <span class="glyphicon glyphicon-comment"></span>
                                     </button>
                                     <button class="btn btn-xs btn-opcion" ng-click="editarfamilia( donador )">
                                        <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>

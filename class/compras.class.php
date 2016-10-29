@@ -38,6 +38,8 @@ class Compra extends Session
 			$this->con->query( "START TRANSACTION" );
 			$sql = "CALL agregarCompraDonacion(NULL,'{$_fechaIngreso}', {$_noFactura}, {$_idMoneda}, {$this->getIdUser()})";
 
+			echo $sql;
+
 			if( $rs = $this->con->query( $sql ) ){
 				$this->con->next_result();
 				$row = $rs->fetch_object();
@@ -53,6 +55,7 @@ class Compra extends Session
 					}
 
 				}else{
+					$this->con->next_result();
 					$this->error = true;
 				}
 			}
@@ -82,7 +85,9 @@ class Compra extends Session
 				$compra->fechaCaducidad = "'".$compra->fechaCaducidad ."'";
 
 			$sql = "CALL adquisionProducto ({$idCompraDonacion}, {$compra->idProducto}, {$compra->idProveedor}, $compra->cantidad, $compra->precioUnitario, $compra->fechaCaducidad );";
-			
+
+			echo $sql;
+
 			if( $rs = $this->con->query( $sql) ){
 
 				$this->con->next_result();

@@ -154,5 +154,75 @@ class Familia extends Session
 		return $lstFamiliasB;
 	}
 
+
+	function verHistorialEconomico( $idFamilia ){
+		$lstHistorialEco = array();
+
+		$idFamilia = (int) $idFamilia;
+
+		$sql = "SELECT 
+					    idFamilia,
+					    nombreFamilia,
+					    direccion,
+					    idEstado,
+					    estado,
+					    observacion,
+					    fechaHora,
+					    DATE_FORMAT(fechaHora, '%d/%m/%Y %h:%i %p') AS fechaIngreso
+					FROM
+					    vstHistorialEconomico
+				WHERE idFamilia = {$idFamilia};";
+
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+
+				$iFamilia = -1;
+				$iEstado  = 1;
+
+				// RECORRER LISTA FAMILIAS
+				foreach ($lstHistorialEco AS $ixHistorialE => $ixHistorialE) {
+					if( $ixHistorialE['idFamilia'] == $row->idFamilia ){
+						$iFamilia = $ixHistorialE;
+						break;
+					}
+				}
+
+				if( $iFamilia == -1 ){
+					$iFamilia = count( $lstHistorialEc );
+					$lstHistorialEc[ $iFamilia ] = array(
+							'idFamilia'     => $row->idFamilia,
+							'nombreFamilia' => $row->nombreFamilia,
+							'direccion'     => $row->direccion,
+							'lstEstados'    => array(),
+						);
+				}
+
+				// RECORRER LISTA ESTADOS
+				foreach ($lstHistorialEco[ $iFamilia ]['lstEstados'] AS $ixEstado => $estado) {
+					if( $estado['idFamilia'] == $row->idEstado ){
+						$iEstado = $ixEstado;
+						break;
+					}
+				}
+
+				if( $iEstado == -1 ){
+					$iEstado = count( $lstHistorialEco[ $iFamilia ]['lstEstados'] );
+					$lstHistorialEco[ $iFamilia ]['lstEstados'][$iEstado] = array(
+							'idEstado'        => $row->idEstado,
+							'estado'          => $row->estado,
+							'lstSeguimientos' => array(),
+						);
+				}
+
+				$lstHistorialEco[ $iFamilia ]['lstEstados'][$iEstado]['lstSeguimientos'][] = array(
+						'observacion'  => $row->observacion,
+						'fechaIngreso' => $row->fechaIngreso
+					);
+			}
+		}
+	}
+
+
+
 }
 ?>

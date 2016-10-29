@@ -32,6 +32,10 @@
         templateUrl : 'views/form.compras.php',
         controller  : 'ctrlCompras'
     })
+    .when('/reportes', {
+        templateUrl : 'views/form.reportes.php',
+        controller  : 'ctrlReportes'
+    })
     .otherwise({
         redirectTo: '/'
     });

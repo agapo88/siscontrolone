@@ -23,7 +23,7 @@
                </ul>
             </li>
 
-            <li ng-class="{'active':menu=='reporte'}"><a href="#">Reportes</a></li>
+            <li ng-class="{'active':menu=='reporte'}"><a href="#/reportes">Reportes</a></li>
             <li class="dropdown">
                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
                <ul class="dropdown-menu">

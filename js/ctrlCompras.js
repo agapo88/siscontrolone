@@ -236,6 +236,7 @@
 
 	// GUARDAR COMPRAS QUETZALES
 	$scope.guardarCompraQ = function(){
+		console.log( $scope.compras );
 		var error = false;
 
 		if( !($scope.compras.noFactura && $scope.compras.noFactura > 0)  ){
@@ -253,6 +254,7 @@
 
 		// SI NO EXISTE ERROR
 		if( !error ){
+			console.log("accedsio");
 			var fechaIngreso = $filter('date')($scope.compras.fechaIngreso, "yyyy-MM-dd");
 			$http.post('consultas.php', {accion: 'guardarCompras', datos: $scope.compras, fechaIngreso: fechaIngreso})
 			.success(function(data){

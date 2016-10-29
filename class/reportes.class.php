@@ -18,7 +18,6 @@ class Reporte
 	// GENERAR DETALLE DE APORTES POR FAMILIAS
 	function verDonacionesFamilia( $idFamilia = null){
 
-		
 		$lstAyudasRecibidas = array();
 		$filtro = "";
 		if( isset( $idFamilia ) )
@@ -107,6 +106,19 @@ class Reporte
 		}
 
 		return $lstAyudasRecibidas;
+	}
+
+	//function 
+
+	function generarInserts(){
+
+		for ($i=0; $i <= 50; $i+2) { 
+			$sql = "CALL ingresarSeguimiento({$i}, 'Séptimo Seguimiento Familia ==> {$i}', 1 );";
+
+			$this->con->query( $sql );
+			$this->con->next_result();
+			
+		}
 	}
 
 }

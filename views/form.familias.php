@@ -1,24 +1,3 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
-   <div class="modal-dialog" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Modal title</h4>
-         </div>
-         <div class="modal-body">
-            <p>One fine body&hellip;</p>
-            <button type="button" ng-click="agregarOficios()">
-               Prueba
-            </button>
-         </div>
-         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-         </div>
-      </div><!-- /.modal-content -->
-   </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <!-- MODAL REPORTE AYUDAS -->
 <div class="modal fade" tabindex="-1" role="dialog" id="modalReporte">
    <div class="modal-dialog modal-xl" role="document">
@@ -176,22 +155,20 @@
          <div class="form-group">
 
             <label class="control-label col-sm-2">Departamento:</label>
-            <div class="col-sm-3">
-               <div class="input-group">
-                  <span class="input-group-addon">
-                     <i class="glyphicon glyphicon-calendar"></i>
-                  </span>
-                  <input type="text" name="fechaIngreso" class="form-control" ng-model="familia.fechaIngreso" data-date-format="dd/MM/yyyy" data-date-type="number"  data-max-date="today" data-autoclose="1"  bs-datepicker>
-               </div>
+            <div class="col-sm-4 col-lg-3">
+               <select ng-model="familia.idDepartamento" class="form-control" ng-change="consultarMunicipio(familia.idDepartamento)">
+                  <option value="{{ departamento.idDepartamento }}" ng-repeat="departamento in lstDepartamentos">
+                     {{departamento.departamento}}
+                  </option>
+               </select>
             </div>
             <label class="control-label col-sm-2">Municipio:</label>
-            <div class="col-sm-3">
-               <div class="input-group">
-                  <span class="input-group-addon">
-                     <i class="glyphicon glyphicon-calendar"></i>
-                  </span>
-                  <input type="text" name="fechaIngreso" class="form-control" ng-model="familia.fechaIngreso" data-date-format="dd/MM/yyyy" data-date-type="number"  data-max-date="today" data-autoclose="1"  bs-datepicker>
-               </div>
+            <div class="col-sm-4 col-lg-3">
+               <select ng-model="familia.idMunicipio" class="form-control">
+                  <option value="{{ municipio.idMunicipio }}" ng-repeat="municipio in lstMunicipios">
+                     {{municipio.municipio}}
+                  </option>
+               </select>
             </div>
          </div>
          <div class="form-group text-right">

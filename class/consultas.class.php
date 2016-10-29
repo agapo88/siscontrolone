@@ -75,6 +75,37 @@ class Consultas
 		return $lstGeneros;
 	}
 
+
+	// CONSULTAR PARENTESCOS
+	function consultarDepartamentos(){
+		$lstDepartamentos = array();
+
+		$sql = "SELECT idDepartamento, departamento FROM departamento;;";
+		
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+				$lstDepartamentos[] = $row;
+			}
+		}
+
+		return $lstDepartamentos;
+	}
+
+	function consultarMunicipios( $idDepartamento ){
+		$lstMunicipios = array();
+		$idDepartamento = (int) $idDepartamento;
+		$sql = "SELECT idMunicipio, idDepartamento, municipio FROM municipio WHERE idDepartamento = {$idDepartamento};";
+		
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+				$lstMunicipios[] = $row;
+			}
+		}
+
+		return $lstMunicipios;
+	}
+
+
 	
 
 }

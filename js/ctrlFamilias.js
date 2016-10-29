@@ -10,9 +10,8 @@
 	$scope.lstParentesco = [];
 	$scope.filtro        = "departamento";
 
-
+	$scope.agregarMiembros = false;
 	$scope.$watch('agregarMiembros', function(){
-		console.log( $scope.agregarMiembros );
 		if( $scope.agregarMiembros == true ){
 			$timeout(function(){
 				$('#miembroCui').focus();
@@ -60,13 +59,26 @@
 	($scope.cargarInicio = function(){
 		$http.post('consultas.php', {accion: 'cargaDataFamilia'})
 		.success(function( data ){
-			$scope.lstAreas      = data.lstAreas;
-			$scope.lstParentesco = data.lstParentesco;
-			$scope.lstGeneros    = data.lstGeneros;
+			console.log(data);
+			$scope.lstAreas         = data.lstAreas;
+			$scope.lstParentesco    = data.lstParentesco;
+			$scope.lstGeneros       = data.lstGeneros;
+			$scope.lstDepartamentos = data.lstDepartamentos;
 		}).error(function(data){
 			console.log(data);
 		});
 	})();
+
+
+	$scope.lstMunicipios = [];
+	$scope.consultarMunicipio = function( idDepartamento ){
+		$http.post('consultas.php',{accion: 'consultarMunicipio', idDepartamento: idDepartamento})
+		.success(function(data){
+			$scope.lstMunicipios = data.lstMunicipios;
+		}).error(function(data){
+			console.log(data);
+		});
+	}
 
 	$scope.lstAyudasFam = [];
 	$scope.verDonacionesFamilia = function( idFamilia ){
@@ -100,7 +112,6 @@
 	($scope.consultarFamilias = function(){
 		$http.post('consultas.php',{accion: 'consultarFamilias'})
 		.success(function(data){
-			console.log(data);
 			$scope.lstFamiliasB = data.lstFamiliasB;
 		}).error(function(data){
 			console.log(data);
@@ -173,7 +184,6 @@
 				idGenero        : miembro.idGenero,
 				parentesco      : miembro.parentesco,
 				idParentesco    : miembro.idParentesco,
-				lstOcupacion    : [],
 			});
 			$scope.resetObject();
 			$scope.agregarMiembros = false;
@@ -188,36 +198,13 @@
 
 	// RESETEAR VALORES
 	$scope.reset = function(){
-		$scope.donador = {
-				nombre        : '',
-				telefono      : '',
-				email         : '',
-				idTipoEntidad : null,
-				fechaIngreso  : null
+		$scope.familia = {
+				nombre       : '',
+				fechaIngreso : '',
+				idArea       : '',
+				lstMiembros  : []
 			};
 	}
-
-
-	var indice = null;
-	$scope.openModalOficios = function( index ){
-		console.log( index );
-		indice = angular.copy( index );
-	}
-
-
-	// AGREGAR OCUPACIÓN
-	$scope.agregarOficios = function(){
-		console.log( $scope.familia.lstMiembros[ indice ] );
-
-		$scope.familia.lstMiembros[ indice ].lstOcupacion.push({
-			prueba : 'uno',
-			dos    : 'dos',
-			tres   : 'tres',
-			cuatro : 'cuatro',
-			cinco  : 'cinco'
-		});
-	}
-
 
 
 	// CONSULTAR LISTA DONANTES

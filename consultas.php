@@ -35,6 +35,13 @@ switch ( $data->accion ) {
 		$reportes->generarInserts();
 		break;
 
+	case 'consultarMunicipio':
+		$consulta = new Consultas( $conexion );
+		$datos['lstMunicipios'] = $consulta->consultarMunicipios( $data->idDepartamento );
+		echo json_encode( $datos );
+		
+		break;
+
 	/*** PROVEEDORES ***/
 	case 'inicioProveedor':
 		$producto  = new Producto( $conexion );
@@ -158,9 +165,11 @@ switch ( $data->accion ) {
 	/***** FAMILIA *****/
 	case 'cargaDataFamilia':
 		$consulta = new Consultas( $conexion );
-		$datos['lstAreas']      = $consulta->consultarAreas();
-		$datos['lstParentesco'] = $consulta->consultarParentescos();
-		$datos['lstGeneros']    = $consulta->consultarGeneros();
+		$datos['lstAreas']         = $consulta->consultarAreas();
+		$datos['lstParentesco']    = $consulta->consultarParentescos();
+		$datos['lstGeneros']       = $consulta->consultarGeneros();
+		$datos['lstDepartamentos'] = $consulta->consultarDepartamentos();
+
 		echo json_encode( $datos );
 		break;
 

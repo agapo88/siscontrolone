@@ -29,7 +29,6 @@ switch ( $data->accion ) {
 		
 		break;
 
-
 	case 1:
 		$reportes = new Reporte( $conexion );
 		$reportes->generarInserts();
@@ -185,6 +184,14 @@ switch ( $data->accion ) {
 		$datos['lstHistorialFamilia'] = $familia->verHistorialEconomico( $data->idFamilia );
 
 		echo json_encode( $datos );
+		break;
+
+	case 'guardarFamilia':
+		//var_dump( $data );
+		$familia = new Familia( $conexion );
+		$datos   = $familia->guardarFamilia();
+
+		echo json_encode( $datos );		
 		break;
 	
 	/***** DONANTES *****/

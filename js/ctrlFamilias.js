@@ -23,12 +23,10 @@
 		if( $scope.tab == 2){
 			$timeout(function(){
 				$('#nombreFamilia').focus();
-				
 			});
 		}
 	});
 
-	
 	$scope.familia = {
 		nombre         : 'Familia ',
 		fechaIngreso   : '',
@@ -41,7 +39,7 @@
 				nombres         : 'Jose Antonio',
 				apellidos       : 'Perez García',
 				cui             : '0031231231231',
-				fechaNacimiento : '04/10/1999',
+				fechaNacimiento : '1988-12-05',
 				idGenero        : '1',
 				parentesco      : '',
 				idParentesco    : '3',
@@ -50,7 +48,7 @@
 				nombres         : 'Maria',
 				apellidos       : 'Perez García',
 				cui             : '0031231231231',
-				fechaNacimiento : '04/10/1999',
+				fechaNacimiento : '1999-10-04',
 				idGenero        : '2',
 				parentesco      : '',
 				idParentesco    : '3',
@@ -105,10 +103,8 @@
 
 	$scope.lstSeguimientoFam = [];
 	$scope.verSeguimiento = function( idFamilia ){
-		console.log( "cargando", idFamilia );
 		$http.post('consultas.php',{accion: 'verHistorialEconomico', idFamilia: idFamilia})
 		.success(function(data){
-			console.log(data);
 			$scope.lstSeguimientoFam = data.lstHistorialFamilia;
 			if( data.lstHistorialFamilia.length > 0 )
 				$('#modalSeguimiento').modal('show');
@@ -187,12 +183,13 @@
 
 		// SI NO EXISTE ERROR
 		if( !error ){
+			var fechaNacimiento = $filter('date')($scope.familia.fechaNacimiento, "yyyy-MM-dd");
 			// AGREGA AL ARREGLO LOS VALORES DEL OBJETO
 			$scope.familia.lstMiembros.push({
 				nombres         : miembro.nombres,
 				apellidos       : miembro.apellidos,
 				cui             : miembro.cui,
-				fechaNacimiento : miembro.fechaNacimiento,
+				fechaNacimiento : fechaNacimiento,
 				idGenero        : miembro.idGenero,
 				parentesco      : miembro.parentesco,
 				idParentesco    : miembro.idParentesco,
@@ -269,11 +266,12 @@
 		// SI NO EXISTE ERROR
 		if( !error ){
 			console.log("Accedio");
-			/*
-			var fechaIngreso = $filter('date')($scope.donador.fechaIngreso, "yyyy-MM-dd");
-			$http.post('consultas.php', {accion: 'guardarDonador', datos: $scope.donador, fechaIngreso: fechaIngreso})
+			
+			var fechaIngreso = $filter('date')($scope.familia.fechaIngreso, "yyyy-MM-dd");
+			$http.post('consultas.php', {accion: 'guardarFamilia', datos: $scope.familia, fechaIngreso: fechaIngreso})
 			.success(function(data){
 				console.log(data);
+				/*
 				if( data.respuesta ){
 					$scope.$parent.hideModalAgregar();
 					$scope.reset();
@@ -282,10 +280,10 @@
 				}else{
 					$alert({title: 'Error: ', content: data.mensaje, placement: 'top', type: 'danger', show: true, duration: 4});
 				}
+				*/
 			}).error(function(data){
 				console.log(data);
 			});
-			*/
 		}
 	}
 	

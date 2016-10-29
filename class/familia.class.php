@@ -9,6 +9,7 @@ class Familia extends Session
 	private $con;
 	private $respuesta = 0;
 	private $mensaje   = "";
+	private $error     = false;
 
 	function __construct( &$conexion )
 	{
@@ -154,7 +155,7 @@ class Familia extends Session
 		return $lstFamiliasB;
 	}
 
-
+	// FUNCIÓN CONSULTAR HISTORIAL ECONOMICO
 	function verHistorialEconomico( $idFamilia ){
 		
 		$lstHistorialEco = array();
@@ -226,7 +227,80 @@ class Familia extends Session
 		return $lstHistorialEco;
 	}
 
+	// FUNCIÓN GUARDAR FAMILIA
+	function guardarFamilia(){
+		global $data;
 
+		$nombreFamilia  = $this->con->real_escape_string( $data->datos->nombre );
+		$fechaIngreso   = $this->con->real_escape_string( $data->fechaIngreso );
+		$direccion      = $this->con->real_escape_string( $data->datos->direccion );
+		$idArea         = (int) $data->datos->idArea;
+		$idMunicipio    = (int) $data->datos->idMunicipio;
+		$idDepartamento = (int) $data->datos->idDepartamento;
+
+		$this->con->query( "START TRANSACTION" );
+		$sql = "CALL ingresarFamilia('{$nombreFamilia}', '{$fechaIngreso}', {$idArea}, '{$direccion}', {$idMunicipio}, {$idDepartamento}, {$this->getIdUser()});";
+
+
+		if( $rs = $this->con->query( $sql ) ){
+
+			$this->con->next_result();
+			$row = $rs->fetch_object();
+
+			$this->mensaje   = $row->mensaje;
+			$this->respuesta = (int) $row->respuesta;
+
+			if( $this->respuesta ){
+				$idFamilia = (int) $row->idFamilia;
+				$this->guardarMiembro($idFamilia, $data->datos->lstMiembros );
+			}
+			
+		}else{
+			$this->error   = true;
+			$this->mensaje = "Error al ejecutar el Procedimiento de ingreso." ;
+		}
+
+		// VALIDAR REGISTRO PARA FINALIZAR TRANSACCIÓN
+		if( $this->error )
+			$this->con->query( "ROLLBACK" );
+		else
+			$this->con->query( "COMMIT" );
+
+		$respuesta = array( 'mensaje' => $this->mensaje, 'respuesta' => $this->respuesta );
+
+		return $respuesta;
+	}
+
+	// FUNCIÓN GUARDAR MIEMBROS
+	function guardarMiembro($idFamilia, $lstMiembros){
+
+		foreach ($lstMiembros AS $ixMiembro => $miembro) {
+			if( $miembro->idParentesco != 99 )
+				$miembro->parentesco = "NULL";
+			else
+				$miembro->parentesco = "'".$miembro->parentesco."'";
+
+			$sql = "CALL ingresarMiembro('{$miembro->cui}', '{$miembro->nombres}', '{$miembro->apellidos}', '{$miembro->fechaNacimiento}', {$miembro->idGenero}, {$miembro->parentesco}, {$miembro->idParentesco}, {$idFamilia});";
+
+			if( $rs = $this->con->query( $sql ) ){
+
+				$this->con->next_result();
+				$row = $rs->fetch_object();
+
+				$this->mensaje   = $row->mensaje;
+				$this->respuesta = (int) $row->respuesta;
+
+				if( !$this->respuesta ){
+					$this->error = true;
+					break;
+				}
+				
+			}else{
+				$this->error   = true;
+				$this->mensaje = "Error en el Procedimiento de ingreso de familiares." ;
+			}
+		}
+	}
 
 }
 ?>

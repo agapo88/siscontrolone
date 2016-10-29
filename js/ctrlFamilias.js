@@ -1,6 +1,8 @@
-﻿miApp.controller('ctrlFamilias', function($scope, $http, $alert, $filter, $timeout){
+﻿miApp.controller('ctrlFamilias', function($scope, $http, $alert, $filter, $timeout, $routeParams){
 	
 
+	$scope.idFamiliaSel =$routeParams.idFamilia;
+	console.log( $scope.idFamiliaSel );
 	$scope.$parent.menu  = 'familias';
 	$scope.tab = 1;
 

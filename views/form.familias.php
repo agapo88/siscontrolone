@@ -432,7 +432,9 @@
                                     <button class="btn btn-xs btn-opcion" ng-click="editarfamilia( donador )">
                                        <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
                                     </button>
-                                    
+                                    <a href="#familias/{{ familia.idFamilia }}" class="btn btn-sm btn-opcion" ng-click="openModalOficios( ixMiembro )" title="Ver Miembros">
+                                       <span class="glyphicon glyphicon-user"></span>
+                                    </a>
                                     <!--
                                     <button type="button" class="btn btn-sm btn-opcion" ng-click="openModalOficios( ixMiembro )">
                                        <span class="glyphicon glyphicon-plus"></span> Oficio

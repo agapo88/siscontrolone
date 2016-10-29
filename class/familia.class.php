@@ -167,6 +167,7 @@ class Familia extends Session
 					    idEstado,
 					    estado,
 					    observacion,
+					    username,
 					    fechaHora,
 					    DATE_FORMAT(fechaHora, '%d/%m/%Y %h:%i %p') AS fechaIngreso
 					FROM
@@ -216,7 +217,8 @@ class Familia extends Session
 				
 				$lstHistorialEco[ $iFamilia ]['lstEstados'][$iEstado]['lstSeguimientos'][] = array(
 						'observacion'  => $row->observacion,
-						'fechaIngreso' => $row->fechaIngreso
+						'username'     => $row->username,
+						'fechaIngreso' => $row->fechaIngreso,
 					);
 			}
 		}

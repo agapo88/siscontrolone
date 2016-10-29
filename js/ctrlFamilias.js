@@ -79,11 +79,17 @@
 		});
 	};
 
+	$scope.lstSeguimientoFam = [];
 	$scope.verSeguimiento = function( idFamilia ){
 		console.log( "cargando", idFamilia );
 		$http.post('consultas.php',{accion: 'verHistorialEconomico', idFamilia: idFamilia})
 		.success(function(data){
 			console.log(data);
+			$scope.lstSeguimientoFam = data.lstHistorialFamilia;
+			if( data.lstHistorialFamilia.length > 0 )
+				$('#modalSeguimiento').modal('show');
+			else
+				$alert({title: 'Notificación: ', content: 'No se encontro seguimientos para esta familia.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}).error(function(data){
 			console.log(data);
 		});

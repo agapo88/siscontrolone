@@ -156,9 +156,9 @@ class Familia extends Session
 
 
 	function verHistorialEconomico( $idFamilia ){
+		
 		$lstHistorialEco = array();
-
-		$idFamilia = (int) $idFamilia;
+		$idFamilia       = (int) $idFamilia;
 
 		$sql = "SELECT 
 					    idFamilia,
@@ -177,20 +177,20 @@ class Familia extends Session
 			while( $row = $rs->fetch_object() ){
 
 				$iFamilia = -1;
-				$iEstado  = 1;
+				$iEstado  = -1;
 
 				// RECORRER LISTA FAMILIAS
-				foreach ($lstHistorialEco AS $ixHistorialE => $ixHistorialE) {
-					if( $ixHistorialE['idFamilia'] == $row->idFamilia ){
+				foreach ($lstHistorialEco AS $ixHistorialE => $historialE) {
+					if( $historialE['idFamilia'] == $row->idFamilia ){
 						$iFamilia = $ixHistorialE;
 						break;
 					}
 				}
 
 				if( $iFamilia == -1 ){
-					$iFamilia = count( $lstHistorialEc );
-					$lstHistorialEc[ $iFamilia ] = array(
-							'idFamilia'     => $row->idFamilia,
+					$iFamilia = count( $lstHistorialEco );
+					$lstHistorialEco[ $iFamilia ] = array(
+							'idFamilia'     => (int) $row->idFamilia,
 							'nombreFamilia' => $row->nombreFamilia,
 							'direccion'     => $row->direccion,
 							'lstEstados'    => array(),
@@ -199,7 +199,7 @@ class Familia extends Session
 
 				// RECORRER LISTA ESTADOS
 				foreach ($lstHistorialEco[ $iFamilia ]['lstEstados'] AS $ixEstado => $estado) {
-					if( $estado['idFamilia'] == $row->idEstado ){
+					if( $estado['idEstado'] == $row->idEstado ){
 						$iEstado = $ixEstado;
 						break;
 					}
@@ -213,13 +213,15 @@ class Familia extends Session
 							'lstSeguimientos' => array(),
 						);
 				}
-
+				
 				$lstHistorialEco[ $iFamilia ]['lstEstados'][$iEstado]['lstSeguimientos'][] = array(
 						'observacion'  => $row->observacion,
 						'fechaIngreso' => $row->fechaIngreso
 					);
 			}
 		}
+
+		return $lstHistorialEco;
 	}
 
 

@@ -77,7 +77,17 @@
 		}).error(function(data){
 			console.log(data);
 		});
-	}
+	};
+
+	$scope.verSeguimiento = function( idFamilia ){
+		console.log( "cargando", idFamilia );
+		$http.post('consultas.php',{accion: 'verHistorialEconomico', idFamilia: idFamilia})
+		.success(function(data){
+			console.log(data);
+		}).error(function(data){
+			console.log(data);
+		});
+	};
 
 
 	$scope.lstFamiliasB = [];

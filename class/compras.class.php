@@ -36,7 +36,7 @@ class Compra extends Session
 		if( !$this->error ){
 
 			$this->con->query( "START TRANSACTION" );
-			$sql = "CALL agregarCompraDonacion(NULL,'{$_fechaIngreso}', {$_noFactura}, {$_idMoneda}, {$this->getIdUser()})";
+			$sql = "CALL agregarCompraDonacion(NULL,'{$_fechaIngreso}', {$_noFactura}, {$_idMoneda}, {$this->getIdUser()});";
 
 			echo $sql;
 
@@ -86,21 +86,20 @@ class Compra extends Session
 
 			$sql = "CALL adquisionProducto ({$idCompraDonacion}, {$compra->idProducto}, {$compra->idProveedor}, $compra->cantidad, $compra->precioUnitario, $compra->fechaCaducidad );";
 
-			echo $sql;
+			//echo $sql;
 
 			if( $rs = $this->con->query( $sql) ){
-
 				$this->con->next_result();
-
 				$row = $rs->fetch_object();	
 
 				$this->respuesta = (int) $row->respuesta;
 				$this->mensaje   = $row->mensaje;
+				if( !$this->respuesta )
+					$this->error = true;
 
 			}else{
 				$this->error     = true;
 				$this->mensaje   = "Error al ejecutar el procedimiento de Productos.";
-				$this->respuesta = 0;
 			}
 			
 			if ( $this->error )

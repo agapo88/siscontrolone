@@ -1,69 +1,3 @@
-<!-- MODAL REPORTE AYUDAS -->
-<div class="modal fade" tabindex="-1" role="dialog" id="modalReporte">
-   <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-         <div ng-repeat="ayudaFamilia in lstAyudasFam">
-            <div class="modal-header title-info">
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-               <blockquote>
-                  <strong>{{ ayudaFamilia.nombreFamilia | uppercase }}</strong>
-                  <footer>Reporte de donaciones y ayudas</footer>
-               </blockquote>
-            </div>
-            <div class="modal-body" ng-repeat="desastre in ayudaFamilia.lstDesastres">
-
-               <div class="panel panel-default">
-                  <div class="panel-heading">
-                     <blockquote>
-                        <a ng-click="desastre.mostrar=!desastre.mostrar">
-                           <span class="glyphicon" ng-class="{'glyphicon-chevron-right': desastre.mostrar, 'glyphicon-chevron-down': !desastre.mostrar}"></span>
-                           <strong>{{desastre.idDesastre + '. ' + desastre.desastre | uppercase }}</strong>
-                           <footer>{{desastre.tipoDesastre}}</footer>
-                           <div class="pull-right">
-                              <strong>TOTAL AYUDA: <span class="badge">{{desastre.totalGeneral | number:2 }}</span></strong>
-                           </div>
-                        </a>
-                     </blockquote>
-                  </div>
-                  <div class="panel-body" ng-show="!desastre.mostrar" ng-repeat="anio in desastre.lstAnio">
-                     <a ng-click="anio.mostrar=!anio.mostrar">
-                        <span class="glyphicon" ng-class="{'glyphicon-chevron-right': desastre.mostrar, 'glyphicon-chevron-down': !desastre.mostrar}"></span>
-                        <strong>
-                           Año {{ anio.anio }}
-                        </strong>
-                     </a>
-                     <div class="pull-right">
-                        <label class="label label-default">
-                           <strong>TOTAL: <span class="badge">{{anio.totalRecibido | number: 2}}</span></strong>
-                        </label>
-                     </div>
-                     <table class="table table-striped" ng-show="!anio.mostrar">
-                        <thead>
-                           <tr>
-                              <th class="text-center">No.</th>
-                              <th class="text-center">Donador</th>
-                              <th class="text-center">Entidad</th>
-                              <th class="text-center">Mes</th>
-                              <th class="text-center">Cantidad</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr ng-repeat="mes in anio.lstMeses">
-                              <td>{{mes.idDonador}}</td>
-                              <td>{{mes.nombre}}</td>
-                              <td class="text-center">{{mes.tipoEntidad}}</td>
-                              <td class="text-center">{{mes.mes}}</td>
-                              <td class="text-right">{{mes.cantidad | number: 2}}</td>
-                           </tr>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
 
 <!-- MODAL SEGUIMIENTO -->
 <div class="modal fade" tabindex="-1" role="dialog" id="modalSeguimiento">
@@ -469,6 +403,74 @@
          <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()"><i class="glyphicon glyphicon-log-out"></i> Cerrar</button>
             <button type="button" class="btn btn-primary" ng-click="guardarDonador()"><i class="glyphicon glyphicon-saved"></i> Guardar Donador</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- MODAL REPORTE AYUDAS -->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalReporte">
+   <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+         <div ng-repeat="ayudaFamilia in lstAyudasFam">
+            <div class="modal-header title-info">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <blockquote>
+                  <strong>{{ ayudaFamilia.nombreFamilia | uppercase }}</strong>
+                  <footer>Reporte de donaciones y ayudas</footer>
+               </blockquote>
+            </div>
+            <div class="modal-body" ng-repeat="desastre in ayudaFamilia.lstDesastres">
+
+               <div class="panel panel-default">
+                  <div class="panel-heading">
+                     <blockquote>
+                        <a ng-click="desastre.mostrar=!desastre.mostrar">
+                           <span class="glyphicon" ng-class="{'glyphicon-chevron-right': desastre.mostrar, 'glyphicon-chevron-down': !desastre.mostrar}"></span>
+                           <strong>{{desastre.idDesastre + '. ' + desastre.desastre | uppercase }}</strong>
+                           <footer>{{desastre.tipoDesastre}}</footer>
+                           <div class="pull-right">
+                              <strong>TOTAL AYUDA: <span class="badge">{{desastre.totalGeneral | number:2 }}</span></strong>
+                           </div>
+                        </a>
+                     </blockquote>
+                  </div>
+                  <div class="panel-body" ng-show="!desastre.mostrar" ng-repeat="anio in desastre.lstAnio">
+                     <a ng-click="anio.mostrar=!anio.mostrar">
+                        <span class="glyphicon" ng-class="{'glyphicon-chevron-right': desastre.mostrar, 'glyphicon-chevron-down': !desastre.mostrar}"></span>
+                        <strong>
+                           Año {{ anio.anio }}
+                        </strong>
+                     </a>
+                     <div class="pull-right">
+                        <label class="label label-default">
+                           <strong>TOTAL: <span class="badge">{{anio.totalRecibido | number: 2}}</span></strong>
+                        </label>
+                     </div>
+                     <table class="table table-striped" ng-show="!anio.mostrar">
+                        <thead>
+                           <tr>
+                              <th class="text-center">No.</th>
+                              <th class="text-center">Donador</th>
+                              <th class="text-center">Entidad</th>
+                              <th class="text-center">Mes</th>
+                              <th class="text-center">Cantidad</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr ng-repeat="mes in anio.lstMeses">
+                              <td>{{mes.idDonador}}</td>
+                              <td>{{mes.nombre}}</td>
+                              <td class="text-center">{{mes.tipoEntidad}}</td>
+                              <td class="text-center">{{mes.mes}}</td>
+                              <td class="text-right">{{mes.cantidad | number: 2}}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
          </div>
       </div>
    </div>

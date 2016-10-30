@@ -209,7 +209,8 @@
 
 		// SI NO EXISTE ERROR
 		if( !error ){
-			var fechaNacimiento = $filter('date')($scope.familia.fechaNacimiento, "yyyy-MM-dd");
+			var fechaNacimiento = $filter('date')($scope.miembro.fechaNacimiento, "yyyy-MM-dd");
+			console.log( "fechaNacimiento::: ",fechaNacimiento );
 			// AGREGA AL ARREGLO LOS VALORES DEL OBJETO
 			$scope.familia.lstMiembros.push({
 				nombres         : miembro.nombres,

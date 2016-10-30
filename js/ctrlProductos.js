@@ -35,6 +35,17 @@
 		});
 	})();
 
+	$scope.lstDetalleProducto = [];
+	$scope.consultarDetalleProducto = function( idProducto ){
+		$http.post('consultas.php',{accion: 'consultarDetalleProducto', idProducto: idProducto})
+		.success(function(data){
+			$scope.lstDetalleProducto = data.lstDetalleProducto;
+			console.log(data);
+		}).error(function(data){
+			console.log(data);
+		});
+	}
+
 
 	($scope.cargarAreasBodega = function(){
 		$http.post('consultas.php', {accion: 'cargarSeccionBodega'})

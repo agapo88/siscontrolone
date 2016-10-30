@@ -146,7 +146,12 @@ switch ( $data->accion ) {
 		$datos = $producto->guardarProducto( $prod->producto, $prod->perecedero, $prod->idTipoProducto, $prod->idSeccionBodega, $prod->cantidadMinima, $prod->cantidadMaxima, $prod->observacion );
 		echo json_encode( $datos );
 		break;
-		
+	
+	case 'consultarDetalleProducto':
+		$producto = new Producto( $conexion );
+		$datos['lstDetalleProducto'] = $producto->consultarDetalleProducto( $data->idProducto );
+		echo json_encode( $datos );
+		break;	
 
 	case 'consultarProductos':
 		$producto = new Producto( $conexion );

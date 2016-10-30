@@ -9,11 +9,11 @@ class Producto extends Session
 	private $respuesta = 0;
 	private $mensaje   = "";
 
+	// CONSTRUCTOR DE PRODUCTOS
 	function __construct( &$conexion )
 	{
 		$this->con = $conexion;
 	}	
-
 
 	// FUNCION PARA CONSULTAR PRODUCTOS
 	function consultarProductos(  $groupBy = 'tipoProducto'){
@@ -127,7 +127,7 @@ class Producto extends Session
 						$alertaStock = 1;
 					elseif( $row->totalProducto <= $row->cantidadMinima + 15 ):
 						$alertaStock = 2;
-					elseif( $row->totalProducto > $row->cantidadMaxima ):
+					elseif( $row->totalProducto + 50 > $row->cantidadMaxima ):
 						$alertaStock = 3;
 					endif;
 
@@ -181,6 +181,7 @@ class Producto extends Session
 		return $catProductos;
 	}
 
+	// CONSULTAR TIPOS DE PRODUCTO
 	function consultarTipoProducto(){
 		$lsTiposProducto = array();
 		$sql = "SELECT 
@@ -197,6 +198,36 @@ class Producto extends Session
 		return $lsTiposProducto;
 	}
 
+
+	function consultarDetalleProducto( $idProducto ){
+		$lstDetalleProducto = [];
+
+		$sql = "SELECT 
+					    noFactura,
+					    idProducto,
+					    producto,
+					    fechaAdquisicion,
+					    esPerecedero,
+					    fechaCaducidad,
+					    cantidadDisponible,
+					    precioUnitario,
+					    observacion,
+					    seccionBodega,
+					    tipoProducto
+					FROM
+					    vstControlCompras 
+				WHERE idProducto = {$idProducto} AND cantidadDisponible > 0 ORDER BY fechaCaducidad ASC;";
+
+		if( $rs = $this->con->query($sql) ){
+			while( $row = $rs->fetch_object() ){
+				$lstDetalleProducto[] = $row;
+			}
+		}
+
+		return $lstDetalleProducto;
+	}
+
+	// GUARDAR PRODUCTO
 	function guardarProducto($producto, $perecedero, $idTipoProducto, $idSeccionBodega, $cantidadMinima, $cantidadMaxima, $observacion){
 
 		$_producto        = $this->con->real_escape_string( $producto );

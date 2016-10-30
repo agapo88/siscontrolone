@@ -128,7 +128,7 @@
                            <button class="btn btn-xs btn-opcion" ng-click="editarDonador( donador )">
                               <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
                            </button>
-                           <button type="button" class="btn btn-sm btn-opcion" data-toggle="modal" data-target="#myModal" ng-click="openModalOficios( ixMiembro )">
+                           <button type="button" class="btn btn-sm btn-opcion" data-toggle="modal" data-target="#myModal" ng-click="consultarDetalleProducto( ixMiembro )">
                               <span class="glyphicon glyphicon-folder-open"></span>
                            </button>
                         </div>

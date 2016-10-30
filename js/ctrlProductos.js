@@ -35,16 +35,22 @@
 		});
 	})();
 
-	$scope.lstDetalleProducto = [];
+	$scope.lstDetalleProducto = {
+		lstProductos: []
+	};
 	$scope.consultarDetalleProducto = function( idProducto ){
 		$http.post('consultas.php',{accion: 'consultarDetalleProducto', idProducto: idProducto})
 		.success(function(data){
-			$scope.lstDetalleProducto = data.lstDetalleProducto;
 			console.log(data);
+			$scope.lstDetalleProducto = data.lstDetalleProducto;
+			if( $scope.lstDetalleProducto.lstProductos.length > 0 )
+				$('#detalleProducto').modal('show');
+			else
+				$alert({title: 'Notificación: ', content: 'No se encontrarón productos disponibles.', placement: 'top', type: 'info', show: true, duration: 4});
 		}).error(function(data){
 			console.log(data);
 		});
-	}
+	};
 
 
 	($scope.cargarAreasBodega = function(){

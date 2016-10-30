@@ -128,7 +128,7 @@
                            <button class="btn btn-xs btn-opcion" ng-click="editarDonador( donador )">
                               <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
                            </button>
-                           <button type="button" class="btn btn-sm btn-opcion" data-toggle="modal" data-target="#myModal" ng-click="consultarDetalleProducto( ixMiembro )">
+                           <button type="button" class="btn btn-sm btn-opcion" ng-click="consultarDetalleProducto( producto.idProducto )">
                               <span class="glyphicon glyphicon-folder-open"></span>
                            </button>
                         </div>
@@ -290,6 +290,69 @@
          <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()"><i class="glyphicon glyphicon-log-out"></i> Cerrar</button>
             <button type="button" class="btn btn-primary" ng-click="actualizarDonador()"><i class="glyphicon glyphicon-saved"></i> Guardar Donador</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- VENTANA MODAL AGREGAR -->
+<div class="modal fade" id="detalleProducto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <div class="modal-dialog  modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header title-success">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">
+               <span class="glyphicon glyphicon-tasks"></span> DETALLE PRODUCTOS
+            </h4>
+         </div>
+         <div class="modal-body">
+            <button type="button" class="btn btn-default">
+               <strong>Producto: </strong> {{lstDetalleProducto.producto}}
+            </button>
+            <button type="button" class="btn btn-default">
+               <strong>Tipo Producto: </strong> {{lstDetalleProducto.tipoProducto}}
+            </button>
+            <div class="text-right">
+               <strong>SECCIÓN DE BODEGA: </strong> {{lstDetalleProducto.seccionBodega}}
+            </div>
+            <legend class="text-center">Detalle de Productos</legend>
+            <table class="table table-striped">
+               <thead>
+                  <tr>
+                     <th class="text-center">No.</th>
+                     <th class="text-center col-sm-2">Factura</th>
+                     <th class="text-center col-sm-1">Disponible</th>
+                     <th class="text-center col-sm-2">Fecha Adquisión</th>
+                     <th class="text-center col-sm-2">Fecha Caducidad</th>
+                     <th class="text-center col-sm-2">Meses para Vencer</th>
+                     <th class="text-center col-sm-1">Despachar Producto</th>
+                     <th class="text-center col-sm-1">Desechar Producto</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="detalleProd in lstDetalleProducto.lstProductos" ng-class="{'danger': detalleProd.mesVencimiento <= 3}">
+                     <td class="text-center">{{ $index + 1 }}</td>
+                     <td class="text-center">{{detalleProd.noFactura}}</td>
+                     <td class="text-center">{{detalleProd.cantidadDisponible}}</td>
+                     <td class="text-center">{{detalleProd.fechaAdquisicion}}</td>
+                     <td class="text-center">{{detalleProd.fechaCaducidad}}</td>
+                     <td class="text-center">{{detalleProd.mesVencimiento}}</td>
+                     <td class="text-center">
+                        <button type="button" class="btn btn-sm btn-info noBorder" title="Despachar Producto">
+                           <span class="glyphicon glyphicon-export"></span>
+                        </button>
+                     </td>
+                     <td class="text-center">
+                        <button type="button" class="btn btn-sm btn-danger noBorder" title="Despachar Producto">
+                           <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()"><i class="glyphicon glyphicon-log-out"></i> Cerrar</button>
          </div>
       </div>
    </div>

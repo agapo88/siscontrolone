@@ -206,9 +206,10 @@ class Producto extends Session
 					    noFactura,
 					    idProducto,
 					    producto,
-					    fechaAdquisicion,
+					    DATE_FORMAT(fechaAdquisicion, '%d/%m/%Y') AS fechaAdquisicion,
+					    DATE_FORMAT(fechaCaducidad, '%d/%m/%Y') AS fechaCaducidad,
 					    esPerecedero,
-					    fechaCaducidad,
+					    mesVencimiento,
 					    cantidadDisponible,
 					    precioUnitario,
 					    observacion,
@@ -220,7 +221,29 @@ class Producto extends Session
 
 		if( $rs = $this->con->query($sql) ){
 			while( $row = $rs->fetch_object() ){
-				$lstDetalleProducto[] = $row;
+
+				if( !count($lstDetalleProducto) ){
+					$lstDetalleProducto = array(
+						'idProducto'      => $row->idProducto,
+						'producto'        => $row->producto,
+						'observacion'     => $row->observacion,
+						'seccionBodega'   => $row->seccionBodega,
+						'tipoProducto'    => $row->tipoProducto,
+						'totalDisponible' => 0,
+						'lstProductos'    => array()
+						);
+				}
+
+				$lstDetalleProducto['lstProductos'][] = array(
+						'noFactura'          => $row->noFactura,
+						'fechaAdquisicion'   => $row->fechaAdquisicion,
+						'esPerecedero'       => $row->esPerecedero,
+						'fechaCaducidad'     => $row->fechaCaducidad,
+						'cantidadDisponible' => $row->cantidadDisponible,
+						'mesVencimiento'     => $row->mesVencimiento
+					);
+
+				$lstDetalleProducto['totalDisponible'] += $row->cantidadDisponible;
 			}
 		}
 

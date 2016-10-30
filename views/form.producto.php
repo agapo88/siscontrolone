@@ -320,11 +320,11 @@
                <thead>
                   <tr>
                      <th class="text-center">No.</th>
-                     <th class="text-center col-sm-2">Factura</th>
+                     <th class="text-center">Factura</th>
                      <th class="text-center col-sm-1">Disponible</th>
                      <th class="text-center col-sm-2">Fecha Adquisión</th>
                      <th class="text-center col-sm-2">Fecha Caducidad</th>
-                     <th class="text-center col-sm-2">Meses para Vencer</th>
+                     <th class="text-center col-sm-1">Meses para Vencer</th>
                      <th class="text-center col-sm-1">Despachar Producto</th>
                      <th class="text-center col-sm-1">Desechar Producto</th>
                   </tr>

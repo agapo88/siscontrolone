@@ -200,7 +200,7 @@ class Producto extends Session
 
 
 	function consultarDetalleProducto( $idProducto ){
-		$lstDetalleProducto = [];
+		$lstDetalleProducto = array();
 
 		$sql = "SELECT 
 					    noFactura,

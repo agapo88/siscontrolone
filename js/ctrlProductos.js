@@ -43,10 +43,10 @@
 		.success(function(data){
 			console.log(data);
 			$scope.lstDetalleProducto = data.lstDetalleProducto;
-			if( $scope.lstDetalleProducto.lstProductos.length > 0 )
-				$('#detalleProducto').modal('show');
-			else
+			if( !($scope.lstDetalleProducto.lstProductos)  )
 				$alert({title: 'Notificación: ', content: 'No se encontrarón productos disponibles.', placement: 'top', type: 'info', show: true, duration: 4});
+			else if( data.lstDetalleProducto.lstProductos.length > 0 )
+				$('#detalleProducto').modal('show');
 		}).error(function(data){
 			console.log(data);
 		});

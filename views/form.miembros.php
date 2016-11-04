@@ -12,7 +12,9 @@
 				Agregar Miembros
 			</button>
 		</div>
-		<legend class="text-center">Miembros de la Familia</legend>
+		<legend class="text-center">
+			<strong>Miembros de la Familia</strong>
+		</legend>
 		<div class="text-right">
 			<div class="btn-group" role="group">
 			  	<button type="button" class="btn btn-default">
@@ -25,23 +27,22 @@
 		</div>
 		<table class="table table-striped table-hover">
 			<thead>
-				<tr>
+				<tr id="tb-familiares">
 					<th class="text-center">CUI</th>
 					<th class="text-center">Nombre</th>
+					<th class="text-center">Genero</th>
 					<th class="text-center">Fecha de Nacimiento</th>
 					<th class="text-center">Edad</th>
-					<th class="text-center">Genero</th>
 					<th class="text-center">Parentesco</th>
 					<th class="text-center">Menú</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="miembro in lstMiembrosFamilia[0].lstMiembros">
-				
 					<td class="text-center">{{miembro.cui }}</td>
 					<td>{{miembro.nombres + ' ' + miembro.apellidos }}</td>
-					<td class="text-center">{{miembro.fechaNacimiento | date:'dd/MM/yyyy' }}</td>
 					<td class="text-center">{{miembro.genero }}</td>
+					<td class="text-center">{{miembro.fechaNacimiento | date:'dd/MM/yyyy' }}</td>
 					<td class="text-center">{{miembro.edad }}</td>
 					<td class="text-center">{{miembro.parentesco }}</td>
 					<td class="text-center">

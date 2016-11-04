@@ -14,6 +14,62 @@ class Reporte
 		$this->con = $conexion;
 	}	
 
+	// GENERAR REPORTE PROVEEDORES/PRODUCTOS
+	function reporteProveedorProducto(){
+		$lstProProducto = array();
+
+		$sql = "SELECT 
+					    idTipoProducto,
+					    tipoProducto,
+					    idProducto,
+					    producto,
+					    esPerecedero,
+					    idSeccionBodega,
+					    cantidadMinima,
+					    cantidadMaxima,
+					    idProveedor,
+					    proveedor,
+					    telefono,
+					    email
+					FROM
+					    vstProveedorProducto;";
+
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+
+				$iProveedor = -1;
+				foreach ($lstProProducto as $ixProProducto => $proProducto) {
+					if( $proProducto['idProveedor'] == $row->idProveedor ){
+						$iProveedor = $ixProProducto;
+						break;
+					}
+				}
+
+				if( $iProveedor == -1 ){
+					$iProveedor = count( $lstProProducto );
+					$lstProProducto[$iProveedor] = array(
+							'idProveedor'    => $row->idProveedor,
+							'proveedor'      => $row->proveedor,
+							'telefono'       => $row->telefono,
+							'email'          => $row->email,
+							'totalProductos' => 0,
+							'lstProductos'   => array(),
+						);
+				}
+
+
+				$lstProProducto[$iProveedor]['lstProductos'][] = array(
+						'idProducto'     => $row->idProducto,
+						'producto'       => $row->producto,
+						'cantidadMinima' => $row->cantidadMinima,
+						'cantidadMaxima' => $row->cantidadMaxima,
+						'esPerecedero'   => $row->esPerecedero ? 'Si': 'No'
+					);
+			}
+		}
+
+		return $lstProProducto;
+	}
 
 	// GENERAR DETALLE DE APORTES POR FAMILIAS
 	function verDonacionesFamilia( $idFamilia = null){
@@ -137,6 +193,22 @@ class Reporte
 		}
 
 		return $lstProductosVen;
+	}
+
+	// CONSULTAR BENEFICIADOS
+	function consultarBeneficiados(){
+
+		$sql = "SELECT 
+			    idMiembro,
+			    fechaNacimiento,
+			    nombreFamilia,
+			    fechaIngreso,
+			    direccion,
+			    idGenero,
+			    edad
+			FROM
+			    vstMiembrosFamilia;";
+
 	}
 
 

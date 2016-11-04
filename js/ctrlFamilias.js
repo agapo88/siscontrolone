@@ -1,8 +1,6 @@
 ﻿miApp.controller('ctrlFamilias', function($scope, $http, $alert, $filter, $timeout, $routeParams){
 
 	$scope.idFamiliaSel = $routeParams.idFamilia;
-	console.log($scope.idFamiliaSel);
-
 	$scope.$parent.menu  = 'familias';
 	$scope.tab = 1;
 
@@ -57,6 +55,7 @@
 		idMunicipio    : null,
 		idDepartamento : null,
 		lstMiembros    : [
+		/*
 			{
 				nombres         : 'Jose Antonio',
 				apellidos       : 'Perez García',
@@ -75,6 +74,7 @@
 				parentesco      : '',
 				idParentesco    : '3',
 			},
+		*/
 		]
 	};
 

@@ -39,14 +39,13 @@
    </div>
 </div>
 
-
 <div class="row">
    <div class="title-section">
       <span class="titulo">FAMILIAS</span>
    </div>
 </div>
 
-<ul class="nav nav-tabs" role="tablist">
+<ul class="nav nav-tabs" role="tablist" style="margin-top: 15px;">
    <li role="presentation" ng-class="{'active': tab==1}" ng-click="tab=1"><a role="tab">Listado de Familias</a></li>
    <li role="presentation" ng-class="{'active': tab==2}" ng-click="tab=2"><a role="tab">Agregar Familia</a></li>
 </ul>

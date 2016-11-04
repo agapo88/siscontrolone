@@ -50,12 +50,23 @@
                </strong>
             </a>
             <div class="pull-right">
-               <label class="label label-primary">
+               <label class="label label-primary" ng-show="filtro=='moneda'">
                   <strong>TOTAL: <span class="badge">{{fondoComun.totalDonacionEntidad | number: 2}}</span></strong>
                </label>
             </div>
          </div>
          <div class="panel-body" ng-hide="fondoComun.mostrar">
+            <div ng-show="filtro!='moneda'" class="text-right">
+               <strong>Totales:</strong>
+               <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-default">
+                     <strong>Q. {{ fondoComun.totalQuetzales | number:2 }}</strong>
+                  </button>
+                  <button type="button" class="btn btn-default">
+                     <strong>$. {{fondoComun.totalDolares | number:2 }}</strong>
+                  </button>
+               </div>
+            </div>
             <table class="table table-striped table-hover">
                <thead>
                   <tr>
@@ -283,9 +294,10 @@
                                  </tbody>
                               </table>
                            </div>
-                           <hr>
                            <div class="form-group" style="margin-left: 10px; margin-right: 10px">
-                              <label class="label label-warning">Agregar Productos</label>
+                              <legend class="text-center">
+                                 Lista de Productos Donados
+                              </legend>
                               <table class="table table-striped">
                                  <thead>
                                     <tr>
@@ -330,69 +342,6 @@
             <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()">
                <i class="glyphicon glyphicon-log-out"></i> Cerrar
             </button>
-         </div>
-      </div>
-   </div>
-</div>
-
-
-
-<!-- VENTANA MODAL EDITAR -->
-<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-   <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content ">
-         <div class="modal-header title-editar">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">
-               <span class="glyphicon glyphicon-user"></span> Actualizar Donador
-            </h4>
-         </div>
-         <div class="modal-body">
-            <form class="form-horizontal" name="formAgregar">
-               <div class="form-group">
-                  <label class="control-label col-sm-3">Nombre:</label>
-                  <div class="col-sm-8">
-                     <input type="text" ng-model="itemDonador.nombre" class="form-control">
-                  </div>
-               </div>
-               <div class="form-group"  ng-class="{'has-error': formAgregar.telefono.$invalid}">
-                  <label class="control-label col-sm-3">Telefono:</label>
-                  <div class="col-sm-8">
-                     <input type="text" name="telefono" minlength="8" maxlength="15" ng-model="itemDonador.telefono" class="form-control">
-                  </div>
-               </div>
-               <div class="form-group" ng-class="{'has-error': formAgregar.email.$invalid}">
-                  <label class="control-label col-sm-3">Email:</label>
-                  <div class="col-sm-8">
-                     <input type="email" name="email" ng-model="itemDonador.email" class="form-control">
-                  </div>
-               </div>
-               <div class="form-group">
-                  <label class="control-label col-sm-3">Tipo Donante:</label>
-                  <div class="col-sm-6">
-                     <select class="form-control" ng-model="itemDonador.idTipoEntidad">
-                        <option value="{{tipoEntidad.idTipoEntidad}}" ng-repeat="tipoEntidad in lstTipoEntidad">
-                           {{tipoEntidad.tipoEntidad}}
-                        </option>
-                     </select>
-                  </div>
-               </div>
-               <div class="form-group" ng-class="{'has-error': formAgregar.fechaIngreso.$invalid}">
-                  <label class="control-label col-sm-3">Fecha Ingreso:</label>
-                  <div class="col-sm-6">
-                     <div class="input-group">
-                        <span class="input-group-addon">
-                           <i class="glyphicon glyphicon-calendar"></i>
-                        </span>
-                        <input type="text" name="fechaIngreso" class="form-control" ng-model="itemDonador.fechaIngreso" data-date-format="dd/MM/yyyy" data-date-type="number"  data-max-date="today" data-autoclose="1"  bs-datepicker>
-                     </div>
-                  </div>
-               </div>
-            </form>
-         </div>
-         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()"><i class="glyphicon glyphicon-log-out"></i> Cerrar</button>
-            <button type="button" class="btn btn-primary" ng-click="actualizarDonador()"><i class="glyphicon glyphicon-saved"></i> Guardar Donador</button>
          </div>
       </div>
    </div>

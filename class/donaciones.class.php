@@ -31,7 +31,7 @@ class Donacion extends Session
 				    moneda,
 				    total
 				FROM
-				    vstFondoComun;";
+				    vstFondoComun ORDER BY fechaDonacion;";
 
 		if( $rs = $this->con->query( $sql ) ){
 			while( $row = $rs->fetch_object() ){
@@ -91,6 +91,8 @@ class Donacion extends Session
 						'moneda'               => $row->moneda,
 						'total'                => $row->total,
 						'totalDonacionEntidad' => 0,
+						'totalQuetzales'       => 0,
+						'totalDolares'         => 0,
 						'lstFondos'            => array(),
 					);
 				}
@@ -127,6 +129,11 @@ class Donacion extends Session
 						'tipoMoneda'    => $row->idMoneda == 1 ? 'Q.' : '$.',
 					);
 
+					if( $row->idMoneda == 1 )
+						$lstFondoComun[ $ixSolicitud ]['totalQuetzales'] += $row->donacion;
+					else
+						$lstFondoComun[ $ixSolicitud ]['totalDolares'] += $row->donacion;
+					
 					$lstFondoComun[ $ixSolicitud ]['totalDonacionEntidad'] += $row->donacion;
 				}
 

@@ -201,7 +201,7 @@ switch ( $data->accion ) {
 
 	case 'verMiembrosFamilia':
 		$familia = new Familia( $conexion );
-		$datos   = $familia->verMiembrosFamilia( $data->idFamilia );
+		$datos['lstMiembrosFamilia']   = $familia->verMiembrosFamilia( $data->idFamilia );
 
 		echo json_encode( $datos );		
 		break;

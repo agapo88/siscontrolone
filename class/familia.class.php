@@ -241,7 +241,7 @@ class Familia extends Session
 		$this->con->query( "START TRANSACTION" );
 		$sql = "CALL ingresarFamilia('{$nombreFamilia}', '{$fechaIngreso}', {$idArea}, '{$direccion}', {$idMunicipio}, {$idDepartamento}, {$this->getIdUser()});";
 
-
+		//ECHO $sql;
 		if( $rs = $this->con->query( $sql ) ){
 
 			$this->con->next_result();
@@ -263,8 +263,10 @@ class Familia extends Session
 		// VALIDAR REGISTRO PARA FINALIZAR TRANSACCIÓN
 		if( $this->error )
 			$this->con->query( "ROLLBACK" );
-		else
+		else{
 			$this->con->query( "COMMIT" );
+			$this->mensaje = "Familia Agregada correctamente." ;
+		}
 
 		$respuesta = array( 'mensaje' => $this->mensaje, 'respuesta' => $this->respuesta );
 
@@ -332,11 +334,13 @@ class Familia extends Session
 
 				if( !count($lstMiembrosFam) ){
 					$lstMiembrosFam[0] = array(
-							'idFamilia'    => $row->idFamilia,
-							'nombreFamilia'      => $row->nombreFamilia,
-							'fechaIngreso' => $row->fechaIngreso,
-							'direccion'    => $row->direccion,
-							'lstMiembros'  => array()
+							'idFamilia'     => $row->idFamilia,
+							'nombreFamilia' => $row->nombreFamilia,
+							'fechaIngreso'  => $row->fechaIngreso,
+							'direccion'     => $row->direccion,
+							'totalMujeres'  => 0,
+							'totalHombres'  => 0,
+							'lstMiembros'   => array()
 						);
 				}
 
@@ -360,6 +364,11 @@ class Familia extends Session
 							'edad'            => $row->edad,
 						);
 				}
+
+				if( $row->idGenero == 1  )
+					$lstMiembrosFam[0]['totalHombres'] ++;
+				else
+					$lstMiembrosFam[0]['totalMujeres'] ++;
 			}
 		}
 

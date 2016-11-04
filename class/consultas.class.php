@@ -109,13 +109,5 @@ class Consultas
 	
 
 }
-/*
-djsmurf10@gmail.com
-
-Toby Love Ft. Judy Santos - No Hay Colores
-
-parkeastmusic@gmail.com
-
-*/
 
 ?>

@@ -36,18 +36,18 @@
 		console.log( $scope.familiaSeleccionada );
 	};
 
+	$scope.lstMiembrosFamilia = [];
 	if( $scope.idFamiliaSel != undefined ){
 		$http.post('consultas.php',{accion: 'verMiembrosFamilia', idFamilia: $scope.idFamiliaSel})
 		.success(function(data){
+			console.log("pRUEBA",data);
 			$scope.lstMiembrosFamilia = data.lstMiembrosFamilia;
-			console.log(data);
 		}).error(function(data){
 			console.log(data);
 		});
 	};
 
 
-	$scope.lstMiembrosFamilia = [];
 
 	$scope.familia = {
 		nombre         : 'Familia ',
@@ -210,7 +210,6 @@
 		// SI NO EXISTE ERROR
 		if( !error ){
 			var fechaNacimiento = $filter('date')($scope.miembro.fechaNacimiento, "yyyy-MM-dd");
-			console.log( "fechaNacimiento::: ",fechaNacimiento );
 			// AGREGA AL ARREGLO LOS VALORES DEL OBJETO
 			$scope.familia.lstMiembros.push({
 				nombres         : miembro.nombres,
@@ -298,16 +297,14 @@
 			$http.post('consultas.php', {accion: 'guardarFamilia', datos: $scope.familia, fechaIngreso: fechaIngreso})
 			.success(function(data){
 				console.log(data);
-				/*
 				if( data.respuesta ){
 					$scope.$parent.hideModalAgregar();
 					$scope.reset();
-					$scope.consultarDonadores();
+					$scope.consultarFamilias();
 					$alert({title: 'Mensaje: ', content: data.mensaje, placement: 'top', type: 'success', show: true, duration: 4});
 				}else{
 					$alert({title: 'Error: ', content: data.mensaje, placement: 'top', type: 'danger', show: true, duration: 4});
 				}
-				*/
 			}).error(function(data){
 				console.log(data);
 			});

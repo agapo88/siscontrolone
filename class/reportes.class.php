@@ -108,18 +108,37 @@ class Reporte
 		return $lstAyudasRecibidas;
 	}
 
-	//function 
 
-	function generarInserts(){
+	// CONSULTAR PRODUCTOS POR VENCER
+	function consultarDetalleProducto( $fechaInicio, $fechaFinal ){
+		$lstProductosVen = array();
 
-		for ($i=0; $i <= 50; $i+2) { 
-			$sql = "CALL ingresarSeguimiento({$i}, 'Séptimo Seguimiento Familia ==> {$i}', 1 );";
+		$sql = "SELECT 
+					    idProducto,
+					    producto,
+					    DATE_FORMAT(fechaAdquisicion, '%d/%m/%Y') AS fechaAdquisicion,
+					    DATE_FORMAT(fechaCaducidad, '%d/%m/%Y') AS fechaVencimiento,
+					    esPerecedero,
+					    mesVencimiento,
+					    cantidadDisponible,
+					    precioUnitario,
+					    observacion,
+					    seccionBodega,
+					    tipoProducto,
+                        idTipoProducto
+					FROM
+					    vstControlCompras
+					WHERE esPerecedero = 1 AND fechaCaducidad BETWEEN '{$fechaInicio}' AND '{$fechaFinal}'";
 
-			$this->con->query( $sql );
-			$this->con->next_result();
-			
+		if( $rs = $this->con->query($sql) ){
+			while( $row = $rs->fetch_object() ){
+				$lstProductosVen[] = $row;
+			}
 		}
+
+		return $lstProductosVen;
 	}
+
 
 }
 ?>

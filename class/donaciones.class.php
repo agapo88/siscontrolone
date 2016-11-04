@@ -31,7 +31,7 @@ class Donacion extends Session
 				    moneda,
 				    total
 				FROM
-				    vstFondoComun ORDER BY fechaDonacion;";
+				    vstFondoComun ORDER BY fechaDonacion DESC;";
 
 		if( $rs = $this->con->query( $sql ) ){
 			while( $row = $rs->fetch_object() ){
@@ -133,7 +133,7 @@ class Donacion extends Session
 						$lstFondoComun[ $ixSolicitud ]['totalQuetzales'] += $row->donacion;
 					else
 						$lstFondoComun[ $ixSolicitud ]['totalDolares'] += $row->donacion;
-					
+
 					$lstFondoComun[ $ixSolicitud ]['totalDonacionEntidad'] += $row->donacion;
 				}
 

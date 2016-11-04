@@ -127,7 +127,7 @@ class Producto extends Session
 						$alertaStock = 1;
 					elseif( $row->totalProducto <= $row->cantidadMinima + 15 ):
 						$alertaStock = 2;
-					elseif( $row->totalProducto + 50 > $row->cantidadMaxima ):
+					elseif( $row->totalProducto + 50 >= $row->cantidadMaxima ):
 						$alertaStock = 3;
 					endif;
 
@@ -154,9 +154,7 @@ class Producto extends Session
 						$lstProductos[ $ixSolicitud ]['totalStockAlto'] ++;
 
 					$lstProductos[ $ixSolicitud ]['totalProductos'] ++;
-
 				}
-
 			}
 		}
 
@@ -198,7 +196,7 @@ class Producto extends Session
 		return $lsTiposProducto;
 	}
 
-
+	// CONSULTAR DETALLE PRODUCTO
 	function consultarDetalleProducto( $idProducto ){
 		$lstDetalleProducto = array();
 

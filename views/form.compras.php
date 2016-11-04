@@ -189,7 +189,7 @@
                   </tr>
                   <tr id="tb-title" ng-show="compras.lstProductos.length > 0">
                      <td colspan="7" class="text-right">
-                        <strong> SUBTOTAL {{ subTotalQuetzales() | number: 2 }}</strong>
+                        <strong> TOTAL {{ subTotalQuetzales() | number: 2 }}</strong>
                      </td>
                      <td></td>
                   <td>

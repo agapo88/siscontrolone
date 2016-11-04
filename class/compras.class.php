@@ -38,7 +38,7 @@ class Compra extends Session
 			$this->con->query( "START TRANSACTION" );
 			$sql = "CALL agregarCompraDonacion(NULL,'{$_fechaIngreso}', {$_noFactura}, {$_idMoneda}, {$this->getIdUser()});";
 
-			echo $sql;
+//			echo $sql;
 
 			if( $rs = $this->con->query( $sql ) ){
 				$this->con->next_result();
@@ -107,5 +107,7 @@ class Compra extends Session
 			
 		}
 	}
+
+
 }
 ?>

@@ -76,7 +76,9 @@ miApp.config(function($alertProvider) {
 
 
 miApp.controller('home', function($scope, $http){
+
 	$scope.menu = 'inicio';
+    
 	$scope.lstDatos = [];
 	($scope.fnCargar = function(){
 		$http.post('consultas.php', {accion: 'inicio'})

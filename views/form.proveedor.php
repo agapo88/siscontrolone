@@ -2,7 +2,11 @@
    <div class="title-section">
       <span class="titulo">PROVEEDOR</span>
    </div>
-   <div class="col-sm-12 text-right">
+   <div class="col-sm-12 text-right" style="margin-bottom: 10px">
+      <a class="btn btn-primary btn-sm noBorder" target="_blank" href="reporte.provee.producto.php">
+         <span class="glyphicon glyphicon-save"></span>
+         Generar Reporte
+      </a>
       <button type="button" class="btn btn-success btn-sm noBorder" ng-mouseleave="hoveri=false" ng-mouseenter="hoveri=true" data-toggle="modal" data-target="#modalAgregar">
          <span class="glyphicon" ng-class="{'glyphicon-plus-sign': hoveri, 'glyphicon-plus':!hoveri}"></span>
          Agregar Proveedor

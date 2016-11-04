@@ -38,6 +38,7 @@ class Reporte
 			while( $row = $rs->fetch_object() ){
 
 				$iProveedor = -1;
+				$iProducto = -1;
 				foreach ($lstProProducto as $ixProProducto => $proProducto) {
 					if( $proProducto['idProveedor'] == $row->idProveedor ){
 						$iProveedor = $ixProProducto;
@@ -58,13 +59,25 @@ class Reporte
 				}
 
 
-				$lstProProducto[$iProveedor]['lstProductos'][] = array(
-						'idProducto'     => $row->idProducto,
-						'producto'       => $row->producto,
-						'cantidadMinima' => $row->cantidadMinima,
-						'cantidadMaxima' => $row->cantidadMaxima,
-						'esPerecedero'   => $row->esPerecedero ? 'Si': 'No'
-					);
+				foreach ($lstProProducto[$iProveedor]['lstProductos'] AS $ixProducto => $producto) {
+					if( $producto['idProducto'] == $row->idProducto ){
+						$iProducto = $ixProducto;
+						break;
+					}
+				}
+
+				if( $iProducto == -1 ){
+
+					$lstProProducto[$iProveedor]['lstProductos'][] = array(
+							'idProducto'     => $row->idProducto,
+							'producto'       => $row->producto,
+							'tipoProducto'   => $row->tipoProducto,
+							'cantidadMinima' => $row->cantidadMinima,
+							'cantidadMaxima' => $row->cantidadMaxima,
+							'esPerecedero'   => $row->esPerecedero ? 'Si': 'No'
+						);
+					$lstProProducto[$iProveedor]['totalProductos']++;
+				}
 			}
 		}
 

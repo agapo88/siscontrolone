@@ -116,7 +116,7 @@ class Reporte
 					$iFamilia = count( $lstAyudasRecibidas );
 					$lstAyudasRecibidas[ $iFamilia ] = array(
 						'idFamilia'     => $row->idFamilia,
-						'nombreFamilia' => $row->nombreFamilia,
+						'nombreFamilia' => strtoupper( $row->nombreFamilia ),
 						'lstDesastres'  => array(),
 					);
 				}
@@ -165,7 +165,7 @@ class Reporte
 					'tipoEntidad' => $row->tipoEntidad,
 					'idMes'       => $row->idMes,
 					'mes'         => $row->mes,
-					'cantidad'    => (int) $row->cantidad
+					'cantidad'    => number_format( $row->cantidad, 2 )
 					);				
 
 				$lstAyudasRecibidas[ $iFamilia ]['lstDesastres'][ $iDesastre ][ 'lstAnio' ][ $iAnio ]['totalRecibido'] += (int) $row->cantidad;

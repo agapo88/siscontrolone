@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/ngstrap.css">
-	<!--<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">-->
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body ng-controller="home">

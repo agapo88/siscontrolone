@@ -82,7 +82,7 @@
 		}
 		else if( !($scope.itemDonador.fechaIngreso) ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'No ha ingresado la fecha de Ingreso.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
 
 		// SI NO EXISTE ERROR
@@ -128,7 +128,7 @@
 		}
 		else if( !($scope.donador.fechaIngreso) ){
 			error = true;
-			$alert({title: 'Alerta: ', content: 'No ha seleccionado el tipo de Donante.', placement: 'top', type: 'warning', show: true, duration: 4});
+			$alert({title: 'Alerta: ', content: 'No ha ingresado la fecha de Ingreso.', placement: 'top', type: 'warning', show: true, duration: 4});
 		}
 
 		// SI NO EXISTE ERROR

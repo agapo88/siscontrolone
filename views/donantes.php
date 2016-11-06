@@ -1,6 +1,6 @@
 <div class="row">
    <div class="title-section">
-      <span class="titulo">DONANTES</span>
+      <span class="titulo">DONADORES</span>
    </div>
    <div class="col-sm-12 text-right">
       <button type="button" class="btn btn-success btn-sm noBorder" ng-mouseleave="hoveri=false" ng-mouseenter="hoveri=true" data-toggle="modal" data-target="#modalAgregar">

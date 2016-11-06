@@ -24,7 +24,6 @@
         templateUrl : 'views/form.fondo.comun.php',
         controller  : 'ctrlDonaciones'
     })
-
     .when('/productos', {
         templateUrl : 'views/form.producto.php',
         controller  : 'ctrlProductos'
@@ -40,6 +39,10 @@
     .when('/reportes', {
         templateUrl : 'views/form.reportes.php',
         controller  : 'ctrlReportes'
+    })
+    .when('/desastres', {
+        templateUrl : 'views/form.desastres.php',
+        controller  : 'ctrlDesastres'
     })
     .otherwise({
         redirectTo: '/'

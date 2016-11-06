@@ -41,7 +41,6 @@
 		</div>
 	</a>
 
-
 	<a href="#/donantes">
 		<div class="col-sm-4 col-md-3 col-lg-2">
 			<div class="panel-menu">
@@ -57,7 +56,6 @@
 			</div>
 		</div>
 	</a>
-
 
 	<a href="#/donaciones">
 		<div class="col-sm-4 col-md-3 col-lg-2">
@@ -107,13 +105,13 @@
 		</div>
 	</a>
 
-	<a href="#/reportes">
+	<a href="#/desastres">
 		<div class="col-sm-4 col-md-3 col-lg-2">
 			<div class="panel-menu">
 				<div class="panel-heading text-center">
-					<span style="font-size: 40px;" class="glyphicon glyphicon-list-alt"></span>
+					<span style="font-size: 40px;" class="glyphicon glyphicon-flag"></span>
 					<h4>
-						<span class="badge">REPORTES</span>
+						<span class="badge">DESASTRES</span>
 					</h4>
 				</div>
 				<div class="panel-footer text-center">
@@ -123,13 +121,13 @@
 		</div>
 	</a>
 
-	<a href="#/usuario">
+	<a href="#/reportes">
 		<div class="col-sm-4 col-md-3 col-lg-2">
 			<div class="panel-menu">
 				<div class="panel-heading text-center">
-					<span style="font-size: 40px;" class="glyphicon glyphicon-flag"></span>
+					<span style="font-size: 40px;" class="glyphicon glyphicon-list-alt"></span>
 					<h4>
-						<span class="badge">DESASTRES</span>
+						<span class="badge">REPORTES</span>
 					</h4>
 				</div>
 				<div class="panel-footer text-center">
@@ -154,7 +152,6 @@
 			</div>
 		</div>
 	</a>
-
 
 	<a href="#/usuario">
 		<div class="col-sm-4 col-md-3 col-lg-2">

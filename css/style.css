@@ -30,8 +30,8 @@ h4 > .badge {
     margin-bottom: 25px;
     background-color: #fff;
     border-radius: 4px;
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, .3);
+    box-shadow: 0 1px 10px rgba(0, 0, 0, .3);
 }
 
 .panel-menu:hover {

@@ -10,6 +10,7 @@ require_once 'class/session.class.php';
 require_once 'class/areas.bodega.class.php';
 require_once 'class/consultas.class.php';
 require_once 'class/compras.class.php';
+require_once 'class/desastre.class.php';
 require_once 'class/donante.class.php';
 require_once 'class/donaciones.class.php';
 require_once 'class/familia.class.php';
@@ -32,6 +33,26 @@ switch ( $data->accion ) {
 	case 1:
 		$reportes = new Reporte( $conexion );
 		$reportes->generarInserts();
+		break;
+
+
+	case 'inicioDesastres':
+		$desastre = new Desastre( $conexion );
+		$datos['lstTiposDesastre'] = $desastre->consultarTipoDesastre();
+		echo json_encode( $datos );
+		break;
+
+	case 'consultarDesastres':
+		$desastre = new Desastre( $conexion );
+		$datos['lstDesastres'] = $desastre->consultarDesastres();
+		echo json_encode( $datos );
+		break;
+
+	case 'guardarDesastre':
+		//var_dump( $data );
+		$desastre = new Desastre( $conexion );
+		$datos = $desastre->guardarDesastre( $data->datos->desastre, $data->datos->idTipoDesastre, $data->fechaDesastre );
+		echo json_encode( $datos );
 		break;
 
 	case 'consultarMunicipio':

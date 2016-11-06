@@ -77,6 +77,13 @@ switch ( $data->accion ) {
 		echo json_encode( $datos );
 		break;
 
+	case 'verProductosProv':		// CONSULTAR LISTA DE PROVEEDORES
+		$proveedor = new Proveedor( $conexion );
+		$datos['lstProductosProv'] = $proveedor->verProductosProveedor( $data->idProveedor );
+
+		echo json_encode( $datos );
+		break;
+
 	case 'guardarProveedor':		// GUARDAR PROVEEDOR
 		$proveedor = new Proveedor( $conexion );
 		$datos = $proveedor->registrarProveedor( $data->datos->nombre, $data->datos->telefono, $data->datos->email );

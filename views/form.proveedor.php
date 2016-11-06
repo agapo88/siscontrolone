@@ -63,10 +63,13 @@
                      <td>
                         <!-- OPCIONES -->
                         <div class="menu-opciones">
-                           <button class="btn btn-xs btn-opcion" ng-click="editarDonador( donador )">
+                           <button class="btn btn-xs btn-opcion" title="Editar Proveedor">
                               <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
                            </button>
-                           <button type="button" class="btn btn-sm btn-opcion" data-toggle="modal" data-target="#myModal" ng-click="openModalOficios( ixMiembro )">
+                           <button class="btn btn-xs btn-opcion" title="Agregar Producto">
+                              <span class="glyphicon glyphicon-plus"></span>
+                           </button>
+                           <button type="button" class="btn btn-sm btn-opcion" data-toggle="modal" data-target="#myModal" ng-click="verProductosProveedor( proveedor.idProveedor )" title="Ver Catalogo">
                               <span class="glyphicon glyphicon-folder-open"></span> Catalogo
                            </button>
                         </div>
@@ -74,6 +77,44 @@
                   </tr>
                </tbody>
             </table>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- VENTANA MODAL AGREGAR -->
+<div class="modal fade" id="modalProductos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header title-primary">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">
+               <span class="glyphicon glyphicon-plus"></span> Lista de Productos
+            </h4>
+         </div>
+         <div class="modal-body">              
+            <table class="table table-striped table-hover">
+               <thead>
+                  <tr>
+                     <th class="text-center">Código</th>
+                     <th class="text-center">Producto</th>
+                     <th class="text-center">Tipo de Producto</th>
+                     <th class="text-center">Perecedero</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="prodProvee in lstProductosProv">
+                     <td class="text-center">{{prodProvee.idProducto}}</td>
+                     <td class="text-center">{{prodProvee.producto}}</td>
+                     <td class="text-center">{{prodProvee.tipoProducto}}</td>
+                     <td class="text-center">{{prodProvee.esPerecedero}}</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()"><i class="glyphicon glyphicon-log-out"></i> Cerrar</button>
          </div>
       </div>
    </div>

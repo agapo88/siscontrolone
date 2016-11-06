@@ -80,10 +80,13 @@
                      <td>
                         <!-- OPCIONES -->
                         <div class="menu-opciones">
+                           <button class="btn btn-xs btn-opcion" title="Ver Apadrinados">
+                              <span class="glyphicon glyphicon-user"></span>
+                           </button>
                            <button class="btn btn-xs btn-opcion" ng-click="removeMiembro( ixMiembro )" >
                               <span class="glyphicon glyphicon-trash"></span>
                            </button>
-                           <button class="btn btn-xs btn-opcion" ng-click="editarDonador( donador )">
+                           <button class="btn btn-xs btn-opcion" ng-click="editarDonador( donador )" title="Editar Donador">
                               <span class="glyphicon" ng-class="{'glyphicon-pencil': !editar, 'glyphicon-ok': editar}"></span>
                            </button>
                            <!--

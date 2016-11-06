@@ -74,6 +74,25 @@ class Proveedor extends session
 		return $lstProveedores;
 	}
 
+	function verProductosProveedor( $idProveedor ){
+
+		$lstProductosProv = array();
+		$sql = "SELECT 
+					    tipoProducto, idProducto, producto, esPerecedero, proveedor, telefono, email
+					FROM
+					    vstProveedorProducto
+					WHERE
+					    idProveedor = 1;";
+		if( $rs = $this->con->query( $sql ) ){
+			while( $row = $rs->fetch_object() ){
+				$row->esPerecedero	= $row->esPerecedero ? 'Si' : 'No';
+				$lstProductosProv[] = $row;
+			}
+		}
+
+		return $lstProductosProv;
+	}
+
 
 }
 ?>

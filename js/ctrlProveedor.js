@@ -36,6 +36,22 @@ miApp.controller('ctrlProveedor', function($scope, $http, $alert){
 		$scope.proveedor = {};
 	};
 
+	$scope.lstProductosProv= [];
+	$scope.verProductosProveedor = function( idProveedor ){
+		console.log("data");
+		$http.post('consultas.php',{accion: 'verProductosProv', idProveedor: idProveedor})
+		.success(function(data){
+			console.log("dats",data);
+			$scope.lstProductosProv = data.lstProductosProv;
+			if( data.lstProductosProv.length > 0 )
+				$('#modalProductos').modal('show');
+			else
+				$alert({title: 'Alerta: ', content: 'No se encontraron productos del proveedor.', placement: 'top', type: 'warning', show: true, duration: 4});
+		}).error(function(data){
+			console.log(data);
+		});
+	}
+
 	// GUARDAR PROVEEDOR
 	$scope.guardarProveedor = function(){
 		var proveedor = $scope.proveedor;

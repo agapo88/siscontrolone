@@ -13,8 +13,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-
-         <ul class="nav navbar-nav navbar-right">
+      <!--
             <li class="dropdown" ng-class="{'active':menu=='compras'}">
                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Compras <span class="caret"></span></a>
                <ul class="dropdown-menu">
@@ -31,12 +30,16 @@
                   <li ng-class="{'active':menu=='donantes'}"><a href="#/donantes">Donantes</a></li>
                   <li ng-class="{'active':menu=='familias'}"><a href="#/familias">Familias</a></li>
                   <li ng-class="{'active':menu=='productos'}"><a href="#/productos">Productos</a></li>
-                  <li ng-class="{'active':menu=='proveedor'}"><a href="#/proveedor">Proveedores</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#">Desastres</a></li>
                </ul>
             </li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+      -->
+         <ul class="nav navbar-nav navbar-right">
+            <li>
+               <a>
+                  <span class="glyphicon glyphicon-hand-right"></span> <?php echo $session->getUsername(); ?>
+               </a>
+            </li>
+            <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
          </ul>
       </div>
    </div>

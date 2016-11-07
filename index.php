@@ -1,3 +1,7 @@
+<?php 
+session_start();
+if( isset($_SESSION['idPerfil']) ):
+?>
 <!DOCTYPE html>
 <html ng-app="proyecto" lang="es-GT">
 <head>
@@ -9,7 +13,9 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body ng-controller="home">
-<?php 
+<?php
+	include 'class/session.class.php';
+	$session = new Session();
 	include 'include/menu.php';
 ?>
 	<div class="principal">
@@ -36,6 +42,11 @@
 	<script type="text/javascript" src="js/ctrlProveedor.js"></script>
 	<script type="text/javascript" src="js/ctrlReportes.js"></script>
 	<script type="text/javascript" src="js/ctrlDesastres.js"></script>
-	
+
 </body>
 </html>
+<?php
+else:
+	header('Location: login.php');
+endif;
+?>

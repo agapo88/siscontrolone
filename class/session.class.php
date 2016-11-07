@@ -11,6 +11,10 @@ class Session
 		return (int) $_SESSION['idUser'];
 	}
 
+	function getUsername(){
+		return $_SESSION['username'];
+	}
+
 
 }
 ?>

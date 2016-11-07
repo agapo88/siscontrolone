@@ -1,9 +1,9 @@
 <?php
 session_start();
-$username       = "MariaJuarez";
-$password       = "MariaJuarez";
+$username       = "";
+$password       = "";
 $mensaje        = "";
-$response       = "";
+$response       = null;
 $error          = false;
 $respuesta      = (object) array(
     'mensaje'      => "",
@@ -163,7 +163,6 @@ if( !isset($_SESSION['idPerfil']) ) {
                             if( $response == 2 && $error )
                                 echo $cambioPass;
                         ?>
-                        
                         <div class="form-group">
                             <button type="submit" name="submit" class="btn btn-success btn-block">
                                 <span class="glyphicon glyphicon-globe"></span> Acceder

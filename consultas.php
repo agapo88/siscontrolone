@@ -1,8 +1,5 @@
 <?php 
 session_start();
-
-$_SESSION['idUser'] = 1;
-
 $data = json_decode( file_get_contents("php://input") );
 
 require_once 'class/conexion.class.php';
@@ -25,17 +22,10 @@ switch ( $data->accion ) {
 
 	case 'inicio':
 		$consulta = new Consultas( $conexion );
-		//$datos = $consulta->consultarTipo();
 		echo json_encode( $datos );
-		
 		break;
 
-	case 1:
-		$reportes = new Reporte( $conexion );
-		$reportes->generarInserts();
-		break;
-
-
+	/*** DESASTRES **/
 	case 'inicioDesastres':
 		$desastre = new Desastre( $conexion );
 		$datos['lstTiposDesastre'] = $desastre->consultarTipoDesastre();

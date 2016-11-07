@@ -1,6 +1,5 @@
 <?php 
 require_once 'class/conexion.class.php';
-
 $conexion = new Conexion();
 
 function crearSession( $username ){

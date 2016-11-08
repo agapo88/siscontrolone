@@ -25,6 +25,9 @@ h4 > .badge {
 	background: rgba(0, 0, 0, 0.35);
 	padding: 6px;
 }
+footer{
+	margin-top: 25px;
+}
 .panel-menu {
     border: 1px solid #ccc;
     margin-bottom: 25px;

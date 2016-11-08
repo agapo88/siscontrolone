@@ -98,7 +98,7 @@ if( !isset($_SESSION['idPerfil']) ) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>LOGIN | Evaluacion De Desempeño</title>
+    <title>LOGIN | TODOS SOMOS UNO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <style>
@@ -112,9 +112,6 @@ if( !isset($_SESSION['idPerfil']) ) {
             background: -ms-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(49,106,168,1) 48%, rgba(6,89,179,1) 100%);
             background: linear-gradient(to right, rgba(73,155,234,1) 0%, rgba(49,106,168,1) 48%, rgba(6,89,179,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#0659b3', GradientType=1 );
-            display:table-cell;
-            border: 1px solid transparent;
-            vertical-align:middle;
         }
         .alert {
             color: #FFF;
@@ -136,51 +133,49 @@ if( !isset($_SESSION['idPerfil']) ) {
     </style>
 </head>
 <body>
-    <div class="row">
-        <div class="col-md-offset-6 col-md-7">
-            <div class="panel panel-opacity">
-                <div class="panel-heading text-center">
-                    <img src="img/logo.jpg" class="img-responsive">
-                    <h3>
-                        SISTEMA DE ACCESO
-                    </h3>
-                </div>
-                <div class="panel-body" >
-                    <form method="POST" autocomplete="off" action=" <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> ">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                <input type="text" class="form-control" name="username" placeholder="Usuario" value="<?= $username ?>" >
-                            </div>
+    <div class="col-sm-offset-4 col-md-4">
+        <div class="panel panel-opacity">
+            <div class="panel-heading text-center">
+                <img src="img/logo.jpg" class="img-responsive">
+                <h3>
+                    SISTEMA DE ACCESO
+                </h3>
+            </div>
+            <div class="panel-body" >
+                <form method="POST" autocomplete="off" action=" <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> ">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                            <input type="text" class="form-control" name="username" placeholder="Usuario" value="<?= $username ?>" >
                         </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                                <input type="password" class="form-control" name="password" placeholder="Contraseña" value="<?= $password ?>">                                        
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                            <input type="password" class="form-control" name="password" placeholder="Password" value="<?= $password ?>">                                        
                         </div>
-                        <?php 
-                            if( $response == 2 && $error )
-                                echo $cambioPass;
-                        ?>
+                    </div>
+                    <?php 
+                        if( $response == 2 && $error )
+                            echo $cambioPass;
+                    ?>
+                    <div class="form-group">
+                        <button type="submit" name="submit" class="btn btn-success btn-block">
+                            <span class="glyphicon glyphicon-globe"></span> Acceder
+                        </button>
+                    </div>
+                    <?php 
+                    if ( $error ){
+                    ?>
                         <div class="form-group">
-                            <button type="submit" name="submit" class="btn btn-success btn-block">
-                                <span class="glyphicon glyphicon-globe"></span> Acceder
-                            </button>
+                            <?php
+                                echo $mensaje;
+                            ?>
                         </div>
-                        <?php 
-                        if ( $error ){
-                        ?>
-                            <div class="form-group">
-                                <?php
-                                    echo $mensaje;
-                                ?>
-                            </div>
-                        <?php
-                        }
-                        ?>
-                    </form>
-                </div>
+                    <?php
+                    }
+                    ?>
+                </form>
             </div>
         </div>
     </div>

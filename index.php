@@ -7,10 +7,8 @@ if( isset($_SESSION['idPerfil']) ):
 <head>
 	<title>Proyecto</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/ngstrap.css">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.min.css">
 </head>
 <body ng-controller="home">
 <?php
@@ -43,15 +41,6 @@ if( isset($_SESSION['idPerfil']) ):
 	<script type="text/javascript" src="js/ctrlReportes.js"></script>
 	<script type="text/javascript" src="js/ctrlDesastres.js"></script>
 
-	<footer class="text-center">
-		<address>
-		  	<strong>ONG TODOS SOMOS UNO</strong><br>
-		  	Guatemala, C.A<br>
-		  	<abbr title="Phone">Tel:</abbr> (502) 7767-1116<br>
-		  	<abbr title="Phone">Cel:</abbr> (502) 5045-7895<br>
-		</address>
-		
-	</footer>
 </body>
 </html>
 <?php

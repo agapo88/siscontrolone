@@ -224,3 +224,13 @@
 	?>
 
 </div>
+
+
+<footer class="text-center">
+	<address>
+	  	<strong>ONG TODOS SOMOS UNO</strong><br>
+	  	Guatemala, C.A<br>
+	  	<abbr title="Phone">Tel:</abbr> (502) 7767-1116<br>
+	  	<abbr title="Phone">Cel:</abbr> (502) 5045-7895<br>
+	</address>
+</footer>

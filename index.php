@@ -28,7 +28,6 @@ if( isset($_SESSION['idPerfil']) ):
 	<script type="text/javascript" src="js/libs/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/libs/ngstrap.js"></script>
 	<script type="text/javascript" src="js/libs/dirPagination.js"></script>
-
 	<!-- CONTROLADORES -->
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/route.js"></script>
